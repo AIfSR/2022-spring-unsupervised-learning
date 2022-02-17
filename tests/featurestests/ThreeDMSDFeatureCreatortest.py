@@ -13,7 +13,7 @@ from tckfilereader.Points import Points
 class RateOfChangeFeatureCreatorTest (unittest.TestCase):
     def get_feature_creator(self):
         """Gets the XFeatureCreator to test"""
-        return ThreeDMSDFeatureCreator(XFeatureCreator(),YFeatureCreator(),ZFeatureCreator())
+        return ThreeDMSDFeatureCreator()
 
     def test_get_features(self):
         """Tests getting features from the RateOfChangeFeatureCreator"""
@@ -23,7 +23,7 @@ class RateOfChangeFeatureCreatorTest (unittest.TestCase):
             Point(2,2,3,2),
             Point(0,2,3,3),
         ])
-        rateOfChangeFeatureCreator = ThreeDMSDFeatureCreator(XFeatureCreator(),YFeatureCreator(),ZFeatureCreator())
+        rateOfChangeFeatureCreator = ThreeDMSDFeatureCreator()
 
         solutionFeatures = Features()
         solutionFeatures.add_feature_val(0)
@@ -33,5 +33,5 @@ class RateOfChangeFeatureCreatorTest (unittest.TestCase):
         self.assertEquals(rateOfChangeFeatureCreator.get_features(points), solutionFeatures)
 
     def test_string(self):
-        featureCreator = ThreeDMSDFeatureCreator(XFeatureCreator(),YFeatureCreator(),ZFeatureCreator())
-        self.assertEquals(str(featureCreator), "3DMSD:XYZ")
+        featureCreator = ThreeDMSDFeatureCreator()
+        self.assertEquals(str(featureCreator), "3DMSD")

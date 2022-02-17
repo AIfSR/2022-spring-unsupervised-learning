@@ -1,5 +1,8 @@
 from typing import List
 from datasets.MacrophageStageDataset import MacrophageStageDataset
+from datasets.SyntheticDataset import SyntheticDataset
+from features.MSDFeatureCreator import MSDFeatureCreator
+from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from features.MarkWhenFeatureValuesChange import MarkWhenFeatureValuesChange
 from features.OutlierFeatureCreator import OutlierFeatureCreator
 from features.DeltaFromStartFeatureCreator import DeltaFromStartFeatureCreator 
@@ -21,6 +24,7 @@ from featuretosingleval.MedianOfFeature import MedianOfFeature
 from plotting.GraphParameters import GraphParameters
 from plotting.singlepointcomparetrajectories.SinglePoint2DCompareTrajectories import SinglePoint2DCompareTrajectories
 from plotting.singlepointcomparetrajectories.SinglePointCompareTrajectoriesFactory import SinglePointCompareTrajectoriesFactory
+from plotting.FeaturesOverIndices import FeaturesOverIndices
 import numpy
 import matplotlib.pyplot as plt
 
@@ -46,32 +50,41 @@ if __name__ == "__main__":
     # the angle between points as opposed to the average value
     plotFeatures = [
         GraphParameters(
-            xFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(XFeatureCreator())), 
-            yFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(YFeatureCreator())), 
-            yLabel = "Average: Y Speed",
-            xLabel = "Average: X Speed"),
-        GraphParameters(
-            xFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(XFeatureCreator())), 
-            yFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(YFeatureCreator())), 
-            featuresToSingleVal=MedianOfFeature()),
-        GraphParameters(
-            xFeatureCreator=PointsAngleFeatureCreator(),
-            yFeatureCreator=RateOfChangeFeatureCreator(PointsDistanceFeatureCreator())),    
-        GraphParameters(
-            xFeatureCreator=PointsAngleFeatureCreator()),
-        GraphParameters(
-            xFeatureCreator=PointsAngleFeatureCreator(),
-            featuresToSingleVal=MedianOfFeature()),
+            xFeatureCreator=MSDFeatureCreator(XFeatureCreator),
+            xLabel = "MSD: X Speed"),
+        # GraphParameters(
+        #     xFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(XFeatureCreator())),
+        #     yFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(YFeatureCreator())),
+        #     yLabel = "Average: Y Speed",
+        #     xLabel = "Average: X Speed"),
+        # GraphParameters(
+        #     xFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(XFeatureCreator())),
+        #     yFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(YFeatureCreator())),
+        #     featuresToSingleVal=MedianOfFeature()),
+        # GraphParameters(
+        #     xFeatureCreator=PointsAngleFeatureCreator(),
+        #     yFeatureCreator=RateOfChangeFeatureCreator(PointsDistanceFeatureCreator())),
+        # GraphParameters(
+        #     xFeatureCreator=PointsAngleFeatureCreator()),
+        # GraphParameters(
+        #     xFeatureCreator=PointsAngleFeatureCreator(),
+        #     featuresToSingleVal=MedianOfFeature()),
     ]
 
     # The MacrophageStageDataset is all of the real points split up by macrophage
     # stage: M0, M1, M2
     dataset = MacrophageStageDataset()
+    dataset1 = SyntheticDataset()
 
     # Takes all of the points and categories specified above in the stageCategories variable, 
     # and all of the different types of graphs specified above in the plotFeatures variable and 
     # creates all of the desired graphs one at a time.
-    singlePoint2DCompareTrajectoriesFactory = SinglePointCompareTrajectoriesFactory()
-    singlePoint2DCompareTrajectoriesFactory.display_plots(plotFeatures, dataset.getCategoriesWithPoints())
+    print(dataset1.getCategoriesWithPoints()[0][1][0])
+    print(len(dataset1.getCategoriesWithPoints()[0][1][0]))
+    points = dataset1.getCategoriesWithPoints()[0][1][0]
+    FeaturesOverIndices = FeaturesOverIndices()
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),points)
+    # singlePoint2DCompareTrajectoriesFactory = SinglePointCompareTrajectoriesFactory()
+    # singlePoint2DCompareTrajectoriesFactory.display_plots(plotFeatures, dataset.getCategoriesWithPoints())
 
 

@@ -105,7 +105,7 @@ class SinglePoint2DCompareTrajectories (ComparePlotsBase):
                 yAvgOfFeature = featuresToSingleVal.get_val(yFeature)
                 xPointsAverages.append(xAvgOfFeature)
                 yPointsAverages.append(yAvgOfFeature)
-                print(xAvgOfFeature,yAvgOfFeature)
+                # print(xAvgOfFeature,yAvgOfFeature)
 
             s = ax_scatter.scatter(xPointsAverages, yPointsAverages, label=name)
             pointsPlotted.append((name, xPointsAverages, yPointsAverages, s.get_ec()))
