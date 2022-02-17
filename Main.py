@@ -79,11 +79,29 @@ if __name__ == "__main__":
     # Takes all of the points and categories specified above in the stageCategories variable, 
     # and all of the different types of graphs specified above in the plotFeatures variable and 
     # creates all of the desired graphs one at a time.
-    print(dataset1.getCategoriesWithPoints()[0][1][0])
-    print(len(dataset1.getCategoriesWithPoints()[0][1][0]))
-    points = dataset1.getCategoriesWithPoints()[0][1][0]
+    print(dataset1.getCategoriesWithPoints()[1][1][0])
+    print(len(dataset1.getCategoriesWithPoints()[1][1][0]))
+    # points = dataset1.getCategoriesWithPoints()[0][1][0]
     FeaturesOverIndices = FeaturesOverIndices()
-    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),points)
+
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0])
+
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][5])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][9])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][22])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][24])
+
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][0])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][5])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][11])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][26])
+
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][2])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][6])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][11])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][13])
+
+
     # singlePoint2DCompareTrajectoriesFactory = SinglePointCompareTrajectoriesFactory()
     # singlePoint2DCompareTrajectoriesFactory.display_plots(plotFeatures, dataset.getCategoriesWithPoints())
 

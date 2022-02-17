@@ -5,6 +5,7 @@ from matplotlib.axes import Axes
 from features.FeatureCreatorBase import FeatureCreatorBase
 from features.Features import Features
 from features.XFeatureCreator import XFeatureCreator
+from features.TFeatureCreator import TFeatureCreator
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from features.MSDFeatureCreator import MSDFeatureCreator
 from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
@@ -21,18 +22,25 @@ class FeaturesOverIndices(ComparePlotsBase1):
         ax_scatter = plt.axes()
         ax_scatter.tick_params(direction='in', top=True, right=True)
         pointsPlotted = []
-        xPoints= []
+        # xPoints= []
+        tFeatureCreator = TFeatureCreator()
+        xPoints = tFeatureCreator.get_features(points)
         yPoints = yFeatureCreator.get_features(points)
-        y = 0
-        while (y < len(yPoints)):
-            xPoints.append(y)
-            y = y+1
-        s = ax_scatter.scatter(xPoints, yPoints)
-        pointsPlotted.append((xPoints, yPoints, s.get_ec()))
-        ax_scatter.set_ylabel(yFeatureCreator)
-        ax_scatter.set_xlabel("Time Step")
+        # y = 0
+        # while (y < len(yPoints)):
+        #     xPoints.append(y)
+        #     y = y+1
+        # del xPoints[0]
+        # s = ax_scatter.scatter(xPoints, yPoints)
+        # pointsPlotted.append((xPoints, yPoints, s.get_ec()))
+        ax_scatter.set_ylabel('MSD, ${\mu}$m${^2}$/s')
+        ax_scatter.set_xlabel("Time Step,s")
+        # plt.plot(xPoints, yPoints, '--b')
+        plt.plot(xPoints[1:len(xPoints)], yPoints[1:len(xPoints)],'--b')
+
+        plt.xscale('log')
+        plt.yscale('log')
         fig.suptitle(self._get_graph_title(points,yFeatureCreator))
-        fig.legend(prop={"size":20})
         plt.show()
 
 

@@ -58,6 +58,7 @@ class ThreeDMSDFeatureCreator(FeatureCreatorBase):
         for k in result:
             features.add_feature_val(k)
         # features._featuresList = features._featuresList[:-2]
+        # del features._featuresList[0]
         return features
 
         # for val, time in zip(otherFeature, timeFeature):
