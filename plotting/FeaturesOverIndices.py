@@ -22,6 +22,7 @@ class FeaturesOverIndices(ComparePlotsBase1):
     def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points) -> None:
         """Displays a plot of the yFeatureCreator over time"""
         #fig = plt.figure(figsize=(16, 7.5))
+        
         ax_scatter = plt.axes()
         #ax_scatter.tick_params(direction='in', top=True, right=True)
         
@@ -53,12 +54,12 @@ class FeaturesOverIndices(ComparePlotsBase1):
             ax_tw_x = ax_scatter.twinx()
             ax_tw_x.axis('off')
             ax2 = ax_tw_x.twiny()
-            img = svg2png(file_obj=open('Test2.svg', "rb"))
+            img = svg2png(file_obj=open('image.svg', "rb"))
             im = Image.open(BytesIO(img))
             width, height = im.size
-            bottomAdjustment = 51
-            top = 54
-            left = 78
+            bottomAdjustment = 63
+            top = 49
+            left = 77
             rightAdjustment = 60
             print("width: ", width)
             print("height: ", height)
@@ -66,10 +67,7 @@ class FeaturesOverIndices(ComparePlotsBase1):
 
             ax2.imshow(im, extent=[min(xPoints), max(xPoints), min(yPoints), max(yPoints)], aspect='auto')
             ax2.axis('off')
-
-            #ax_scatter.imshow(im, aspect='auto')
         
-
         plt.show()
 
 
