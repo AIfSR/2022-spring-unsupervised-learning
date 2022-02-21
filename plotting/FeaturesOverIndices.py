@@ -15,7 +15,7 @@ from plotting.singlepointcomparetrajectories.LineFeatureCreator import LineFeatu
 
 class FeaturesOverIndices(ComparePlotsBase1):
 
-    def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points) -> None:
+    def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points, title:str=None) -> None:
         """Displays plots comparing single point values of a feature for each category"""
         # plt.close()
         fig = plt.figure(figsize=(16, 7.5))
@@ -42,7 +42,10 @@ class FeaturesOverIndices(ComparePlotsBase1):
 
         plt.xscale('log')
         plt.yscale('log')
-        fig.suptitle(self._get_graph_title(points,yFeatureCreator))
+        if title == None:
+            fig.suptitle(self._get_graph_title(points,yFeatureCreator))
+        else:
+            fig.suptitle(title)
         plt.show()
 
 
