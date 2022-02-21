@@ -1,6 +1,7 @@
 from features.FeatureCreatorBase import FeatureCreatorBase
 from features.Features import Features
 from tckfilereader.Points import Points
+import numpy as np
 
 class TFeatureCreator (FeatureCreatorBase):
     """Creates a Feature that is just the T coordinates of the points"""
@@ -9,7 +10,7 @@ class TFeatureCreator (FeatureCreatorBase):
         """Gets all the T values as features"""
         features = Features()
         for point in points:
-            features.add_feature_val(point.get_t())
+            features.add_feature_val(point.get_t() / 1000)
 
         return features
 

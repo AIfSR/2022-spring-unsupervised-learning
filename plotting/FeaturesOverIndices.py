@@ -13,41 +13,69 @@ from plotting.ComparePlotsBase1 import ComparePlotsBase1
 from tckfilereader.Points import Points
 from plotting.singlepointcomparetrajectories.LineFeatureCreator import LineFeatureCreator
 
+from PIL import Image
+from cairosvg import svg2png
+from io import BytesIO
+
 class FeaturesOverIndices(ComparePlotsBase1):
 
     def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points) -> None:
-        """Displays plots comparing single point values of a feature for each category"""
-        # plt.close()
-        fig = plt.figure(figsize=(16, 7.5))
+        """Displays a plot of the yFeatureCreator over time"""
+        #fig = plt.figure(figsize=(16, 7.5))
         ax_scatter = plt.axes()
-        ax_scatter.tick_params(direction='in', top=True, right=True)
-        pointsPlotted = []
-        # xPoints= []
+        #ax_scatter.tick_params(direction='in', top=True, right=True)
+        
         tFeatureCreator = TFeatureCreator()
         xPoints = tFeatureCreator.get_features(points)
         yPoints = yFeatureCreator.get_features(points)
-        # y = 0
-        # while (y < len(yPoints)):
-        #     xPoints.append(y)
-        #     y = y+1
-        # del xPoints[0]
-        # s = ax_scatter.scatter(xPoints, yPoints)
-        # pointsPlotted.append((xPoints, yPoints, s.get_ec()))
+
+        xPoints = xPoints[1:len(xPoints)]
+        yPoints = yPoints[1:len(yPoints)]
+        del xPoints[-2::]
+        del yPoints[-2::]
+        
         ax_scatter.set_ylabel('MSD, ${\mu}$m${^2}$/s')
         ax_scatter.set_xlabel("Time Step,s")
-        # plt.plot(xPoints, yPoints, '--b')
-        plt.plot(xPoints[1:len(xPoints)], yPoints[1:len(xPoints)],'--b')
 
-        plt.xscale('log')
-        plt.yscale('log')
-        fig.suptitle(self._get_graph_title(points,yFeatureCreator))
+        plottingNormally = True
+        if plottingNormally:
+            plt.plot(xPoints, yPoints, color="red")
+
+            #ax_scatter.set_xlim(min(xPoints),max(xPoints))
+            #ax_scatter.set_ylim(min(yPoints),max(yPoints))
+            ax_scatter.set_yscale('log')
+            ax_scatter.set_xscale('log')
+            ax_scatter.set_zorder(2)
+            ax_scatter.set_facecolor('none')
+
+        usingBackground = True
+        if usingBackground:
+            ax_tw_x = ax_scatter.twinx()
+            ax_tw_x.axis('off')
+            ax2 = ax_tw_x.twiny()
+            img = svg2png(file_obj=open('Test2.svg', "rb"))
+            im = Image.open(BytesIO(img))
+            width, height = im.size
+            bottomAdjustment = 51
+            top = 54
+            left = 78
+            rightAdjustment = 60
+            print("width: ", width)
+            print("height: ", height)
+            im = im.crop((left, top, width - rightAdjustment, height - bottomAdjustment))
+
+            ax2.imshow(im, extent=[min(xPoints), max(xPoints), min(yPoints), max(yPoints)], aspect='auto')
+            ax2.axis('off')
+
+            #ax_scatter.imshow(im, aspect='auto')
+        
+
         plt.show()
 
 
     def _get_graph_title(self, points:Points, yFeatureCreator:str) -> str:
         """Gets the name of the graph."""
         title = ""
-        # title += category[0] + ", "
 
         title += "Time Step vs. " + str(yFeatureCreator) + " comparison"
         return title

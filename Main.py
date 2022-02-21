@@ -79,12 +79,11 @@ if __name__ == "__main__":
     # Takes all of the points and categories specified above in the stageCategories variable, 
     # and all of the different types of graphs specified above in the plotFeatures variable and 
     # creates all of the desired graphs one at a time.
-    print(dataset1.getCategoriesWithPoints()[1][1][0])
-    print(len(dataset1.getCategoriesWithPoints()[1][1][0]))
     # points = dataset1.getCategoriesWithPoints()[0][1][0]
     FeaturesOverIndices = FeaturesOverIndices()
 
-    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0])
+    #FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][10])
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][49])
 
     # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][5])
     # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][9])
