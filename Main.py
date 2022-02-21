@@ -84,12 +84,12 @@ if __name__ == "__main__":
     # points = dataset1.getCategoriesWithPoints()[0][1][0]
     FeaturesOverIndices = FeaturesOverIndices()
 
-    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0])
 
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][5])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][9])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][22])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][24])
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][5])
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][9])
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][22])
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][24])
 
     # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][0])
     # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][5])

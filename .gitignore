@@ -1,3 +1,5 @@
 *.ckpt*
 *.pyc
 *.tck
+*.svg
+*.png

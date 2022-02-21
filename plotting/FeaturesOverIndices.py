@@ -26,6 +26,8 @@ class FeaturesOverIndices(ComparePlotsBase1):
         tFeatureCreator = TFeatureCreator()
         xPoints = tFeatureCreator.get_features(points)
         yPoints = yFeatureCreator.get_features(points)
+        del xPoints._featuresList[-2::]
+        del yPoints._featuresList[-2::]
         # y = 0
         # while (y < len(yPoints)):
         #     xPoints.append(y)
