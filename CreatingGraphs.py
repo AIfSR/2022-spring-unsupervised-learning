@@ -49,4 +49,14 @@ dataset1 = SyntheticDataset()
 FeaturesOverIndices = FeaturesOverIndices()
 
 def run():
-    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0],dataset1.getCategoriesWithPoints()[0][1][0].title)
+    i = 0;
+    j = 0;
+    k = 0;
+    for i in range(len(dataset1.getCategoriesWithPoints())):
+        for k in range(len(dataset1.getCategoriesWithPoints()[i][1])):
+            FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                              dataset1.getCategoriesWithPoints()[i][1][k],
+                                              dataset1.getCategoriesWithPoints()[i][1][k].title)
+
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0],dataset1.getCategoriesWithPoints()[0][1][0].title)
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][1],dataset1.getCategoriesWithPoints()[0][1][1].title)

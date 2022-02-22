@@ -83,8 +83,8 @@ if __name__ == "__main__":
     # print(len(dataset1.getCategoriesWithPoints()[1][1][0]))
     # points = dataset1.getCategoriesWithPoints()[0][1][0]
     FeaturesOverIndices = FeaturesOverIndices()
-
-    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0],dataset1.getCategoriesWithPoints()[0][1][0].title)
+    print(dataset1.getCategoriesWithPoints()[0])
+    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[0][1][0],dataset1.getCategoriesWithPoints()[0][1][0].title)
 
     # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][5])
     # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][9])
