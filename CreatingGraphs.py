@@ -67,3 +67,38 @@ def run2():
             FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
                                               dataset.getCategoriesWithPoints()[i][1][k],
                                               dataset.getCategoriesWithPoints()[i][1][k].title)
+
+def run3():
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                      dataset.getCategoriesWithPoints()[0][1][1],
+                                      dataset.getCategoriesWithPoints()[0][1][1].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                      dataset.getCategoriesWithPoints()[0][1][6],
+                                      dataset.getCategoriesWithPoints()[0][1][6].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[0][1][13],
+                                          dataset.getCategoriesWithPoints()[0][1][13].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[1][1][4],
+                                          dataset.getCategoriesWithPoints()[1][1][4].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[1][1][8],
+                                          dataset.getCategoriesWithPoints()[1][1][8].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[1][1][11],
+                                          dataset.getCategoriesWithPoints()[1][1][11].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[1][1][16],
+                                          dataset.getCategoriesWithPoints()[1][1][16].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[2][1][2],
+                                          dataset.getCategoriesWithPoints()[2][1][2].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[2][1][10],
+                                          dataset.getCategoriesWithPoints()[2][1][10].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[2][1][14],
+                                          dataset.getCategoriesWithPoints()[2][1][14].title)
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          dataset.getCategoriesWithPoints()[2][1][18],
+                                          dataset.getCategoriesWithPoints()[2][1][18].title)
