@@ -20,9 +20,9 @@ from io import BytesIO
 
 class FeaturesOverIndices(ComparePlotsBase1):
 
-    BOTTOM_CROP = 63
-    TOP_CROP = 49
-    LEFT_CROP = 77
+    BOTTOM_CROP = 49
+    TOP_CROP = 54
+    LEFT_CROP = 76
     RIGHT_CROP = 60
 
     def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points, imageFile:str) -> None:
