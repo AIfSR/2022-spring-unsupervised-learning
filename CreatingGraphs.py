@@ -36,6 +36,7 @@ from features.RateOfChangeFeatureCreator import RateOfChangeFeatureCreator
 from features.PointsDistanceFeatureCreator import PointsDistanceFeatureCreator
 from features.PointsDisplacementFeatureCreator import PointsDisplacementFeatureCreator
 from tckfilereader.Points import Points
+from tckfilereader.PointsWithNames import PointsWithNames
 from tckfilereader.TCKFileReader import TCKFileReader
 
 plotFeatures = [
@@ -43,78 +44,92 @@ plotFeatures = [
             xFeatureCreator=MSDFeatureCreator(XFeatureCreator),
             xLabel = "MSD: X Speed"),
 ]
-dataset = MacrophageStageDataset()
-dataset1 = SyntheticDataset()
+realDataset = MacrophageStageDataset()
+syntheticDataset = SyntheticDataset()
 
 FeaturesOverIndices = FeaturesOverIndices()
+
+def getPicturePathway(diffusionType:str, pointsWithNames:PointsWithNames):
+    imagePath = "data/Simple_cases/"
+    fullFileName = pointsWithNames.title
+    fileName = fullFileName.split("/")[-1]
+    if diffusionType == "Bal":
+        imagePath += "Ballistic_movement/Figures/MSDs " + fileName + " .svg"
+    elif diffusionType == "CD":
+        imagePath += "Confined_diffusion/Figures/MSDs " + fileName + " .svg"
+    elif diffusionType == "RW":
+        imagePath += "Random_walk/Figures/MSDs " + fileName + " .svg"
+    else:
+        imagePath += "Very_confined_diffusion/Figures/MSDs " + fileName + " .svg"
+    return imagePath
+
+def run0():
+    def plotTrajectory(categoryNumber:int, trajectoryNumber:int):
+        imagePath = getPicturePathway(syntheticDataset.getCategoriesWithPoints()[categoryNumber][0], syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber])
+        FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                        syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber],
+                                        imagePath,
+                                        syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber].title)
+    
+    plotTrajectory(0, 0)
+    plotTrajectory(1, 44)
+    plotTrajectory(2, 39)
+    plotTrajectory(3, 43)
 
 def run():
     i = 0;
     j = 0;
     k = 0;
-    #data/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic0.tck .svg
-    #data/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic0.tck .svg
 
-    for i in range(len(dataset1.getCategoriesWithPoints())):
-        for k in range(len(dataset1.getCategoriesWithPoints()[i][1])):
-            imagePath = "data/Simple_cases/"
-            diffusionType = dataset1.getCategoriesWithPoints()[i][0]
-            fullFileName = dataset1.getCategoriesWithPoints()[i][1][k].title
-            fileName = fullFileName.split("/")[-1]
-            if diffusionType == "Bal":
-                imagePath += "Ballistic_movement/Figures/MSDs " + fileName + " .svg"
-            elif diffusionType == "CD":
-                imagePath += "Confined_diffusion/Figures/MSDs " + fileName + " .svg"
-            elif diffusionType == "RW":
-                imagePath += "Random_walk/Figures/MSDs " + fileName + " .svg"
-            else:
-                imagePath += "Very_confined_diffusion/Figures/MSDs " + fileName + " .svg"
+    for i in range(len(syntheticDataset.getCategoriesWithPoints())):
+        for k in range(len(syntheticDataset.getCategoriesWithPoints()[i][1])):
+            imagePath = getPicturePathway(syntheticDataset.getCategoriesWithPoints()[i][0], syntheticDataset.getCategoriesWithPoints()[i][1][k])
             FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                              dataset1.getCategoriesWithPoints()[i][1][k],
+                                              syntheticDataset.getCategoriesWithPoints()[i][1][k],
                                               imagePath,
-                                              fullFileName)
+                                              syntheticDataset.getCategoriesWithPoints()[i][1][k].title)
 
 def run2():
     i = 0;
     j = 0;
     k = 0;
-    for i in range(len(dataset.getCategoriesWithPoints())):
-        for k in range(len(dataset.getCategoriesWithPoints()[i][1])):
+    for i in range(len(realDataset.getCategoriesWithPoints())):
+        for k in range(len(realDataset.getCategoriesWithPoints()[i][1])):
             FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                              dataset.getCategoriesWithPoints()[i][1][k],
-                                              dataset.getCategoriesWithPoints()[i][1][k].title)
+                                              realDataset.getCategoriesWithPoints()[i][1][k],
+                                              realDataset.getCategoriesWithPoints()[i][1][k].title)
 
 def run3():
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                      dataset.getCategoriesWithPoints()[0][1][1],
-                                      dataset.getCategoriesWithPoints()[0][1][1].title)
+                                      realDataset.getCategoriesWithPoints()[0][1][1],
+                                      realDataset.getCategoriesWithPoints()[0][1][1].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                      dataset.getCategoriesWithPoints()[0][1][6],
-                                      dataset.getCategoriesWithPoints()[0][1][6].title)
+                                      realDataset.getCategoriesWithPoints()[0][1][6],
+                                      realDataset.getCategoriesWithPoints()[0][1][6].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[0][1][13],
-                                          dataset.getCategoriesWithPoints()[0][1][13].title)
+                                          realDataset.getCategoriesWithPoints()[0][1][13],
+                                          realDataset.getCategoriesWithPoints()[0][1][13].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[1][1][4],
-                                          dataset.getCategoriesWithPoints()[1][1][4].title)
+                                          realDataset.getCategoriesWithPoints()[1][1][4],
+                                          realDataset.getCategoriesWithPoints()[1][1][4].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[1][1][8],
-                                          dataset.getCategoriesWithPoints()[1][1][8].title)
+                                          realDataset.getCategoriesWithPoints()[1][1][8],
+                                          realDataset.getCategoriesWithPoints()[1][1][8].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[1][1][11],
-                                          dataset.getCategoriesWithPoints()[1][1][11].title)
+                                          realDataset.getCategoriesWithPoints()[1][1][11],
+                                          realDataset.getCategoriesWithPoints()[1][1][11].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[1][1][16],
-                                          dataset.getCategoriesWithPoints()[1][1][16].title)
+                                          realDataset.getCategoriesWithPoints()[1][1][16],
+                                          realDataset.getCategoriesWithPoints()[1][1][16].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[2][1][2],
-                                          dataset.getCategoriesWithPoints()[2][1][2].title)
+                                          realDataset.getCategoriesWithPoints()[2][1][2],
+                                          realDataset.getCategoriesWithPoints()[2][1][2].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[2][1][10],
-                                          dataset.getCategoriesWithPoints()[2][1][10].title)
+                                          realDataset.getCategoriesWithPoints()[2][1][10],
+                                          realDataset.getCategoriesWithPoints()[2][1][10].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[2][1][14],
-                                          dataset.getCategoriesWithPoints()[2][1][14].title)
+                                          realDataset.getCategoriesWithPoints()[2][1][14],
+                                          realDataset.getCategoriesWithPoints()[2][1][14].title)
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                          dataset.getCategoriesWithPoints()[2][1][18],
-                                          dataset.getCategoriesWithPoints()[2][1][18].title)
+                                          realDataset.getCategoriesWithPoints()[2][1][18],
+                                          realDataset.getCategoriesWithPoints()[2][1][18].title)
