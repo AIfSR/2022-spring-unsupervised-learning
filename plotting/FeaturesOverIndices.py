@@ -25,7 +25,7 @@ class FeaturesOverIndices(ComparePlotsBase1):
     LEFT_CROP = 76
     RIGHT_CROP = 60
 
-    def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points, imageFile:str) -> None:
+    def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points, imageFile:str, title:str=None) -> None:
         """Displays a plot of the yFeatureCreator over time"""
         
         ax_scatter = plt.axes()
@@ -45,11 +45,18 @@ class FeaturesOverIndices(ComparePlotsBase1):
         ax_scatter.set_xlabel("Time Step,s")
 
         plottingNormally = True
+        if title == None:
+            plt.suptitle(self._get_graph_title(points,yFeatureCreator))
+        else:
+            plt.suptitle(title)
+
         if plottingNormally:
             plt.plot(xPoints, yPoints, color="red", label = "AIfSR")
             plt.legend()
+            
             ax_scatter.set_yscale('log')
             ax_scatter.set_xscale('log')
+        
             ax_scatter.set_zorder(2)
             ax_scatter.set_facecolor('none')
 
@@ -62,14 +69,10 @@ class FeaturesOverIndices(ComparePlotsBase1):
             im = Image.open(BytesIO(img))
             width, height = im.size
             
-            print("width: ", width)
-            print("height: ", height)
             im = im.crop((FeaturesOverIndices.LEFT_CROP, FeaturesOverIndices.TOP_CROP, width - FeaturesOverIndices.RIGHT_CROP, height - FeaturesOverIndices.BOTTOM_CROP))
 
             ax2.imshow(im, extent=[min(xPoints), max(xPoints), min(yPoints), max(yPoints)], aspect='auto')
             ax2.axis('off')
-        
-        
 
         plt.show()
 
