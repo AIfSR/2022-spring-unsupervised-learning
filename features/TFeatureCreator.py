@@ -10,7 +10,7 @@ class TFeatureCreator (FeatureCreatorBase):
         """Gets all the T values as features"""
         features = Features()
         for point in points:
-            features.add_feature_val(point.get_t() / 1000)
+            features.add_feature_val(point.get_t())
 
         return features
 

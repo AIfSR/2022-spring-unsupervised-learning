@@ -6,6 +6,7 @@ from features.FeatureCreatorBase import FeatureCreatorBase
 from features.Features import Features
 from features.XFeatureCreator import XFeatureCreator
 from features.TFeatureCreator import TFeatureCreator
+from features.MultiplyByFactorFeatureCreator import MultiplyByFactorFeatureCreator
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from features.MSDFeatureCreator import MSDFeatureCreator
 from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
@@ -29,7 +30,7 @@ class FeaturesOverIndices(ComparePlotsBase1):
         
         ax_scatter = plt.axes()
         
-        tFeatureCreator = TFeatureCreator()
+        tFeatureCreator = MultiplyByFactorFeatureCreator(TFeatureCreator(), 1/1000)
         xPoints = tFeatureCreator.get_features(points)
         yPoints = yFeatureCreator.get_features(points)
 
@@ -45,8 +46,8 @@ class FeaturesOverIndices(ComparePlotsBase1):
 
         plottingNormally = True
         if plottingNormally:
-            plt.plot(xPoints, yPoints, color="red")
-
+            plt.plot(xPoints, yPoints, color="red", label = "AIfSR")
+            plt.legend()
             ax_scatter.set_yscale('log')
             ax_scatter.set_xscale('log')
             ax_scatter.set_zorder(2)
@@ -68,6 +69,8 @@ class FeaturesOverIndices(ComparePlotsBase1):
             ax2.imshow(im, extent=[min(xPoints), max(xPoints), min(yPoints), max(yPoints)], aspect='auto')
             ax2.axis('off')
         
+        
+
         plt.show()
 
 
