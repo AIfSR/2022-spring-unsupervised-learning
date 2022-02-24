@@ -52,11 +52,27 @@ def run():
     i = 0;
     j = 0;
     k = 0;
+    #data/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic0.tck .svg
+    #data/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic0.tck .svg
+
     for i in range(len(dataset1.getCategoriesWithPoints())):
         for k in range(len(dataset1.getCategoriesWithPoints()[i][1])):
+            imagePath = "data/Simple_cases/"
+            diffusionType = dataset1.getCategoriesWithPoints()[i][0]
+            fullFileName = dataset1.getCategoriesWithPoints()[i][1][k].title
+            fileName = fullFileName.split("/")[-1]
+            if diffusionType == "Bal":
+                imagePath += "Ballistic_movement/Figures/MSDs " + fileName + " .svg"
+            elif diffusionType == "CD":
+                imagePath += "Confined_diffusion/Figures/MSDs " + fileName + " .svg"
+            elif diffusionType == "RW":
+                imagePath += "Random_walk/Figures/MSDs " + fileName + " .svg"
+            else:
+                imagePath += "Very_confined_diffusion/Figures/MSDs " + fileName + " .svg"
             FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
                                               dataset1.getCategoriesWithPoints()[i][1][k],
-                                              dataset1.getCategoriesWithPoints()[i][1][k].title)
+                                              imagePath,
+                                              fullFileName)
 
 def run2():
     i = 0;
