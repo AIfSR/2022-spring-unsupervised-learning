@@ -45,7 +45,7 @@ class FeaturesOverIndices:
 
         plottingNormally = True
         if title == None:
-            plt.suptitle(self._get_graph_title(points,yFeatureCreator))
+            plt.suptitle(self._get_graph_title(yFeatureCreator))
         else:
             plt.suptitle(title)
 
@@ -76,7 +76,7 @@ class FeaturesOverIndices:
         plt.show()
 
 
-    def _get_graph_title(self, points:Points, yFeatureCreator:str) -> str:
+    def _get_graph_title(self, yFeatureCreator:str) -> str:
         """Gets the name of the graph."""
         title = ""
 

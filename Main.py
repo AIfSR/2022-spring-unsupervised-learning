@@ -40,70 +40,17 @@ from tckfilereader.TCKFileReader import TCKFileReader
 
 if __name__ == "__main__":
 
-    # PlotFeatures stores all of the GraphParameters associated with each desired graph. 
-    # In this case there will be 5 graphs, the first one will plot the average X speed 
-    # against the average Y speed of the trajectories passed in in a scatterplot, and the next two will 
-    # plot similar 2 dimensional graphs but with different features for the X and Y axes.
-    # The fourth GraphParameters object only has an xFeatureCreator set which means it will only 
-    # plot one dimension in the form of a boxplot. The final GraphParameters object similarly only 
-    # plots one dimension in the form of a boxplot but in this case it is taking the median value of 
-    # the angle between points as opposed to the average value
     plotFeatures = [
         GraphParameters(
             xFeatureCreator=MSDFeatureCreator(XFeatureCreator),
             xLabel = "MSD: X Speed"),
-        # GraphParameters(
-        #     xFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(XFeatureCreator())),
-        #     yFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(YFeatureCreator())),
-        #     yLabel = "Average: Y Speed",
-        #     xLabel = "Average: X Speed"),
-        # GraphParameters(
-        #     xFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(XFeatureCreator())),
-        #     yFeatureCreator=ABSFeatureCreator(RateOfChangeFeatureCreator(YFeatureCreator())),
-        #     featuresToSingleVal=MedianOfFeature()),
-        # GraphParameters(
-        #     xFeatureCreator=PointsAngleFeatureCreator(),
-        #     yFeatureCreator=RateOfChangeFeatureCreator(PointsDistanceFeatureCreator())),
-        # GraphParameters(
-        #     xFeatureCreator=PointsAngleFeatureCreator()),
-        # GraphParameters(
-        #     xFeatureCreator=PointsAngleFeatureCreator(),
-        #     featuresToSingleVal=MedianOfFeature()),
     ]
 
-    # The MacrophageStageDataset is all of the real points split up by macrophage
-    # stage: M0, M1, M2
-    dataset = MacrophageStageDataset()
-    dataset1 = SyntheticDataset()
+    dataset = SyntheticDataset()
 
-    # Takes all of the points and categories specified above in the stageCategories variable, 
-    # and all of the different types of graphs specified above in the plotFeatures variable and 
-    # creates all of the desired graphs one at a time.
-    # print(dataset1.getCategoriesWithPoints()[0][1][0].title)
-    # print(len(dataset1.getCategoriesWithPoints()[1][1][0]))
-    # points = dataset1.getCategoriesWithPoints()[0][1][0]
     FeaturesOverIndices = FeaturesOverIndices()
-    print(dataset.getCategoriesWithPoints()[0])
-    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(), dataset1.getCategoriesWithPoints()[0][1][10], "image.svg", dataset.getCategoriesWithPoints()[0][1][0].title)
-    #FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][49])
-
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][5])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][9])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][22])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[1][1][24])
-
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][0])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][5])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][11])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[2][1][26])
-
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][2])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][6])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][11])
-    # FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),dataset1.getCategoriesWithPoints()[3][1][13])
-
-
-    # singlePoint2DCompareTrajectoriesFactory = SinglePointCompareTrajectoriesFactory()
-    # singlePoint2DCompareTrajectoriesFactory.display_plots(plotFeatures, dataset.getCategoriesWithPoints())
+    trajectoryIndex = 10
+    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(), dataset.getCategoriesWithPoints()[0][1][trajectoryIndex], 
+        "data/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic" + str(trajectoryIndex) + ".tck .svg", dataset.getCategoriesWithPoints()[0][1][trajectoryIndex].title)
 
 
