@@ -6,21 +6,20 @@ import numpy as np
 
 
 class MSDFeatureCreator(FeatureCreatorBase):
-    """Takes a feature and finds the rate of change over all of the values"""
+    """Takes a feature and finds the MSD of that feature over time"""
 
     def __init__(self, featureCreator:FeatureCreatorBase) -> None:
         super().__init__()
         self._featureCreator = featureCreator
 
     def get_features(self, points: Points) -> Features:
+        """Gets the MSD of all the values in the feature created"""
         features = Features()
         timeFeature = TFeatureCreator().get_features(points)
         otherFeature = self._featureCreator.get_features(points)
-        firstVal = True
 
         N = len(timeFeature)
-        """Gets the rate of change of all the values in the feature created"""
-        # MSDinX = np.array(otherFeature[0:N])
+        
         x = otherFeature._featuresList
         DispX = np.zeros((N, N)).astype('float64')
         for k in range(1,N):
@@ -28,37 +27,12 @@ class MSDFeatureCreator(FeatureCreatorBase):
                 DispX[k, i] = (x[i] - x[i + k]) ** 2
 
         for j in range(N):
-            # MSDinX[j] = np.sum(DispX[j, 0:N - j]) / (N - j)
             features.add_feature_val(np.sum(DispX[j, 0:N - j]) / (N - j))
-        # features._featuresList = features._featuresList[:-2]
+        features._featuresList = features._featuresList[1:-2]
         return features
 
-        # for val, time in zip(otherFeature, timeFeature):
-        #     if firstVal:
-        #         # features.add_feature_val(0.0)
-        #         # # this line needs to be here so that there are an equal amount
-        #         # # of feature values as points passed in
-        #         firstVal = False
-        #     else:
-        #         valChange = val - prevVal
-        #         tChange = time - prevTime
-        #         features.add_feature_val((valChange ** 2) / tChange)
-        #     prevVal = val
-        #     prevTime = time
-        # return features
 
     def __str__(self) -> str:
         """This is a feature for the Mean Squared Displacement of another feature"""
-        if not isinstance(self._featureCreator, MSDFeatureCreator):
-            return "MSD:" + str(self._featureCreator)
-
-        featureString = str(self._featureCreator)
-        stringWithoutMSD = featureString[3:]
-        if stringWithoutMSD[0] == ":":
-            return "MSD^2" + stringWithoutMSD
-
-        for i in range(1, len(stringWithoutMSD)):
-            if stringWithoutMSD[i] == ":":
-                break
-        number = stringWithoutMSD[1:i]
-        return "MSD^" + str(int(number) + 1) + stringWithoutMSD[i:]
+        
+        return "MSD:" + str(self._featureCreator)

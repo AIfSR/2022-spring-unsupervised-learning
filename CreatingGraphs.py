@@ -63,7 +63,7 @@ def getPicturePathway(diffusionType:str, pointsWithNames:PointsWithNames):
         imagePath += "Very_confined_diffusion/Figures/MSDs " + fileName + " .svg"
     return imagePath
 
-def run0():
+def createGraphsOfSampleOfSyntheticDataset():
     def plotTrajectory(categoryNumber:int, trajectoryNumber:int):
         imagePath = getPicturePathway(syntheticDataset.getCategoriesWithPoints()[categoryNumber][0], syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber])
         FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
@@ -76,7 +76,7 @@ def run0():
     plotTrajectory(2, 39)
     plotTrajectory(3, 43)
 
-def run():
+def createGraphsOfSyntheticDataset():
     i = 0;
     j = 0;
     k = 0;
@@ -89,7 +89,7 @@ def run():
                                               imagePath,
                                               syntheticDataset.getCategoriesWithPoints()[i][1][k].title)
 
-def run2():
+def createGraphsOfRealDataset():
     i = 0;
     j = 0;
     k = 0;
@@ -99,7 +99,7 @@ def run2():
                                               realDataset.getCategoriesWithPoints()[i][1][k],
                                               realDataset.getCategoriesWithPoints()[i][1][k].title)
 
-def run3():
+def createGraphsOfSampleOfRealDataset():
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
                                       realDataset.getCategoriesWithPoints()[0][1][1],
                                       realDataset.getCategoriesWithPoints()[0][1][1].title)

@@ -9,21 +9,21 @@ import numpy as np
 
 
 class ThreeDMSDFeatureCreator(FeatureCreatorBase):
-    """Takes a feature and finds the rate of change over all of the values"""
+    """Gets the MSD trajectories in all three dimensions"""
 
     def __init__(self) -> None:
         super().__init__()
 
     def get_features(self, points: Points) -> Features:
+        """Gets the MSD in three dimensions of the points"""
         features = Features()
         timeFeature = TFeatureCreator().get_features(points)
         xFeature = XFeatureCreator().get_features(points)
         yFeature = YFeatureCreator().get_features(points)
         zFeature = ZFeatureCreator().get_features(points)
-        firstVal = True
 
         N = len(timeFeature)
-        """Gets the rate of change of all the values in the feature created"""
+        
         MSDinX = np.array(xFeature[0:N])
         x = xFeature._featuresList
         DispX = np.zeros((N, N)).astype('float64')
@@ -57,26 +57,13 @@ class ThreeDMSDFeatureCreator(FeatureCreatorBase):
         result = MSDinX + MSDinY + MSDinZ
         for k in result:
             features.add_feature_val(k)
-        # features._featuresList = features._featuresList[:-2]
-        # del features._featuresList[0]
+        features._featuresList = features._featuresList[1:-2]
+        
         return features
 
-        # for val, time in zip(otherFeature, timeFeature):
-        #     if firstVal:
-        #         # features.add_feature_val(0.0)
-        #         # # this line needs to be here so that there are an equal amount
-        #         # # of feature values as points passed in
-        #         firstVal = False
-        #     else:
-        #         valChange = val - prevVal
-        #         tChange = time - prevTime
-        #         features.add_feature_val((valChange ** 2) / tChange)
-        #     prevVal = val
-        #     prevTime = time
-        # return features
 
     def __str__(self) -> str:
-        """This is a feature for the Mean Squared Displacement of another feature"""
+        """This is a feature for the Mean Squared Displacement"""
         return "3DMSD"
 
 
