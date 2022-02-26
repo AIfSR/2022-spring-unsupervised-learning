@@ -10,7 +10,6 @@ from features.MultiplyByFactorFeatureCreator import MultiplyByFactorFeatureCreat
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from features.MSDFeatureCreator import MSDFeatureCreator
 from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
-from plotting.ComparePlotsBase1 import ComparePlotsBase1
 from tckfilereader.Points import Points
 from plotting.singlepointcomparetrajectories.LineFeatureCreator import LineFeatureCreator
 
@@ -18,7 +17,7 @@ from PIL import Image
 from cairosvg import svg2png
 from io import BytesIO
 
-class FeaturesOverIndices(ComparePlotsBase1):
+class FeaturesOverIndices:
 
     BOTTOM_CROP = 49
     TOP_CROP = 54
