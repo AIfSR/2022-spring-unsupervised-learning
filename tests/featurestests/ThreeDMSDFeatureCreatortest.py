@@ -26,10 +26,9 @@ class RateOfChangeFeatureCreatorTest (unittest.TestCase):
         rateOfChangeFeatureCreator = ThreeDMSDFeatureCreator()
 
         solutionFeatures = Features()
-        solutionFeatures.add_feature_val(0)
+
         solutionFeatures.add_feature_val(6/3)
-        solutionFeatures.add_feature_val(5/2)
-        solutionFeatures.add_feature_val(0)
+        
         self.assertEquals(rateOfChangeFeatureCreator.get_features(points), solutionFeatures)
 
     def test_string(self):
