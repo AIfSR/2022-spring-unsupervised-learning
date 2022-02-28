@@ -28,6 +28,11 @@ class MSDFeatureCreator(FeatureCreatorBase):
 
         for j in range(N):
             features.add_feature_val(np.sum(DispX[j, 0:N - j]) / (N - j))
+
+        # This code is here because the first value is always 0 because it is 
+        # finding the displacement between every point and itself, and the last 
+        # two points are unreliable because the MSD is only averaged over 1 or 2 
+        # points within the trajectory
         features._featuresList = features._featuresList[1:-2]
         return features
 

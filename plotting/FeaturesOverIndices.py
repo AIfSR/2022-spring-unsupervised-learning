@@ -33,14 +33,8 @@ class FeaturesOverIndices:
         xPoints = tFeatureCreator.get_features(points)
         yPoints = yFeatureCreator.get_features(points)
 
-        # This code is here, because the first and last two points are removed
-        # from Alina's plotting software
-        xPoints = xPoints[1:len(xPoints)]
-        yPoints = yPoints[1:len(yPoints)]
-        del xPoints[-2::]
-        del yPoints[-2::]
-        
-        ax_scatter.set_ylabel('MSD, ${\mu}$m${^2}$/s')
+        xPoints = xPoints[1:-2]
+        ax_scatter.set_ylabel(str(yFeatureCreator))
         ax_scatter.set_xlabel("Time Step,s")
 
         plottingNormally = True

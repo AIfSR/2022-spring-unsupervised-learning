@@ -48,9 +48,9 @@ if __name__ == "__main__":
 
     dataset = SyntheticDataset()
 
-    FeaturesOverIndices = FeaturesOverIndices()
+    featuresOverIndices = FeaturesOverIndices()
     trajectoryIndex = 10
-    FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(), dataset.getCategoriesWithPoints()[0][1][trajectoryIndex], 
+    featuresOverIndices.display_plots(ThreeDMSDFeatureCreator(), dataset.getCategoriesWithPoints()[0][1][trajectoryIndex], 
         "data/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic" + str(trajectoryIndex) + ".tck .svg", dataset.getCategoriesWithPoints()[0][1][trajectoryIndex].title)
 
 
