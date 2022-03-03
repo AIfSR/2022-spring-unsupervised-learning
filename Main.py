@@ -1,6 +1,7 @@
 from typing import List
 from datasets.MacrophageStageDataset import MacrophageStageDataset
 from datasets.SyntheticDataset import SyntheticDataset
+from datasets.SyntheticDatasetSubset import SyntheticDatasetSubset
 from features.MSDFeatureCreator import MSDFeatureCreator
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from features.MarkWhenFeatureValuesChange import MarkWhenFeatureValuesChange
@@ -46,7 +47,7 @@ if __name__ == "__main__":
             xLabel = "MSD: X Speed"),
     ]
 
-    dataset = SyntheticDataset()
+    dataset = SyntheticDatasetSubset()
 
     featuresOverIndices = FeaturesOverIndices()
     trajectoryIndex = 10

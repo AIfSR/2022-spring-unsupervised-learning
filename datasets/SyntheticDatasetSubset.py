@@ -3,21 +3,21 @@ from datasets.DatasetBase import DatasetBase
 from tckfilereader.Points import Points
 from tckfilereader.PointsWithNames import PointsWithNames
 
-import datasets.SyntheticFilePaths as FP
+import datasets.SmallerSetSyntheticFilePaths as FPSubset
 from tckfilereader.TCKFileReader import TCKFileReader
 
-class SyntheticDataset (DatasetBase):
+class SyntheticDatasetSubset (DatasetBase):
     def __init__(self) -> None:
         self.tckFileReader = TCKFileReader()
         super().__init__()
 
     def getCategoriesWithPoints(self) -> List[Tuple[str, List[PointsWithNames]]]:
-        """Returns a list of all of the synthetic data split up by the type of 
+        """Returns a list of some of the synthetic data split up by the type of 
         diffusion occuring in each trajectory"""
-        Ballistic_movementPoints = self._getValidPointsFromFilePaths(FP.Ballistic_movementFilePaths)
-        Confined_diffusionPoints = self._getValidPointsFromFilePaths(FP.Confined_diffusionFilePaths)
-        Random_walkPoints = self._getValidPointsFromFilePaths(FP.Random_walkFilePaths)
-        Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(FP.Very_confined_diffusionFilePaths)
+        Ballistic_movementPoints = self._getValidPointsFromFilePaths(FPSubset.Ballistic_movementFilePaths)
+        Confined_diffusionPoints = self._getValidPointsFromFilePaths(FPSubset.Confined_diffusionFilePaths)
+        Random_walkPoints = self._getValidPointsFromFilePaths(FPSubset.Random_walkFilePaths)
+        Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(FPSubset.Very_confined_diffusionFilePaths)
 
 
         # Specifies the three different categories of trajectories that are to be
