@@ -8,8 +8,10 @@ path = os.path.dirname(os.path.abspath(__file__))
 
 current_working_dir = current_working_dir.replace('datasets','')
 
+PATH_TO_SIMPLE_CASES = "/data/02_01_Simulated_trajectories/Simple_cases/"
+
 Ballistic_movementFilePaths = []
-for file in glob.glob(current_working_dir + "/data/Simple_cases/Ballistic_movement/trajectories/*.tck"):
+for file in glob.glob(current_working_dir + PATH_TO_SIMPLE_CASES + "Ballistic_movement/trajectories/*.tck"):
     Ballistic_movementFilePaths.append(file)
 for index, txtfile in enumerate(Ballistic_movementFilePaths):
         Ballistic_movementFilePaths[index] = txtfile.replace(current_working_dir+"/","")
@@ -18,7 +20,7 @@ Ballistic_movementFilePaths.sort(key=lambda test_string : list(
 
 
 Confined_diffusionFilePaths = []
-for file in glob.glob(current_working_dir +"/data/Simple_cases/Confined_diffusion/trajectories/*.tck"):
+for file in glob.glob(current_working_dir + PATH_TO_SIMPLE_CASES + "Confined_diffusion/trajectories/*.tck"):
     Confined_diffusionFilePaths.append(file)
 for index, txtfile in enumerate(Confined_diffusionFilePaths):
         Confined_diffusionFilePaths[index] = txtfile.replace(current_working_dir+"/","")
@@ -27,7 +29,7 @@ Confined_diffusionFilePaths.sort(key=lambda test_string : list(
 
 
 Random_walkFilePaths = []
-for file in glob.glob(current_working_dir +"/data/Simple_cases/Random_walk/trajectories/*.tck"):
+for file in glob.glob(current_working_dir + PATH_TO_SIMPLE_CASES + "Random_walk/trajectories/*.tck"):
     Random_walkFilePaths.append(file)
 for index, txtfile in enumerate(Random_walkFilePaths):
         Random_walkFilePaths[index] = txtfile.replace(current_working_dir+"/","")
@@ -36,7 +38,7 @@ Random_walkFilePaths.sort(key=lambda test_string : list(
 
 
 Very_confined_diffusionFilePaths = []
-for file in glob.glob(current_working_dir +"/data/Simple_cases/Very_confined_diffusion/trajectories/*.tck"):
+for file in glob.glob(current_working_dir + PATH_TO_SIMPLE_CASES + "Very_confined_diffusion/trajectories/*.tck"):
     Very_confined_diffusionFilePaths.append(file)
 for index, txtfile in enumerate(Very_confined_diffusionFilePaths):
         Very_confined_diffusionFilePaths[index] = txtfile.replace(current_working_dir+"/","")
