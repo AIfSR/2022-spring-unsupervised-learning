@@ -66,6 +66,19 @@ class FeaturesTest (unittest.TestCase):
         feature.add_feature_val(-100)
 
         self.assertEquals(max(feature), 8)
+
+    def test_min(self):
+        """Tests the min() operator on a Feature instance"""
+        feature = Features()
+        feature.add_feature_val(1)
+        feature.add_feature_val(2)
+        feature.add_feature_val(8)
+        feature.add_feature_val(4)
+        feature.add_feature_val(-2)
+        feature.add_feature_val(-100)
+
+        self.assertEquals(min(feature), -100)
+
     def test_to_list(self):
         """Tests the to_list methood of a Feature"""
         solution = [1,5,6,2,5,8,9]

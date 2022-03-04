@@ -44,8 +44,12 @@ class Features:
         return result
 
     def __max__(self):
-        """Gets the maximium falue of this feature"""
+        """Gets the maximium value of this feature"""
         return max(self._featuresList)
+
+    def __min__(self):
+        """Gets the minimum value of this feature"""
+        return min(self._featuresList)
 
     def to_list(self):
         """Gets the list version of this feature"""
