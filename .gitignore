@@ -1,3 +1,6 @@
 *.ckpt*
 *.pyc
 *.tck
+*.svg
+*.png
+*.DS_store

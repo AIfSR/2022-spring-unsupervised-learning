@@ -24,5 +24,6 @@ class GraphParameters:
             type(self.yFeatureCreator) == type(o.yFeatureCreator) and
             type(self.featuresToSingleVal) == type(o.featuresToSingleVal) and
             self.xLabel == o.xLabel and
-            self.yLabel == o.yLabel 
+            self.yLabel == o.yLabel
         )
+

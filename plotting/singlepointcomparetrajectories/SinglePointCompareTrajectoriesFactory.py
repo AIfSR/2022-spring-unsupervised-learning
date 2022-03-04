@@ -34,4 +34,3 @@ class SinglePointCompareTrajectoriesFactory (ComparePlotsBase):
             graphParameter.yLabel = str(graphParameter.featuresToSingleVal) + " " + str(graphParameter.yFeatureCreator)
         
 
-        
