@@ -7,7 +7,7 @@ class StandardizeFeaturesNumberBase (ABC):
     classes of this base class will standardize the features."""
 
     @abstractmethod
-    def standardizeFeature(self, feature:Features) -> Features:
+    def standardizeFeatures(self, feature:Features) -> Features:
         """Takes a feature and standardizes the length of that feature to ensure
         that it can be processed by an ML algorithm"""
         pass
@@ -17,6 +17,6 @@ class StandardizeFeaturesNumberBase (ABC):
         can be processed by an ML algorithm."""
         standardizedSetOfFeatures = []
         for feature in setOfFeatures:
-            standardizedSetOfFeatures.append(self.standardizeFeature(feature))
+            standardizedSetOfFeatures.append(self.standardizeFeatures(feature))
         return standardizedSetOfFeatures
 

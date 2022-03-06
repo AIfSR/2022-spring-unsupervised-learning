@@ -40,6 +40,6 @@ class DoNothingStandardizerTest (unittest.TestCase):
         solution.add_feature_val(3)
 
         doNothingStandardizer = DoNothingStandardizer()
-        feature = doNothingStandardizer.standardizeFeature(feature)
+        feature = doNothingStandardizer.standardizeFeatures(feature)
         assert solution == feature
 

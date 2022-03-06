@@ -9,5 +9,5 @@ class DoNothingStandardizer (StandardizeFeaturesNumberBase):
     that the length of each of the features is correct for whatever ML algorithm 
     is going to take the features in"""
 
-    def standardizeFeature(self, feature:Features) -> Features:
+    def standardizeFeatures(self, feature:Features) -> Features:
         return feature
