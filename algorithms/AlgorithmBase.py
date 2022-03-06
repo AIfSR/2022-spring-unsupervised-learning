@@ -9,13 +9,5 @@ class AlgorithmBase (ABC):
         pass
 
     @abstractmethod
-    def save(fileLocation:str) -> None:
-        pass
-
-    @abstractmethod
-    def load(fileLocation:str) -> None:
-        pass
-
-    @abstractmethod
     def predict(testData:list[Features]) -> list[list[float]]:
         pass
