@@ -9,15 +9,20 @@ if __name__ == "__main__":
 
     dataset = SyntheticDatasetSubset()
     categories = dataset.getCategoriesWithPoints()
+
     normalizeFeatures = DoNothingNormalization()
     standardizeFeatures = Extract40ValsRegularInterval()
     featureCreator = ThreeDMSDFeatureCreator()
 
     trainingSet = []
     labels = []
+    numOfLabels = len(categories)
     for i in range(len(categories)):
         for example in categories[1]:
             trainingSet.append(featureCreator.get_features(example))
+            label = [0] * numOfLabels
+            label[i] = 1
+            labels.append(label)
 
     trainingSet = normalizeFeatures.normalizeToSetOfFeatures(trainingSet)
     trainingSet = standardizeFeatures.standardizeSetOfFeatures(trainingSet)
