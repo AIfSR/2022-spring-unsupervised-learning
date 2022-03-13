@@ -1,13 +1,13 @@
 
-from datasets.SyntheticDatasetSubset import SyntheticDatasetSubset
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from normalizefeatures.DoNothingNormalization import DoNothingNormalization
+from features.DeltaFromStartFeatureCreator import DeltaFromStartFeatureCreator
 
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 
 if __name__ == "__main__":
 
-    dataset = SyntheticDatasetSubset()
+    dataset = SyntheticDataset()
     categories = dataset.getCategoriesWithPoints()
 
     normalizeFeatures = DoNothingNormalization()
@@ -28,7 +28,4 @@ if __name__ == "__main__":
     trainingSet = standardizeFeatures.standardizeSetOfFeatures(trainingSet)
 
     # Algo code here
-    
-
-
 
