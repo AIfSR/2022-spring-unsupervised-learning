@@ -1,12 +1,12 @@
 from algorithms.AlgorithmBase import AlgorithmBase
 from features.Features import Features
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression as LR
 import numpy as np
 
 class LogisticRegression(AlgorithmBase):
     def __init__(self) -> None:
         super().__init__()
-        self._model = LogisticRegression(multi_class='multinomial', solver='lbfgs')
+        self._model = LR(multi_class='multinomial', solver='lbfgs')
 
     def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
         y = []
