@@ -5,9 +5,9 @@ from features.Features import Features
 class AlgorithmBase (ABC):
     
     @abstractmethod
-    def train(trainingData:list[Features], labels:list[list[float]]) -> None:
+    def train(self,trainingData:list[Features], labels:list[list[float]]) -> None:
         pass
 
     @abstractmethod
-    def predict(testData:list[Features]) -> list[list[float]]:
+    def predict(self,testData:list[Features]) -> list[list[float]]:
         pass

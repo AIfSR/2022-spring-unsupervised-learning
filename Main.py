@@ -1,12 +1,11 @@
 from typing import List
 from datasets.MacrophageStageDataset import MacrophageStageDataset
 from datasets.SyntheticDataset import SyntheticDataset
-from datasets.SyntheticDatasetSubset import SyntheticDatasetSubset
 from features.MSDFeatureCreator import MSDFeatureCreator
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from features.MarkWhenFeatureValuesChange import MarkWhenFeatureValuesChange
 from features.OutlierFeatureCreator import OutlierFeatureCreator
-from features.DeltaFromStartFeatureCreator import DeltaFromStartFeatureCreator 
+from features.DeltaFromStartFeatureCreator import DeltaFromStartFeatureCreator
 from features.ABSFeatureCreator import ABSFeatureCreator
 from features.EWAFeatureCreator import EWAFeatureCreator
 from features.EliminatePointsOutsideRangeFeatureCreator import EliminatePointsOutsideRangeFeatureCreator
@@ -47,14 +46,10 @@ if __name__ == "__main__":
             xLabel = "MSD: X Speed"),
     ]
 
-    dataset = SyntheticDatasetSubset()
+    dataset = SyntheticDataset()
 
     featuresOverIndices = FeaturesOverIndices()
     trajectoryIndex = 10
-    featuresOverIndices.display_plots(ThreeDMSDFeatureCreator(), dataset.getCategoriesWithPoints()[0][1][trajectoryIndex], 
-        "data/02_01_Simulated_trajectories/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic" + str(trajectoryIndex) + ".tck .svg", 
-        dataset.getCategoriesWithPoints()[0][1][trajectoryIndex].title)
-    
-
-
+    featuresOverIndices.display_plots(ThreeDMSDFeatureCreator(), dataset.getCategoriesWithPoints()[0][1][trajectoryIndex],
+        "data/Simple_cases/Ballistic_movement/Figures/MSDs pure_ballistic" + str(trajectoryIndex) + ".tck .svg", dataset.getCategoriesWithPoints()[0][1][trajectoryIndex].title)
 
