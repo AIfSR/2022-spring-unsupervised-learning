@@ -1,18 +1,22 @@
 
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from normalizefeatures.DoNothingNormalization import DoNothingNormalization
-from features.DeltaFromStartFeatureCreator import DeltaFromStartFeatureCreator
+from datasets.SyntheticDatasetSubset import SyntheticDatasetSubset
+from algorithms.LogisticRegression import LogisticRegression
 
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 
+
 if __name__ == "__main__":
 
-    dataset = SyntheticDataset()
+    dataset = SyntheticDatasetSubset()
     categories = dataset.getCategoriesWithPoints()
 
     normalizeFeatures = DoNothingNormalization()
     standardizeFeatures = Extract40ValsRegularInterval()
     featureCreator = ThreeDMSDFeatureCreator()
+    print("Here")
+    algorithm = LogisticRegression()
 
     trainingSet = []
     labels = []
@@ -27,5 +31,6 @@ if __name__ == "__main__":
     trainingSet = normalizeFeatures.normalizeToSetOfFeatures(trainingSet)
     trainingSet = standardizeFeatures.standardizeSetOfFeatures(trainingSet)
 
-    # Algo code here
+    print("Here")
+    algorithm.train(trainingSet, labels)
 
