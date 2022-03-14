@@ -21,12 +21,16 @@ if __name__ == "__main__":
     trainingSet = []
     labels = []
     numOfLabels = len(categories)
+
+    count = 0
     for i in range(len(categories)):
-        for example in categories[1]:
+        for example in categories[i][1]:
             trainingSet.append(featureCreator.get_features(example))
             label = [0] * numOfLabels
             label[i] = 1
             labels.append(label)
+            print(count)
+            count += 1
 
     trainingSet = normalizeFeatures.normalizeToSetOfFeatures(trainingSet)
     trainingSet = standardizeFeatures.standardizeSetOfFeatures(trainingSet)

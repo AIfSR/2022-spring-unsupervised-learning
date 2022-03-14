@@ -14,7 +14,7 @@ class ThreeDMSDFeatureCreator(FeatureCreatorBase):
     def __init__(self) -> None:
         super().__init__()
 
-    def get_features(self, points: Points) -> Features:
+    def get_features(self, points:Points) -> Features:
         """Gets the MSD in three dimensions of the points"""
         features = Features()
         timeFeature = TFeatureCreator().get_features(points)
