@@ -143,10 +143,10 @@ class SinglePoint2DCompareTrajectories (ComparePlotsBase):
         for histName in histogramDict:
             hist = histogramDict[histName]
             if(histName[-1:] == "X"):
-                hist.set_ylabel("Trajectories", fontsize = 8)
+                hist.set_ylabel("trajectories", fontsize = 8)
                 hist.set_ylim([0, xRange + 1])
             else:
-                hist.set_xlabel("Trajectories", fontsize = 8)
+                hist.set_xlabel("trajectories", fontsize = 8)
                 hist.set_xlim([0, yRange + 1])
         pass
 

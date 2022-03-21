@@ -4,4 +4,4 @@
 *.svg
 *.png
 label.pkl
-training.pkl
+data.pkl

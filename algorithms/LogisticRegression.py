@@ -6,7 +6,7 @@ import numpy as np
 class LogisticRegression(AlgorithmBase):
     def __init__(self) -> None:
         super().__init__()
-        self._model = LR(multi_class='multinomial', solver='lbfgs')
+        self._model = LR(multi_class='multinomial', solver='lbfgs',max_iter=12000)
 
     def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
         y = []
@@ -23,6 +23,10 @@ class LogisticRegression(AlgorithmBase):
         self._model.fit(trainingData, labels_arr)
 
     def predict(self, testData: list[Features]) -> list[list[float]]:
+        y_pred = self._model.predict(testData)
+        return y_pred
+
+    def predict_proba(self, testData: list[Features]) -> list[list[float]]:
         y_pred = self._model.predict_proba(testData)
         return y_pred
 
