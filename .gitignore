@@ -3,3 +3,5 @@
 *.tck
 *.svg
 *.png
+label.pkl
+training.pkl
