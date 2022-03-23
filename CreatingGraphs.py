@@ -162,15 +162,17 @@ def LRTests(indices:List[int]):
                                           imagePath,
                                           syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][
                                               trajectoryNumber].title)
+    fileNames = []
     for i in indices:
         if 0 <= i <= 1499:
-            plotTrajectory(0, i)
+            fileNames.append(syntheticDataset.getCategoriesWithPoints()[0][1][i].title)
         if 1500 <= i <= 2999:
-            plotTrajectory(1, i-1500)
+            fileNames.append(syntheticDataset.getCategoriesWithPoints()[1][1][i-1500].title)
         if 3000 <= i <= 4499:
-            plotTrajectory(2, i-3000)
+            fileNames.append(syntheticDataset.getCategoriesWithPoints()[2][1][i-3000].title)
         if 4500 <= i <= 5999:
-            plotTrajectory(3, i-45000)
+            fileNames.append(syntheticDataset.getCategoriesWithPoints()[3][1][i-4500].title)
+    return fileNames
 
 def createLRGraphs():
     dataset = SyntheticDataset()
@@ -359,4 +361,29 @@ def createLRGraphs():
         print()
         print()
 
-    LRTests(total_incorrect)
+    fileNames = LRTests(total_incorrect)
+    interval = 1198 // 40
+    counter = 0
+    for j in total_incorrect:
+        ax_scatter = plt.axes()
+        x = []
+        for k in range(1, 41):
+            x.append(k * interval)
+        xPoints = np.array(x)
+        yPoints = dataSet[j]
+
+        ax_scatter.set_ylabel("3DMSD")
+        ax_scatter.set_xlabel("Time Step,s")
+
+        plt.suptitle(fileNames[counter])
+        counter += 1
+
+        plt.plot(xPoints, yPoints, color="red", label="AIfSR")
+        plt.legend()
+
+        ax_scatter.set_yscale('log')
+        ax_scatter.set_xscale('log')
+
+        ax_scatter.set_zorder(2)
+        ax_scatter.set_facecolor('none')
+        plt.show()
