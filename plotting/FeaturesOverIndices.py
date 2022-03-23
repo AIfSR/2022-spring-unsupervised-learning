@@ -53,7 +53,7 @@ class FeaturesOverIndices:
             ax_scatter.set_zorder(2)
             ax_scatter.set_facecolor('none')
 
-        usingBackground = True
+        usingBackground = False
         if usingBackground:
             ax_tw_x = ax_scatter.twinx()
             ax_tw_x.axis('off')

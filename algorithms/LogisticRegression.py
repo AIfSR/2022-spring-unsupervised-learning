@@ -6,7 +6,7 @@ import numpy as np
 class LogisticRegression(AlgorithmBase):
     def __init__(self) -> None:
         super().__init__()
-        self._model = LR(multi_class='multinomial', solver='lbfgs',max_iter=12000)
+        self._model = LR(multi_class='multinomial', solver='lbfgs',max_iter=13000)
 
     def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
         y = []

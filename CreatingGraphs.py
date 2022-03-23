@@ -26,7 +26,17 @@ from plotting.singlepointcomparetrajectories.SinglePoint2DCompareTrajectories im
 from plotting.singlepointcomparetrajectories.SinglePointCompareTrajectoriesFactory import SinglePointCompareTrajectoriesFactory
 from plotting.FeaturesOverIndices import FeaturesOverIndices
 import numpy
+import numpy as np
+import pickle
 import matplotlib.pyplot as plt
+from normalizefeatures.DoNothingNormalization import DoNothingNormalization
+import sklearn.linear_model
+from algorithms.LogisticRegression import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.model_selection import cross_val_score
+from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 
 from features.XFeatureCreator import XFeatureCreator
 from features.YFeatureCreator import YFeatureCreator
@@ -50,17 +60,24 @@ syntheticDataset = SyntheticDataset()
 FeaturesOverIndices = FeaturesOverIndices()
 
 def getPicturePathway(diffusionType:str, pointsWithNames:PointsWithNames):
-    imagePath = "data/Simple_cases/"
+    imagePath = "data/02_01_Simulated_trajectories/Simple_cases/"
     fullFileName = pointsWithNames.title
     fileName = fullFileName.split("/")[-1]
+    underscores = 0
+    for i in range(len(fileName)-1):
+        if fileName[i] == "_":
+            underscores += 1
+            if underscores == 2:
+                fileName = fileName[:i] + fileName[i+1:]
+
     if diffusionType == "Bal":
-        imagePath += "Ballistic_movement/Figures/MSDs " + fileName + " .svg"
+        imagePath += "Ballistic_movement/Figures/MSDs " + fileName + ".svg"
     elif diffusionType == "CD":
-        imagePath += "Confined_diffusion/Figures/MSDs " + fileName + " .svg"
+        imagePath += "Confined_diffusion/Figures/MSDs " + fileName + ".svg"
     elif diffusionType == "RW":
-        imagePath += "Random_walk/Figures/MSDs " + fileName + " .svg"
+        imagePath += "Random_walk/Figures/MSDs " + fileName + ".svg"
     else:
-        imagePath += "Very_confined_diffusion/Figures/MSDs " + fileName + " .svg"
+        imagePath += "Very_confined_diffusion/Figures/MSDs " + fileName + ".svg"
     return imagePath
 
 def createGraphsOfSampleOfSyntheticDataset():
@@ -133,3 +150,213 @@ def createGraphsOfSampleOfRealDataset():
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
                                           realDataset.getCategoriesWithPoints()[2][1][18],
                                           realDataset.getCategoriesWithPoints()[2][1][18].title)
+
+
+
+def LRTests(indices:List[int]):
+    def plotTrajectory(categoryNumber: int, trajectoryNumber: int):
+        imagePath = getPicturePathway(syntheticDataset.getCategoriesWithPoints()[categoryNumber][0], syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber])
+        FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
+                                          syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][
+                                              trajectoryNumber],
+                                          imagePath,
+                                          syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][
+                                              trajectoryNumber].title)
+    for i in indices:
+        if 0 <= i <= 1499:
+            plotTrajectory(0, i)
+        if 1500 <= i <= 2999:
+            plotTrajectory(1, i-1500)
+        if 3000 <= i <= 4499:
+            plotTrajectory(2, i-3000)
+        if 4500 <= i <= 5999:
+            plotTrajectory(3, i-45000)
+
+def createLRGraphs():
+    dataset = SyntheticDataset()
+    categories = dataset.getCategoriesWithPoints()
+    normalizeFeatures = DoNothingNormalization()
+    standardizeFeatures = Extract40ValsRegularInterval()
+    featureCreator = ThreeDMSDFeatureCreator()
+    algorithm = LogisticRegression()
+
+    labelFile = open("label.pkl", "rb")
+    loadedLabels = pickle.load(labelFile)
+    labelFile.close()
+    dataFile = open("data.pkl", "rb")
+    loaded_dataSet = pickle.load(dataFile)
+    dataFile.close()
+
+    dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
+    dataSet = standardizeFeatures.standardizeSetOfFeatures(loaded_dataSet)
+
+    indices = np.arange(len(dataSet))
+    (
+        X_train,
+        X_rem,
+        y_train,
+        y_rem,
+        indices_train,
+        indices_rem,
+    ) = train_test_split(dataSet, loadedLabels, indices, train_size=0.6, random_state=1)
+
+    (
+        X_test,
+        X_valid,
+        y_test,
+        y_valid,
+        indices_test,
+        indices_valid,
+    ) = train_test_split(X_rem, y_rem, indices_rem, test_size=0.5, random_state=2)
+
+    yTrain = []
+    for i in y_train:
+        if i == [1.0, 0.0, 0.0, 0.0]:
+            yTrain.append(1)
+        elif i == [0.0, 1.0, 0.0, 0.0]:
+            yTrain.append(2)
+        elif i == [0.0, 0.0, 1.0, 0.0]:
+            yTrain.append(3)
+        elif i == [0.0, 0.0, 0.0, 1.0]:
+            yTrain.append(4)
+
+    yTest = []
+    for i in y_test:
+        if i == [1.0, 0.0, 0.0, 0.0]:
+            yTest.append(1)
+        elif i == [0.0, 1.0, 0.0, 0.0]:
+            yTest.append(2)
+        elif i == [0.0, 0.0, 1.0, 0.0]:
+            yTest.append(3)
+        elif i == [0.0, 0.0, 0.0, 1.0]:
+            yTest.append(4)
+
+    yValid = []
+    for i in y_valid:
+        if i == [1.0, 0.0, 0.0, 0.0]:
+            yValid.append(1)
+        elif i == [0.0, 1.0, 0.0, 0.0]:
+            yValid.append(2)
+        elif i == [0.0, 0.0, 1.0, 0.0]:
+            yValid.append(3)
+        elif i == [0.0, 0.0, 0.0, 1.0]:
+            yValid.append(4)
+
+    algorithm.train(X_train, y_train)
+
+    test_result = algorithm.predict(X_test)
+    train_result = algorithm.predict(X_train)
+    valid_result = algorithm.predict(X_valid)
+
+    print("Training Accuracy:", metrics.accuracy_score(yTrain, train_result))
+    print("Test Accuracy:", metrics.accuracy_score(yTest, test_result))
+    print("Validation Accuracy:", metrics.accuracy_score(yValid, valid_result))
+    print()
+
+    training_check_array = (yTrain == train_result)
+    testing_check_array = (yTest == test_result)
+    validation_check_array = (yValid == valid_result)
+    training_incorrect = []
+    testing_incorrect = []
+    validation_incorrect = []
+    indices_training_incorrect = []
+    indices_testing_incorrect = []
+    indices_validation_incorrect = []
+    for index, g in enumerate(training_check_array):
+        if not g:
+            training_incorrect.append(index)
+    for index, g in enumerate(testing_check_array):
+        if not g:
+            testing_incorrect.append(index)
+    for index, g in enumerate(validation_check_array):
+        if not g:
+            validation_incorrect.append(index)
+    for i in training_incorrect:
+        indices_training_incorrect.append(indices_train[i])
+    for i in testing_incorrect:
+        indices_testing_incorrect.append(indices_test[i])
+    for i in validation_incorrect:
+        indices_validation_incorrect.append(indices_valid[i])
+    total_incorrect = indices_training_incorrect + indices_testing_incorrect + indices_validation_incorrect
+
+    # sum = len(training_incorrect) + len(testing_incorrect) + len(validation_incorrect)
+    # if sum != 0:
+    #     fig, ax = plt.subplots(sum, squeeze=False)
+    #     ax = ax.flatten()
+    #     i = 0
+    #     while i < sum:
+    #         for j in indices_training_incorrect:
+    #             interval = len(loaded_dataSet[j]) // 40
+    #             x = []
+    #             for k in range(1, 41):
+    #                 x.append(k * interval)
+    #             xPoints = np.array(x)
+    #             yPoints = dataSet[j]
+    #             ax[i].set_yscale('log')
+    #             ax[i].set_xscale('log')
+    #             ax[i].plot(xPoints, yPoints)
+    #             i += 1
+    #         for j in indices_testing_incorrect:
+    #             interval = len(loaded_dataSet[j]) // 40
+    #             x = []
+    #             for k in range(1, 41):
+    #                 x.append(k * interval)
+    #             xPoints = np.array(x)
+    #             yPoints = dataSet[j]
+    #             ax[i].set_yscale('log')
+    #             ax[i].set_xscale('log')
+    #             ax[i].plot(xPoints, yPoints)
+    #             i += 1
+    #         for j in indices_validation_incorrect:
+    #             interval = len(loaded_dataSet[j]) // 40
+    #             x = []
+    #             for k in range(1, 41):
+    #                 x.append(k * interval)
+    #             xPoints = np.array(x)
+    #             yPoints = dataSet[j]
+    #             ax[i].set_yscale('log')
+    #             ax[i].set_xscale('log')
+    #             ax[i].plot(xPoints, yPoints)
+    #             i += 1
+    #     plt.show
+
+    if len(training_incorrect) != 0:
+        print("Indexes of incorrect predictions in training: ", end="")
+        print(indices_training_incorrect)
+        print("Actual Diffusion Types: ")
+        for i in training_incorrect:
+            print(yTrain[i], end=", ")
+        print()
+        print("Incorrect predictions: ")
+        for i in training_incorrect:
+            print(train_result[i], end=", ")
+        print()
+        print()
+
+    if len(testing_incorrect) != 0:
+        print("Indexes of incorrect predictions in testing: ", end="")
+        print(indices_testing_incorrect)
+        print("Actual Diffusion Types: ")
+        for i in testing_incorrect:
+            print(yTest[i], end=", ")
+        print()
+        print("Incorrect predictions: ")
+        for i in testing_incorrect:
+            print(test_result[i], end=", ")
+        print()
+        print()
+
+    if len(validation_incorrect) != 0:
+        print("Indexes of incorrect predictions in validation: ", end="")
+        print(indices_validation_incorrect)
+        print("Actual Diffusion Types: ")
+        for i in validation_incorrect:
+            print(yValid[i], end=", ")
+        print()
+        print("Incorrect predictions: ")
+        for i in validation_incorrect:
+            print(valid_result[i], end=", ")
+        print()
+        print()
+
+    LRTests(total_incorrect)
