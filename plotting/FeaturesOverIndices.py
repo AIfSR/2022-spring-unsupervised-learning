@@ -12,6 +12,8 @@ from features.MSDFeatureCreator import MSDFeatureCreator
 from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
 from tckfilereader.Points import Points
 from plotting.singlepointcomparetrajectories.LineFeatureCreator import LineFeatureCreator
+from matplotlib.ticker import MaxNLocator
+
 
 from PIL import Image
 from cairosvg import svg2png
@@ -26,10 +28,10 @@ class FeaturesOverIndices:
 
     def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points, imageFile:str, title:str=None) -> None:
         """Displays a plot of the yFeatureCreator over time"""
-        
+
         ax_scatter = plt.axes()
-        
-        tFeatureCreator = MultiplyByFactorFeatureCreator(TFeatureCreator(), 1/1000)
+
+        tFeatureCreator = MultiplyByFactorFeatureCreator(TFeatureCreator(), 1 / 1000)
         xPoints = tFeatureCreator.get_features(points)
         yPoints = yFeatureCreator.get_features(points)
 
@@ -44,12 +46,12 @@ class FeaturesOverIndices:
             plt.suptitle(title)
 
         if plottingNormally:
-            plt.plot(xPoints, yPoints, color="red", label = "AIfSR")
+            plt.plot(xPoints, yPoints, color="red", label="AIfSR")
             plt.legend()
-            
+
             ax_scatter.set_yscale('log')
             ax_scatter.set_xscale('log')
-        
+
             ax_scatter.set_zorder(2)
             ax_scatter.set_facecolor('none')
 
@@ -61,8 +63,9 @@ class FeaturesOverIndices:
             img = svg2png(file_obj=open(imageFile, "rb"))
             im = Image.open(BytesIO(img))
             width, height = im.size
-            
-            im = im.crop((FeaturesOverIndices.LEFT_CROP, FeaturesOverIndices.TOP_CROP, width - FeaturesOverIndices.RIGHT_CROP, height - FeaturesOverIndices.BOTTOM_CROP))
+
+            im = im.crop((FeaturesOverIndices.LEFT_CROP, FeaturesOverIndices.TOP_CROP,
+                          width - FeaturesOverIndices.RIGHT_CROP, height - FeaturesOverIndices.BOTTOM_CROP))
 
             ax2.imshow(im, extent=[min(xPoints), max(xPoints), min(yPoints), max(yPoints)], aspect='auto')
             ax2.axis('off')

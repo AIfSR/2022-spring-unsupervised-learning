@@ -250,11 +250,19 @@ def createLRGraphs():
     train_result = algorithm.predict(X_train)
     valid_result = algorithm.predict(X_valid)
 
+    print('\033[1m',"Accuracy Measurements:",'\033[0m')
+    print("Here is the accuracy of our algorithm when the training set, test set, and cross validation set is passed in")
+    print()
     print("Training Accuracy:", metrics.accuracy_score(yTrain, train_result))
     print("Test Accuracy:", metrics.accuracy_score(yTest, test_result))
     print("Validation Accuracy:", metrics.accuracy_score(yValid, valid_result))
     print()
-
+    print()
+    print('\033[1m',"Inaccurate Trajectories",'\033[0m')
+    print("Here is some more information on the trajectories it predicted incorrectly. It displays the indexes of the incorrect trajectories, followed by the actual diffusion type and the incorrect predicted diffusion type.")
+    print()
+    print("1 = Ballistic Diffusion, 2 = Confined Diffusion, 3 = Random Walk, 4 = Very Confined Diffusion")
+    print()
     training_check_array = (yTrain == train_result)
     testing_check_array = (yTest == test_result)
     validation_check_array = (yValid == valid_result)
@@ -323,8 +331,10 @@ def createLRGraphs():
     #     plt.show
 
     if len(training_incorrect) != 0:
-        print("Indexes of incorrect predictions in training: ", end="")
-        print(indices_training_incorrect)
+        print("Indexes of incorrect predictions in training: ")
+        for i in indices_training_incorrect:
+            print(i,end=", ")
+        print()
         print("Actual Diffusion Types: ")
         for i in training_incorrect:
             print(yTrain[i], end=", ")
@@ -336,8 +346,10 @@ def createLRGraphs():
         print()
 
     if len(testing_incorrect) != 0:
-        print("Indexes of incorrect predictions in testing: ", end="")
-        print(indices_testing_incorrect)
+        print("Indexes of incorrect predictions in testing: ")
+        for i in indices_testing_incorrect:
+            print(i,end=", ")
+        print()
         print("Actual Diffusion Types: ")
         for i in testing_incorrect:
             print(yTest[i], end=", ")
@@ -349,8 +361,10 @@ def createLRGraphs():
         print()
 
     if len(validation_incorrect) != 0:
-        print("Indexes of incorrect predictions in validation: ", end="")
-        print(indices_validation_incorrect)
+        print("Indexes of incorrect predictions in validation: ")
+        for i in indices_validation_incorrect:
+            print(i, end=", ")
+        print()
         print("Actual Diffusion Types: ")
         for i in validation_incorrect:
             print(yValid[i], end=", ")
@@ -364,6 +378,9 @@ def createLRGraphs():
     fileNames = LRTests(total_incorrect)
     interval = 1198 // 40
     counter = 0
+    print('\033[1m', "Graphs of Incorrect Trajectories:", '\033[0m')
+    print("Here is the graphs of the trajectories that were predicted incorrectly")
+
     for j in total_incorrect:
         ax_scatter = plt.axes()
         x = []
@@ -387,3 +404,52 @@ def createLRGraphs():
         ax_scatter.set_zorder(2)
         ax_scatter.set_facecolor('none')
         plt.show()
+    myzkdataFile = open("Mzykdata.pkl", "rb")
+    loaded_mzyk_dataSet = pickle.load(myzkdataFile)
+    myzkdataFile.close()
+    mzykdataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_mzyk_dataSet)
+    myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(loaded_mzyk_dataSet)
+    mzyk_test_result = algorithm.predict(myzkdataSet)
+    
+    print('\033[1m', "Predictions of Dr. Mzyk's Data:", '\033[0m')
+    print("Here is the predictions of our algorithm when Dr. Mzyk's data is passed in")
+    print()
+    m0_predict = []
+    m1_predict = []
+    m2_predict = []
+    print("M0: ", end="")
+    for i in range(0, 15):
+        print(mzyk_test_result[i], end=", ")
+        m0_predict.append(mzyk_test_result[i])
+    print()
+    print("M1: ", end="")
+    for i in range(15, 32):
+        print(mzyk_test_result[i], end=", ")
+        m1_predict.append(mzyk_test_result[i])
+    print()
+    print("M2: ", end="")
+    for i in range(32, 51):
+        print(mzyk_test_result[i], end=", ")
+        m2_predict.append(mzyk_test_result[i])
+    myzk_predictions = m0_predict + m1_predict + m2_predict
+    print()
+    print()
+    print('\033[1m', "Analytics of Predictions: ", '\033[0m')
+    print("Here is some percentages and information derived from the predictions of the algorithm")
+    print()
+    print("M0:\t1: " + str(format((m0_predict.count(1) / len(m0_predict) * 100), '.2f')) + "%\t2: " + str(
+        format((m0_predict.count(2) / len(m0_predict) * 100), '.3f')) + "%\t3: " + str(
+        format((m0_predict.count(3) / len(m0_predict) * 100), '.3f')) + "%\t4: " + str(
+        format((m0_predict.count(4) / len(m0_predict) * 100), '.3f')) + "%")
+    print("M1:\t1: " + str(format((m1_predict.count(1) / len(m1_predict) * 100), '.2f')) + "%\t2: " + str(
+        format((m1_predict.count(2) / len(m1_predict) * 100), '.3f')) + "%\t3: " + str(
+        format((m1_predict.count(3) / len(m1_predict) * 100), '.3f')) + "%\t4: " + str(
+        format((m1_predict.count(4) / len(m1_predict) * 100), '.3f')) + "%")
+    print("M2:\t1: " + str(format((m2_predict.count(1) / len(m2_predict) * 100), '.2f')) + "%\t2: " + str(
+        format((m2_predict.count(2) / len(m2_predict) * 100), '.3f')) + "%\t3: " + str(
+        format((m2_predict.count(3) / len(m2_predict) * 100), '.3f')) + "%\t4: " + str(
+        format((m2_predict.count(4) / len(m2_predict) * 100), '.3f')) + "%")
+    print("Ovr:\t1: " + str(format((myzk_predictions.count(1) / len(myzk_predictions) * 100), '.2f')) + "%\t2: " + str(
+        format((myzk_predictions.count(2) / len(myzk_predictions) * 100), '.3f')) + "%\t3: " + str(
+        format((myzk_predictions.count(3) / len(myzk_predictions) * 100), '.3f')) + "%\t4: " + str(
+        format((myzk_predictions.count(4) / len(myzk_predictions) * 100), '.3f')) + "%")
