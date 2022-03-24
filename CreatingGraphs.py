@@ -410,7 +410,7 @@ def createLRGraphs():
     mzykdataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_mzyk_dataSet)
     myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(loaded_mzyk_dataSet)
     mzyk_test_result = algorithm.predict(myzkdataSet)
-    
+
     print('\033[1m', "Predictions of Dr. Mzyk's Data:", '\033[0m')
     print("Here is the predictions of our algorithm when Dr. Mzyk's data is passed in")
     print()
