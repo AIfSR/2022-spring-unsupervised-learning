@@ -25,25 +25,7 @@ if __name__ == "__main__":
     algorithm = LogisticRegression()
 
     # code for calculating MSD values and storing these values in data files
-    # dataSet = []
-    # labels = []
-    # numOfLabels = len(categories)
-    # count = 0
 
-    # label_file = open("label.pkl", 'wb')
-    # data_file = open("data.pkl", 'wb')
-    # for i in range(len(categories)):
-    #     for example in categories[i][1]:
-    #         dataSet.append(featureCreator.get_features(example))
-    #         label = [0] * numOfLabels
-    #         label[i] = 1
-    #         labels.append(label)
-    #         print(count)
-    #         count += 1
-    # pickle.dump(labels, label_file)
-    # label_file.close()
-    # pickle.dump(dataSet, data_file)
-    # data_file.close()
     syntheticMSDFeatures = SyntheticMSDFeatures()
 
     loadedLabels = syntheticMSDFeatures.getDatasetOfFeatures()
