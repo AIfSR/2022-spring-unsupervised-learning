@@ -9,11 +9,12 @@ class DatasetFeaturesBase (ABC):
      labels corresponding to that data"""
     
     @abstractmethod
-    def getDatasetOfFeatures() -> list[Features]:
+    def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the dataset when all of the data has been converted to features"""
         pass
     
     @abstractmethod
-    def getLabels() -> list[list[float]]:
+    def getLabels(self) -> list[list[float]]:
         """Gets the labels for each example in the dataset"""
         pass
+
