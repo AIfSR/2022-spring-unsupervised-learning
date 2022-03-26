@@ -46,9 +46,9 @@ if __name__ == "__main__":
     # data_file.close()
     syntheticMSDFeatures = SyntheticMSDFeatures()
 
-    loadedLabels = syntheticMSDFeatures.getDatasetOfFeatures()
-
-    loaded_dataSet = syntheticMSDFeatures.getLabels()
+    loadedLabels = syntheticMSDFeatures.getLabels()
+    
+    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
 
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(loaded_dataSet)

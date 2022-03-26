@@ -66,22 +66,34 @@ def LRTests(indices:List[int]):
             fileNames.append(syntheticDataset.getCategoriesWithPoints()[3][1][i-4500].title)
     return fileNames
 
+def convert2dLabelsTo1d(twoDLabels:list[list[float]]) -> list[float]:
+    oneDLabels = []
+    for i in twoDLabels:
+        if i == [1.0, 0.0, 0.0, 0.0]:
+            oneDLabels.append(1)
+        elif i == [0.0, 1.0, 0.0, 0.0]:
+            oneDLabels.append(2)
+        elif i == [0.0, 0.0, 1.0, 0.0]:
+            oneDLabels.append(3)
+        elif i == [0.0, 0.0, 0.0, 1.0]:
+            oneDLabels.append(4)
+
+    return oneDLabels
+
 def createLRGraphs():
     dataset = SyntheticDataset()
-    categories = dataset.getCategoriesWithPoints()
     normalizeFeatures = DoNothingNormalization()
     standardizeFeatures = Extract40ValsRegularInterval()
-    featureCreator = ThreeDMSDFeatureCreator()
     algorithm = LogisticRegression()
 
     syntheticMSDFeatures = SyntheticMSDFeatures()
 
-    loadedLabels = syntheticMSDFeatures.getDatasetOfFeatures()
+    loadedLabels = syntheticMSDFeatures.getLabels()
 
-    loaded_dataSet = syntheticMSDFeatures.getLabels()
+    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
 
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
-    dataSet = standardizeFeatures.standardizeSetOfFeatures(loaded_dataSet)
+    dataSet = standardizeFeatures.standardizeSetOfFeatures(dataSet)
 
     indices = np.arange(len(dataSet))
     (
@@ -102,38 +114,11 @@ def createLRGraphs():
         indices_valid,
     ) = train_test_split(X_rem, y_rem, indices_rem, test_size=0.5, random_state=2)
 
-    yTrain = []
-    for i in y_train:
-        if i == [1.0, 0.0, 0.0, 0.0]:
-            yTrain.append(1)
-        elif i == [0.0, 1.0, 0.0, 0.0]:
-            yTrain.append(2)
-        elif i == [0.0, 0.0, 1.0, 0.0]:
-            yTrain.append(3)
-        elif i == [0.0, 0.0, 0.0, 1.0]:
-            yTrain.append(4)
+    yTrain = convert2dLabelsTo1d(y_train)
 
-    yTest = []
-    for i in y_test:
-        if i == [1.0, 0.0, 0.0, 0.0]:
-            yTest.append(1)
-        elif i == [0.0, 1.0, 0.0, 0.0]:
-            yTest.append(2)
-        elif i == [0.0, 0.0, 1.0, 0.0]:
-            yTest.append(3)
-        elif i == [0.0, 0.0, 0.0, 1.0]:
-            yTest.append(4)
+    yTest = convert2dLabelsTo1d(yTest)
 
-    yValid = []
-    for i in y_valid:
-        if i == [1.0, 0.0, 0.0, 0.0]:
-            yValid.append(1)
-        elif i == [0.0, 1.0, 0.0, 0.0]:
-            yValid.append(2)
-        elif i == [0.0, 0.0, 1.0, 0.0]:
-            yValid.append(3)
-        elif i == [0.0, 0.0, 0.0, 1.0]:
-            yValid.append(4)
+    yValid = convert2dLabelsTo1d(y_valid)    
 
     algorithm.train(X_train, y_train)
 
@@ -154,6 +139,7 @@ def createLRGraphs():
     print()
     print("1 = Ballistic Diffusion, 2 = Confined Diffusion, 3 = Random Walk, 4 = Very Confined Diffusion")
     print()
+
     training_check_array = (yTrain == train_result)
     testing_check_array = (yTest == test_result)
     validation_check_array = (yValid == valid_result)
@@ -163,6 +149,7 @@ def createLRGraphs():
     indices_training_incorrect = []
     indices_testing_incorrect = []
     indices_validation_incorrect = []
+
     for index, g in enumerate(training_check_array):
         if not g:
             training_incorrect.append(index)
@@ -179,47 +166,6 @@ def createLRGraphs():
     for i in validation_incorrect:
         indices_validation_incorrect.append(indices_valid[i])
     total_incorrect = indices_training_incorrect + indices_testing_incorrect + indices_validation_incorrect
-
-    # sum = len(training_incorrect) + len(testing_incorrect) + len(validation_incorrect)
-    # if sum != 0:
-    #     fig, ax = plt.subplots(sum, squeeze=False)
-    #     ax = ax.flatten()
-    #     i = 0
-    #     while i < sum:
-    #         for j in indices_training_incorrect:
-    #             interval = len(loaded_dataSet[j]) // 40
-    #             x = []
-    #             for k in range(1, 41):
-    #                 x.append(k * interval)
-    #             xPoints = np.array(x)
-    #             yPoints = dataSet[j]
-    #             ax[i].set_yscale('log')
-    #             ax[i].set_xscale('log')
-    #             ax[i].plot(xPoints, yPoints)
-    #             i += 1
-    #         for j in indices_testing_incorrect:
-    #             interval = len(loaded_dataSet[j]) // 40
-    #             x = []
-    #             for k in range(1, 41):
-    #                 x.append(k * interval)
-    #             xPoints = np.array(x)
-    #             yPoints = dataSet[j]
-    #             ax[i].set_yscale('log')
-    #             ax[i].set_xscale('log')
-    #             ax[i].plot(xPoints, yPoints)
-    #             i += 1
-    #         for j in indices_validation_incorrect:
-    #             interval = len(loaded_dataSet[j]) // 40
-    #             x = []
-    #             for k in range(1, 41):
-    #                 x.append(k * interval)
-    #             xPoints = np.array(x)
-    #             yPoints = dataSet[j]
-    #             ax[i].set_yscale('log')
-    #             ax[i].set_xscale('log')
-    #             ax[i].plot(xPoints, yPoints)
-    #             i += 1
-    #     plt.show
 
     if len(training_incorrect) != 0:
         print("Indexes of incorrect predictions in training: ")
