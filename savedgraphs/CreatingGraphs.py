@@ -116,7 +116,7 @@ def createGraphsOfRealDataset():
         for k in range(len(realDataset.getCategoriesWithPoints()[i][1])):
             FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
                                               realDataset.getCategoriesWithPoints()[i][1][k],
-                                              realDataset.getCategoriesWithPoints()[i][1][k].title)
+                                              title=realDataset.getCategoriesWithPoints()[i][1][k].title)
 
 def createGraphsOfSampleOfRealDataset():
     FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
