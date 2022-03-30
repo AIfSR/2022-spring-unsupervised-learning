@@ -36,7 +36,6 @@ class MzykMSDFeatures(DatasetFeaturesBase):
         data_file = open(dataFileName, 'wb')
         dataSet = []
         count = 0
-        data_file = open(data_file, 'wb')
         for i in range(len(self.categories)):
             for example in self.categories[i][1]:
                 dataSet.append(self.featureCreator.get_features(example))
