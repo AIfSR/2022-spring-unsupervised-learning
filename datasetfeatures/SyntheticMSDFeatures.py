@@ -1,4 +1,4 @@
-from DatasetFeaturesBase import DatasetFeaturesBase
+from datasetfeatures.DatasetFeaturesBase import DatasetFeaturesBase
 from features.Features import Features
 from datasets.SyntheticDataset import SyntheticDataset
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
