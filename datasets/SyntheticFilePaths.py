@@ -1,17 +1,15 @@
 import glob
 import os
 import re
+import Utilities
 
-
-current_working_dir = os.getcwd()
-path = os.path.dirname(os.path.abspath(__file__))
-
-current_working_dir = current_working_dir.replace('datasets','')
+current_working_dir = Utilities.getMainDirectory()
 
 PATH_TO_SIMPLE_CASES = "/data/02_01_Simulated_trajectories/Simple_cases/"
 
 Ballistic_movementFilePaths = []
-for file in glob.glob(current_working_dir + PATH_TO_SIMPLE_CASES + "Ballistic_movement/trajectories/*.tck"):
+ballisticPath = current_working_dir + PATH_TO_SIMPLE_CASES + "Ballistic_movement/trajectories/*.tck"
+for file in glob.glob(ballisticPath):
     Ballistic_movementFilePaths.append(file)
 for index, txtfile in enumerate(Ballistic_movementFilePaths):
         Ballistic_movementFilePaths[index] = txtfile.replace(current_working_dir+"/","")

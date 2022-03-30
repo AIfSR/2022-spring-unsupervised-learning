@@ -1,0 +1,14 @@
+import os
+
+_mainDirectory = os.getcwd()
+path = os.path.dirname(os.path.abspath(__file__))
+
+_mainDirectory = _mainDirectory.replace('datasets','')
+_mainDirectory = _mainDirectory.split("/")
+indexOfDir = _mainDirectory.index("2022-spring-unsupervised-learning")
+_mainDirectory = _mainDirectory[0:indexOfDir+1]
+_mainDirectory = "/".join(_mainDirectory)
+
+def getMainDirectory():
+    return _mainDirectory
+

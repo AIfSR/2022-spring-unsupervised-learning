@@ -1,12 +1,9 @@
 import glob
 import os
 import re
+import Utilities
 
-
-current_working_dir = os.getcwd()
-path = os.path.dirname(os.path.abspath(__file__))
-
-current_working_dir = current_working_dir.replace('datasets','')
+current_working_dir = Utilities.getMainDirectory()
 
 PATH_TO_SIMPLE_CASES = "/data/02_01_Simulated_trajectories/Simple_cases/"
 NUMBER_OF_FILES = 50

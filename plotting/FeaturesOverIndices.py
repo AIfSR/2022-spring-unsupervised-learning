@@ -41,16 +41,15 @@ class FeaturesOverIndices:
         else:
             plt.suptitle(title)
 
-        plt.plot(xFeatures, yFeatures, color="red", label="AIfSR")
-        plt.legend()
-
         ax_scatter.set_yscale('log')
         ax_scatter.set_xscale('log')
 
-        ax_scatter.set_zorder(2)
-        ax_scatter.set_facecolor('none')
+        plt.plot(xFeatures, yFeatures, color="red", label="AIfSR")
+        plt.legend()
 
         if imageFile != None:
+            ax_scatter.set_zorder(2)
+            ax_scatter.set_facecolor('none')
             ax_tw_x = ax_scatter.twinx()
             ax_tw_x.axis('off')
             ax2 = ax_tw_x.twiny()
@@ -63,7 +62,7 @@ class FeaturesOverIndices:
 
             ax2.imshow(im, extent=[min(xFeatures), max(xFeatures), min(yFeatures), max(yFeatures)], aspect='auto')
             ax2.axis('off')
-
+        
         plt.show()
 
     def display_plots(self, yFeatureCreator:FeatureCreatorBase, points:Points, imageFile:str=None, title:str=None) -> None:
@@ -72,7 +71,6 @@ class FeaturesOverIndices:
         yFeatures = yFeatureCreator.get_features(points)
         xFeatures = xFeatures[1:-2]
 
-        
         self.display_plots2(xFeatures, yFeatures, imageFile=imageFile, title=title, xLabel="Time Step,s", yLabel=str(yFeatureCreator))
 
 

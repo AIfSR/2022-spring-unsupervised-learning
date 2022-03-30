@@ -19,7 +19,6 @@ class SyntheticDatasetSubset (DatasetBase):
         Random_walkPoints = self._getValidPointsFromFilePaths(FPSubset.Random_walkFilePaths)
         Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(FPSubset.Very_confined_diffusionFilePaths)
 
-
         # Specifies the three different categories of trajectories that are to be
         # compared and the points list of points associated with each of these treajectory categories
         SimpleCasesCategories = [
