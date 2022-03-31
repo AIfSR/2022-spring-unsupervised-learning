@@ -11,13 +11,13 @@ class SyntheticMSDFeatures (DatasetFeaturesBase):
 
     def __init__(self):
         dataset = SyntheticDataset()
-        categories = dataset.getCategoriesWithPoints()
-        featureCreator = ThreeDMSDFeatureCreator()
+        self.categories = dataset.getCategoriesWithPoints()
+        self.featureCreator = ThreeDMSDFeatureCreator()
 
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been 
         converted to MSD values."""
-        if os.exists("data.pkl"):
+        if os.path.exists("data.pkl"):
             dataFile = open("data.pkl", "rb")
             loaded_dataSet = pickle.load(dataFile)
             dataFile.close()
@@ -34,7 +34,7 @@ class SyntheticMSDFeatures (DatasetFeaturesBase):
     def getLabels(self) -> list[list[float]]:
         """Gets all of the labels of the synthetic dataset."""
         
-        if os.exists("label.pkl"):
+        if os.path.exists("label.pkl"):
             labelFile = open("label.pkl", "rb")
             loadedLabels = pickle.load(labelFile)
             labelFile.close()
@@ -54,6 +54,13 @@ class SyntheticMSDFeatures (DatasetFeaturesBase):
         labels = []
         numOfLabels = len(self.categories)
         count = 0
+        
+        totalTrajectories = 0
+        for i in range(numOfLabels):
+            for example in self.categories[i][1]:
+                totalTrajectories += 1
+        
+        print("Generating MSD Files")
 
         for i in range(numOfLabels):
             for example in self.categories[i][1]:
@@ -61,10 +68,11 @@ class SyntheticMSDFeatures (DatasetFeaturesBase):
                 label = [0] * numOfLabels
                 label[i] = 1
                 labels.append(label)
-                print(count)
+                if (count / (totalTrajectories // 10)) % 1 == 0:
+                    print(str(count) + "/" + str(totalTrajectories) + " MSD vals calculated")
                 count += 1
 
         pickle.dump(labels, label_file)
-        labelFileName.close()
+        label_file.close()
         pickle.dump(dataSet, data_file)
-        dataFileName.close()
+        data_file.close()
