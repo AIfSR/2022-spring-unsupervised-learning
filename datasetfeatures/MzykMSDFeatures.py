@@ -12,8 +12,8 @@ class MzykMSDFeatures(DatasetFeaturesBase):
 
     def __init__(self):
         dataset = MacrophageStageDataset()
-        categories = dataset.getCategoriesWithPoints()
-        featureCreator = ThreeDMSDFeatureCreator()
+        self.categories = dataset.getCategoriesWithPoints()
+        self.featureCreator = ThreeDMSDFeatureCreator()
 
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been
@@ -35,12 +35,23 @@ class MzykMSDFeatures(DatasetFeaturesBase):
     def generateDatafiles(self, dataFileName:str) -> None:
         data_file = open(dataFileName, 'wb')
         dataSet = []
+        numOfLabels = len(self.categories)
         count = 0
-        for i in range(len(self.categories)):
+
+        totalTrajectories = 0
+        for i in range(numOfLabels):
+            for example in self.categories[i][1]:
+                totalTrajectories += 1
+
+        print("Generating MSD Files")
+
+        for i in range(numOfLabels):
             for example in self.categories[i][1]:
                 dataSet.append(self.featureCreator.get_features(example))
-                print(count)
+                if (count / (totalTrajectories // 10)) % 1 == 0:
+                    print(str(count) + "/" + str(totalTrajectories) + " MSD vals calculated")
                 count += 1
+
         pickle.dump(dataSet, data_file)
         data_file.close()
 
