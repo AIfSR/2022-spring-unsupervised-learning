@@ -41,7 +41,35 @@ def convert2dLabelsTo1d(twoDLabels: list[list[float]]) -> list[float]:
     return oneDLabels
 
 
-def MyzkPredictions(algorithm):
+def MyzkPredictions(result: list[int], tag: str) -> list[int]:
+    predict = []
+    start = 0
+    stop = 0
+    if tag == "M0":
+        start = 0
+        stop = 15
+    elif tag == "M1":
+        start = 15
+        stop = 32
+    elif tag == "M2":
+        start = 32
+        stop = 51
+    print(tag + ": ", end="")
+    for i in range(start, stop):
+        print(result[i], end=", ")
+        predict.append(result[i])
+    print()
+    return predict
+
+
+def MzykAnalytics(predict: list[int], tag: str) -> None:
+    print(tag + ":\t1: " + str(format((predict.count(1) / len(predict) * 100), '.3f')) + "%\t2: " + str(
+        format((predict.count(2) / len(predict) * 100), '.3f')) + "%\t3: " + str(
+        format((predict.count(3) / len(predict) * 100), '.3f')) + "%\t4: " + str(
+        format((predict.count(4) / len(predict) * 100), '.3f')) + "%")
+
+
+def MyzkInfo(algorithm):
     normalizeFeatures = DoNothingNormalization()
     standardizeFeatures = Extract40ValsRegularInterval()
     myzkdataFile = open("Mzykdata.pkl", "rb")
@@ -54,45 +82,21 @@ def MyzkPredictions(algorithm):
     print('\033[1m', "Predictions of Dr. Mzyk's Data:", '\033[0m')
     print("Here is the predictions of our algorithm when Dr. Mzyk's data is passed in")
     print()
-    m0_predict = []
-    m1_predict = []
-    m2_predict = []
-    print("M0: ", end="")
-    for i in range(0, 15):
-        print(mzyk_test_result[i], end=", ")
-        m0_predict.append(mzyk_test_result[i])
-    print()
-    print("M1: ", end="")
-    for i in range(15, 32):
-        print(mzyk_test_result[i], end=", ")
-        m1_predict.append(mzyk_test_result[i])
-    print()
-    print("M2: ", end="")
-    for i in range(32, 51):
-        print(mzyk_test_result[i], end=", ")
-        m2_predict.append(mzyk_test_result[i])
+
+    m0_predict = MyzkPredictions(mzyk_test_result, "M0")
+    m1_predict = MyzkPredictions(mzyk_test_result, "M1")
+    m2_predict = MyzkPredictions(mzyk_test_result, "M2")
     myzk_predictions = m0_predict + m1_predict + m2_predict
-    print()
+
     print()
     print('\033[1m', "Analytics of Predictions: ", '\033[0m')
     print("Here is some percentages and information derived from the predictions of the algorithm")
     print()
-    print("M0:\t1: " + str(format((m0_predict.count(1) / len(m0_predict) * 100), '.2f')) + "%\t2: " + str(
-        format((m0_predict.count(2) / len(m0_predict) * 100), '.3f')) + "%\t3: " + str(
-        format((m0_predict.count(3) / len(m0_predict) * 100), '.3f')) + "%\t4: " + str(
-        format((m0_predict.count(4) / len(m0_predict) * 100), '.3f')) + "%")
-    print("M1:\t1: " + str(format((m1_predict.count(1) / len(m1_predict) * 100), '.2f')) + "%\t2: " + str(
-        format((m1_predict.count(2) / len(m1_predict) * 100), '.3f')) + "%\t3: " + str(
-        format((m1_predict.count(3) / len(m1_predict) * 100), '.3f')) + "%\t4: " + str(
-        format((m1_predict.count(4) / len(m1_predict) * 100), '.3f')) + "%")
-    print("M2:\t1: " + str(format((m2_predict.count(1) / len(m2_predict) * 100), '.2f')) + "%\t2: " + str(
-        format((m2_predict.count(2) / len(m2_predict) * 100), '.3f')) + "%\t3: " + str(
-        format((m2_predict.count(3) / len(m2_predict) * 100), '.3f')) + "%\t4: " + str(
-        format((m2_predict.count(4) / len(m2_predict) * 100), '.3f')) + "%")
-    print("Ovr:\t1: " + str(format((myzk_predictions.count(1) / len(myzk_predictions) * 100), '.2f')) + "%\t2: " + str(
-        format((myzk_predictions.count(2) / len(myzk_predictions) * 100), '.3f')) + "%\t3: " + str(
-        format((myzk_predictions.count(3) / len(myzk_predictions) * 100), '.3f')) + "%\t4: " + str(
-        format((myzk_predictions.count(4) / len(myzk_predictions) * 100), '.3f')) + "%")
+
+    MzykAnalytics(m0_predict, "M0")
+    MzykAnalytics(m1_predict, "M1")
+    MzykAnalytics(m2_predict, "M2")
+    MzykAnalytics(myzk_predictions, "Ovr")
 
 
 def displayInaccuracies(Idxs: list[int], cvtLbls: list[float], result: list[int], tag: str) -> list[int]:
@@ -203,4 +207,4 @@ def createAnalysisDocument(algorithm):
     total_incorrect = idxs_trn_incor + idxs_test_incor + idxs_valid_incor
     createIncorGraphs(total_incorrect, dataSet)
 
-    MyzkPredictions(algorithm)
+    MyzkInfo(algorithm)
