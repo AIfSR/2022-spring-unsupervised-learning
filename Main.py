@@ -14,17 +14,13 @@ from datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
 
 
 if __name__ == "__main__":
-    print("in main")
     dataset = SyntheticDataset()
     categories = dataset.getCategoriesWithPoints()
 
     normalizeFeatures = DoNothingNormalization()
     standardizeFeatures = Extract40ValsRegularInterval()
     featureCreator = ThreeDMSDFeatureCreator()
-    print("Here1")
     algorithm = LogisticRegression()
-
-    # code for calculating MSD values and storing these values in data files
 
     syntheticMSDFeatures = SyntheticMSDFeatures()
 
@@ -34,7 +30,6 @@ if __name__ == "__main__":
 
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(loaded_dataSet)
-    print("Here2")
     X_train, X_rem, y_train, y_rem = train_test_split(dataSet, loadedLabels, train_size=0.6, random_state = 1)
     test_size = 0.5
     X_valid, X_test, y_valid, y_test = train_test_split(X_rem, y_rem, test_size=0.5,random_state = 1)
@@ -76,13 +71,6 @@ if __name__ == "__main__":
             yValid.append(3)
         elif i == [0.0, 0.0, 0.0, 1.0]:
             yValid.append(4)
-
-    # Code for a second type of validation
-    # model = sklearn.linear_model.LogisticRegression(multi_classx='multinomial', solver='lbfgs')
-    # model.fit(X_train, y_train_final)
-    # cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
-    # n_scores = cross_val_score(algorithm, trainingSet, labels_final, scoring='accuracy', cv=cv, n_jobs=-1)
-    # print('Mean Accuracy: %.3f (%.3f)' % (np.mean(n_scores), np.std(n_scores)))
 
     print("Training Accuracy:", metrics.accuracy_score(yTrain, train_result))
     print("Test Accuracy:", metrics.accuracy_score(yTest, test_result))
