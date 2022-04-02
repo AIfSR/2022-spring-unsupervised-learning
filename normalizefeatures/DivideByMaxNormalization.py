@@ -19,7 +19,6 @@ class DivideByMaxNormalization (NormalizeFeaturesBase):
                 maxFeatureMagnitude = abs(featuresMin)
             if maxMagnitude < maxFeatureMagnitude:
                 maxMagnitude = maxFeatureMagnitude
-        
         scaledSet = []
         for features in setOfFeatures:
             scaledFeatures = Features()

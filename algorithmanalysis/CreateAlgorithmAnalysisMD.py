@@ -6,6 +6,7 @@ import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 from normalizefeatures.DoNothingNormalization import DoNothingNormalization
+from normalizefeatures.DivideByMaxNormalization import DivideByMaxNormalization
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
@@ -70,14 +71,19 @@ def MzykAnalytics(predict: list[int], tag: str) -> None:
 
 
 def MyzkInfo(algorithm):
-    normalizeFeatures = DoNothingNormalization()
+    normalizeFeatures = DivideByMaxNormalization()
     standardizeFeatures = Extract40ValsRegularInterval()
     myzkdataFile = open("Mzykdata.pkl", "rb")
     loaded_mzyk_dataSet = pickle.load(myzkdataFile)
     myzkdataFile.close()
-    mzykdataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_mzyk_dataSet)
+    mzykdataSet = []
+    for feature in loaded_mzyk_dataSet:
+        mzykdataSet.append(normalizeFeatures.normalizeFeature(feature))
     myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(mzykdataSet)
-    mzyk_test_result = algorithm.predict(myzkdataSet)
+    mzyk_test_result = []
+    for realTrajectory in myzkdataSet:
+        mzyk_test_result.append(algorithm.predict([realTrajectory]))
+    # mzyk_test_result = algorithm.predict(myzkdataSet)
 
     print('\033[1m', "Predictions of Dr. Mzyk's Data:", '\033[0m')
     print("Here is the predictions of our algorithm when Dr. Mzyk's data is passed in")
@@ -157,7 +163,7 @@ def createIncorGraphs(total_incorrect, dataSet):
 
 
 def createAnalysisDocument(algorithm):
-    normalizeFeatures = DoNothingNormalization()
+    normalizeFeatures = DivideByMaxNormalization()
     standardizeFeatures = Extract40ValsRegularInterval()
     syntheticMSDFeatures = SyntheticMSDFeatures()
     loaded_labels = syntheticMSDFeatures.getLabels()
