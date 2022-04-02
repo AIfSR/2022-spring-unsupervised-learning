@@ -4,6 +4,7 @@ from datasets.SyntheticDataset import SyntheticDataset
 from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 import os
 import pickle
+import Utilities
 
 
 class SyntheticMSDFeatures(DatasetFeaturesBase):
@@ -18,32 +19,35 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been
         converted to MSD values."""
-        if os.path.exists("data.pkl"):
-            dataFile = open("data.pkl", "rb")
+        mainDir = Utilities.getMainDirectory()
+        dataFilePath = mainDir + "/data.pkl"
+        if os.path.exists(dataFilePath):
+            dataFile = open(dataFilePath, "rb")
             loaded_dataSet = pickle.load(dataFile)
             dataFile.close()
             return loaded_dataSet
 
         # GENERATE MSD VALUES HERE, WRITE RESULTS TO data.pkl
-        self.generateDatafiles("data.pkl", "label.pkl")
+        self.generateDatafiles(dataFilePath, mainDir + "/label.pkl")
 
-        dataFile = open("data.pkl", "rb")
+        dataFile = open(dataFilePath, "rb")
         loaded_dataSet = pickle.load(dataFile)
         dataFile.close()
         return loaded_dataSet
 
     def getLabels(self) -> list[list[float]]:
         """Gets all of the labels of the synthetic dataset."""
-
-        if os.path.exists("label.pkl"):
-            labelFile = open("label.pkl", "rb")
+        mainDir = Utilities.getMainDirectory()
+        labelFilePath = mainDir + "/label.pkl"
+        if os.path.exists(labelFilePath):
+            labelFile = open(labelFilePath, "rb")
             loadedLabels = pickle.load(labelFile)
             labelFile.close()
             return loadedLabels
 
         # GENERATE LABELS HERE, WRITE RESULTS TO data.pkl
-        self.generateDatafiles("data.pkl", "label.pkl")
-        labelFile = open("label.pkl", "rb")
+        self.generateDatafiles(mainDir + "/data.pkl", labelFilePath)
+        labelFile = open(labelFilePath, "rb")
         loadedLabels = pickle.load(labelFile)
         labelFile.close()
         return loadedLabels
@@ -55,12 +59,12 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         labels = []
         numOfLabels = len(self.categories)
         count = 0
-
+        
         totalTrajectories = 0
         for i in range(numOfLabels):
             for example in self.categories[i][1]:
                 totalTrajectories += 1
-
+        
         print("Generating MSD Files")
 
         for i in range(numOfLabels):

@@ -10,8 +10,6 @@ indexOfDir = _mainDirectory.index(DIR_NAME)
 _mainDirectory = _mainDirectory[0:indexOfDir+1]
 _mainDirectory = "/".join(_mainDirectory)
 
-print("_mainDirectory: ", _mainDirectory)
-
 def getMainDirectory():
     return _mainDirectory
 

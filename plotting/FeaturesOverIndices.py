@@ -26,7 +26,7 @@ class FeaturesOverIndices:
     LEFT_CROP = 76
     RIGHT_CROP = 60
 
-    def display_plots2(self, xFeatures:Features, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None) -> None:
+    def display_plot_of_features(self, xFeatures:Features, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None) -> None:
         """Displays a plot of the yFeatureCreator over time"""
 
         ax_scatter = plt.axes()
@@ -69,9 +69,9 @@ class FeaturesOverIndices:
         tFeatureCreator = MultiplyByFactorFeatureCreator(TFeatureCreator(), 1 / 1000)
         xFeatures = tFeatureCreator.get_features(points)
         yFeatures = yFeatureCreator.get_features(points)
-        xFeatures = xFeatures[1:-2]
+        xFeatures = xFeatures[:len(yFeatures)]
 
-        self.display_plots2(xFeatures, yFeatures, imageFile=imageFile, title=title, xLabel="Time Step,s", yLabel=str(yFeatureCreator))
+        self.display_plot_of_features(xFeatures, yFeatures, imageFile=imageFile, title=title, xLabel="Time Step,s", yLabel=str(yFeatureCreator))
 
 
 
