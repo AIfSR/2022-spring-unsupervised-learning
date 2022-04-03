@@ -5,8 +5,7 @@ from datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
-from normalizefeatures.DoNothingNormalization import DoNothingNormalization
-from normalizefeatures.DivideByMaxNormalization import DivideByMaxNormalization
+from normalizefeatures.ScaletoMillion import ScaletoMillion
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
@@ -57,7 +56,7 @@ def MyzkPredictions(result: list[int], tag: str) -> list[int]:
         stop = 51
     print(tag + ": ", end="")
     for i in range(start, stop):
-        print(result[i], end=", ")
+        print(result[i][0], end=", ")
         predict.append(result[i])
     print()
     return predict
@@ -71,7 +70,7 @@ def MzykAnalytics(predict: list[int], tag: str) -> None:
 
 
 def MyzkInfo(algorithm):
-    normalizeFeatures = DivideByMaxNormalization()
+    normalizeFeatures = ScaletoMillion()
     standardizeFeatures = Extract40ValsRegularInterval()
     myzkdataFile = open("Mzykdata.pkl", "rb")
     loaded_mzyk_dataSet = pickle.load(myzkdataFile)
@@ -163,7 +162,7 @@ def createIncorGraphs(total_incorrect, dataSet):
 
 
 def createAnalysisDocument(algorithm):
-    normalizeFeatures = DivideByMaxNormalization()
+    normalizeFeatures = ScaletoMillion()
     standardizeFeatures = Extract40ValsRegularInterval()
     syntheticMSDFeatures = SyntheticMSDFeatures()
     loaded_labels = syntheticMSDFeatures.getLabels()

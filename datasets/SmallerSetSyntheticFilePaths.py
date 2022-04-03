@@ -8,6 +8,7 @@ current_working_dir = Utilities.getMainDirectory()
 PATH_TO_SIMPLE_CASES = "/data/02_01_Simulated_trajectories/Simple_cases/"
 NUMBER_OF_FILES = 50
 
+
 def getFiles(numberOfFiles:int, path:str, ) -> list[str]:
     files = []
     count = 0

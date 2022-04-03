@@ -23,7 +23,7 @@ class ScaletoMillion(NormalizeFeaturesBase):
         for features in setOfFeatures:
             scaledFeatures = Features()
             for featureVal in features:
-                scaledFeatures.add_feature_val((featureVal / maxMagnitude) * 10 ** 6)
+                scaledFeatures.add_feature_val((featureVal / maxMagnitude) * (10 ** 8))
             scaledSet.append(scaledFeatures)
 
         return scaledSet

@@ -6,6 +6,7 @@ from tckfilereader.PointsWithNames import PointsWithNames
 import datasets.SyntheticFilePaths as FP
 from tckfilereader.TCKFileReader import TCKFileReader
 
+
 class SyntheticDataset (DatasetBase):
     def __init__(self) -> None:
         self.tckFileReader = TCKFileReader()
