@@ -3,7 +3,7 @@ from features.Features import Features
 
 class StandardizeFeaturesNumberBase (ABC):
     """This is the base class from which standardizers derive from. The length 
-    of features needs to be standardized for certain algorithms and so the child
+    of features needs to be standardized for certain algorithmstests and so the child
     classes of this base class will standardize the features."""
 
     @abstractmethod
