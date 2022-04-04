@@ -1,5 +1,6 @@
 from typing import List
 from datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
+from datasetfeatures.MzykMSDFeatures import MzykMSDFeatures
 from datasets.MacrophageStageDataset import MacrophageStageDataset
 from datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
@@ -46,7 +47,7 @@ def MyzkPredictions(result: List[List[float]], tag: str) -> List[List[float]]:
     return predict
 
 
-def MzykAnalytics(predict: List[List[float]], tag: str) -> None:
+def RealAnalytics(predict: List[List[float]], tag: str) -> None:
     print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
           "%\tcd: " + str(format((predict.count([0.0, 1.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
           "%\trw: " + str(format((predict.count([0.0, 0.0, 1.0, 0.0]) / len(predict) * 100), '.3f')) +
@@ -56,21 +57,20 @@ def MzykAnalytics(predict: List[List[float]], tag: str) -> None:
 def MyzkInfo(algorithm):
     normalizeFeatures = ScaletoMillion()
     standardizeFeatures = Extract40ValsRegularInterval()
-    myzkdataFile = open("Mzykdata.pkl", "rb")
-    loaded_mzyk_dataSet = pickle.load(myzkdataFile)
-    myzkdataFile.close()
-    mzykdataSet = []
-    for feature in loaded_mzyk_dataSet:
-        mzykdataSet.append(normalizeFeatures.normalizeFeature(feature))
-    myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(mzykdataSet)
-    # mzyk_test_result = []
+    realMSDFeatures = MzykMSDFeatures()
+    loaded_real_dataset = realMSDFeatures.getDatasetOfFeatures()
+    realdataSet = []
+    for feature in loaded_real_dataset:
+        realdataSet.append(normalizeFeatures.normalizeFeature(feature))
+    myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(realdataSet)
+    # real_test_result = []
     # for realTrajectory in myzkdataSet:
-    #     mzyk_test_result.append(algorithm.predict([realTrajectory]))
-    mzyk_test_result = algorithm.predict(myzkdataSet)
+    #     real_test_result.append(algorithm.predict([realTrajectory]))
+    real_test_result = algorithm.predict(myzkdataSet)
 
-    m0_predict = MyzkPredictions(mzyk_test_result, "M0")
-    m1_predict = MyzkPredictions(mzyk_test_result, "M1")
-    m2_predict = MyzkPredictions(mzyk_test_result, "M2")
+    m0_predict = MyzkPredictions(real_test_result, "M0")
+    m1_predict = MyzkPredictions(real_test_result, "M1")
+    m2_predict = MyzkPredictions(real_test_result, "M2")
     myzk_predictions = m0_predict + m1_predict + m2_predict
 
     print()
@@ -78,10 +78,10 @@ def MyzkInfo(algorithm):
     print("Here is some percentages and information derived from the predictions of the algorithm")
     print()
 
-    MzykAnalytics(m0_predict, "M0")
-    MzykAnalytics(m1_predict, "M1")
-    MzykAnalytics(m2_predict, "M2")
-    MzykAnalytics(myzk_predictions, "Ovr")
+    RealAnalytics(m0_predict, "M0")
+    RealAnalytics(m1_predict, "M1")
+    RealAnalytics(m2_predict, "M2")
+    RealAnalytics(myzk_predictions, "Ovr")
 
 
 def displayInaccuracies(Idxs: List[int], Lbls: List[List[float]], result: List[List[float]], tag: str) -> List[int]:
