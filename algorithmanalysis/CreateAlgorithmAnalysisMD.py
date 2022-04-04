@@ -6,6 +6,7 @@ import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 from normalizefeatures.ScaletoMillion import ScaletoMillion
+from plotting.FeaturesOverIndices import FeaturesOverIndices
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
@@ -27,21 +28,7 @@ def getFileNames(indices: List[int]):
     return fileNames
 
 
-def convert2dLabelsTo1d(twoDLabels: list[list[float]]) -> list[float]:
-    oneDLabels = []
-    for i in twoDLabels:
-        if i == [1.0, 0.0, 0.0, 0.0]:
-            oneDLabels.append(1)
-        elif i == [0.0, 1.0, 0.0, 0.0]:
-            oneDLabels.append(2)
-        elif i == [0.0, 0.0, 1.0, 0.0]:
-            oneDLabels.append(3)
-        elif i == [0.0, 0.0, 0.0, 1.0]:
-            oneDLabels.append(4)
-    return oneDLabels
-
-
-def MyzkPredictions(result: list[int], tag: str) -> list[int]:
+def MyzkPredictions(result: List[List[float]], tag: str) -> List[List[float]]:
     predict = []
     start = 0
     stop = 0
@@ -54,19 +41,16 @@ def MyzkPredictions(result: list[int], tag: str) -> list[int]:
     elif tag == "M2":
         start = 32
         stop = 51
-    print(tag + ": ", end="")
     for i in range(start, stop):
-        print(result[i][0], end=", ")
         predict.append(result[i])
-    print()
     return predict
 
 
-def MzykAnalytics(predict: list[int], tag: str) -> None:
-    print(tag + ":\t1: " + str(format((predict.count(1) / len(predict) * 100), '.3f')) + "%\t2: " + str(
-        format((predict.count(2) / len(predict) * 100), '.3f')) + "%\t3: " + str(
-        format((predict.count(3) / len(predict) * 100), '.3f')) + "%\t4: " + str(
-        format((predict.count(4) / len(predict) * 100), '.3f')) + "%")
+def MzykAnalytics(predict: List[List[float]], tag: str) -> None:
+    print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
+          "%\tcd: " + str(format((predict.count([0.0, 1.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
+          "%\trw: " + str(format((predict.count([0.0, 0.0, 1.0, 0.0]) / len(predict) * 100), '.3f')) +
+          "%\tvcd: " + str(format((predict.count([0.0, 0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
 
 
 def MyzkInfo(algorithm):
@@ -79,14 +63,10 @@ def MyzkInfo(algorithm):
     for feature in loaded_mzyk_dataSet:
         mzykdataSet.append(normalizeFeatures.normalizeFeature(feature))
     myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(mzykdataSet)
-    mzyk_test_result = []
-    for realTrajectory in myzkdataSet:
-        mzyk_test_result.append(algorithm.predict([realTrajectory]))
-    # mzyk_test_result = algorithm.predict(myzkdataSet)
-
-    print('\033[1m', "Predictions of Dr. Mzyk's Data:", '\033[0m')
-    print("Here is the predictions of our algorithm when Dr. Mzyk's data is passed in")
-    print()
+    # mzyk_test_result = []
+    # for realTrajectory in myzkdataSet:
+    #     mzyk_test_result.append(algorithm.predict([realTrajectory]))
+    mzyk_test_result = algorithm.predict(myzkdataSet)
 
     m0_predict = MyzkPredictions(mzyk_test_result, "M0")
     m1_predict = MyzkPredictions(mzyk_test_result, "M1")
@@ -104,8 +84,10 @@ def MyzkInfo(algorithm):
     MzykAnalytics(myzk_predictions, "Ovr")
 
 
-def displayInaccuracies(Idxs: list[int], cvtLbls: list[float], result: list[int], tag: str) -> list[int]:
-    check_array = (cvtLbls == result)
+def displayInaccuracies(Idxs: List[int], Lbls: List[List[float]], result: List[List[float]], tag: str) -> List[int]:
+    check_array = []
+    for label, prediction in zip(Lbls, result):
+        check_array.append(label == prediction)
     incorrect = []
     indices_incorrect = []
     for index, g in enumerate(check_array):
@@ -120,7 +102,7 @@ def displayInaccuracies(Idxs: list[int], cvtLbls: list[float], result: list[int]
         print()
         print("Actual Diffusion Types: ")
         for i in incorrect:
-            print(cvtLbls[i], end=", ")
+            print(Lbls[i], end=", ")
         print()
         print("Incorrect predictions: ")
         for i in incorrect:
@@ -136,29 +118,13 @@ def createIncorGraphs(total_incorrect, dataSet):
     print("Here is the graphs of the trajectories that were predicted incorrectly")
     interval = 1198 // 40
     counter = 0
+    plotting = FeaturesOverIndices()
     for j in total_incorrect:
-        ax_scatter = plt.axes()
         x = []
         for k in range(1, 41):
             x.append(k * interval)
-        xPoints = np.array(x)
-        yPoints = dataSet[j]
-
-        ax_scatter.set_ylabel("3DMSD")
-        ax_scatter.set_xlabel("Time Step,s")
-
-        plt.suptitle(fileNames[counter])
-        counter += 1
-
-        plt.plot(xPoints, yPoints, color="red", label="AIfSR")
-        plt.legend()
-
-        ax_scatter.set_yscale('log')
-        ax_scatter.set_xscale('log')
-
-        ax_scatter.set_zorder(2)
-        ax_scatter.set_facecolor('none')
-        plt.show()
+        plotting.display_plot_of_features(xFeatures=x, yFeatures=dataSet[j], title=fileNames[counter],
+                                          xLabel="Time Step,s", yLabel="3DMSD",)
 
 
 def createAnalysisDocument(algorithm):
@@ -169,7 +135,6 @@ def createAnalysisDocument(algorithm):
     loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(dataSet)
-
     indices = np.arange(len(dataSet))
     (trnData, remData, trnLbls, remLbls, trnIdxs, remIdxs)\
         = split(dataSet, loaded_labels, indices, train_size=0.6, random_state=1)
@@ -177,12 +142,7 @@ def createAnalysisDocument(algorithm):
     (testData, valData, testLbls, valLbls, testIdxs, valIdxs) \
         = split(remData, remLbls, remIdxs, test_size=0.5, random_state=2)
 
-    cvtTrnLbls = convert2dLabelsTo1d(trnLbls)
-    cvtTestLbls = convert2dLabelsTo1d(testLbls)
-    cvtValLbls = convert2dLabelsTo1d(valLbls)
-
     algorithm.train(trnData, trnLbls)
-
     test_result = algorithm.predict(testData)
     train_result = algorithm.predict(trnData)
     valid_result = algorithm.predict(valData)
@@ -191,9 +151,9 @@ def createAnalysisDocument(algorithm):
     print("Here is the accuracy of our algorithm when the training set, test set,"
           " and cross validation set is passed in")
     print()
-    print("Training Accuracy:", metrics.accuracy_score(cvtTrnLbls, train_result))
-    print("Test Accuracy:", metrics.accuracy_score(cvtTestLbls, test_result))
-    print("Validation Accuracy:", metrics.accuracy_score(cvtValLbls, valid_result))
+    print("Training Accuracy:", metrics.accuracy_score(trnLbls, train_result))
+    print("Test Accuracy:", metrics.accuracy_score(testLbls, test_result))
+    print("Validation Accuracy:", metrics.accuracy_score(valLbls, valid_result))
     print()
     print()
 
@@ -202,14 +162,14 @@ def createAnalysisDocument(algorithm):
           " It displays the indexes of the incorrect trajectories, "
           "followed by the actual diffusion type and the incorrect predicted diffusion type.")
     print()
-    print("1 = Ballistic Diffusion, 2 = Confined Diffusion, 3 = Random Walk, 4 = Very Confined Diffusion")
+    print('\033[1m', "[Ballistic Motion,Confined Diffusion,Random Walk,Very Confinded Diffusion]", '\033[0m')
     print()
-
-    idxs_trn_incor = displayInaccuracies(trnIdxs, cvtTrnLbls, train_result, "training")
-    idxs_test_incor = displayInaccuracies(testIdxs, cvtTestLbls, test_result, "testing")
-    idxs_valid_incor = displayInaccuracies(valIdxs, cvtValLbls, valid_result, "validation")
+    idxs_trn_incor = displayInaccuracies(trnIdxs, trnLbls, train_result, "training")
+    idxs_test_incor = displayInaccuracies(testIdxs, testLbls, test_result, "testing")
+    idxs_valid_incor = displayInaccuracies(valIdxs, valLbls, valid_result, "validation")
 
     total_incorrect = idxs_trn_incor + idxs_test_incor + idxs_valid_incor
     createIncorGraphs(total_incorrect, dataSet)
+    print(type(dataSet[1]))
 
     MyzkInfo(algorithm)

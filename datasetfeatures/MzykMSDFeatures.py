@@ -18,7 +18,7 @@ class MzykMSDFeatures(DatasetFeaturesBase):
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been
         converted to MSD values."""
-        if os.exists("Mzykdata.pkl"):
+        if os.path.exists("Mzykdata.pkl"):
             dataFile = open("Myzkdata.pkl", "rb")
             loaded_dataSet = pickle.load(dataFile)
             dataFile.close()
