@@ -9,6 +9,10 @@ class PointsWithNames(Points):
         self.title = title
         pass
 
+    def getName(self) -> str:
+        """Gets the name of these Points"""
+        return self.title
+
 
 
 

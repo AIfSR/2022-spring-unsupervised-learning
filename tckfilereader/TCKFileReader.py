@@ -29,11 +29,14 @@ class TCKFileReader:
             allPoints.addPoint(Point(xList[i], yList[i], zList[i], tList[i]))
         return allPoints
 
-    def get_points_with_name(self, path_to_tck_file:str) -> PointsWithNames:
+    def get_points_with_name(self, path_to_tck_file:str, tckFileInDirectory:bool=True) -> PointsWithNames:
         """Gets all of the points from the specified TCK file."""
-        script = os.path.dirname(__file__)
-        script1 = os.path.dirname(script)
-        path = os.path.join(script1, path_to_tck_file)
+        if not tckFileInDirectory:
+            path = path_to_tck_file
+        else:
+            script = os.path.dirname(__file__)
+            script1 = os.path.dirname(script)
+            path = os.path.join(script1, path_to_tck_file)
         with open(path) as file:
             xLine = file.readline()
             xList = xLine.split()

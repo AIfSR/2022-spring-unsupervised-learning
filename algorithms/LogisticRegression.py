@@ -2,6 +2,7 @@ from algorithms.AlgorithmBase import AlgorithmBase
 from features.Features import Features
 from sklearn.linear_model import LogisticRegression as LR
 import numpy as np
+import pickle
 
 
 class LogisticRegression(AlgorithmBase):
@@ -40,3 +41,14 @@ class LogisticRegression(AlgorithmBase):
     def predict_proba(self, testData: list[Features]) -> list[list[float]]:
         y_pred = self._model.predict_proba(testData)
         return y_pred
+
+    def save(self, directoryToSaveTo:str, name:str) -> None:
+        """Saves the model to the directoryToSaveTo under the name provided"""
+        location = directoryToSaveTo + name + ".pkl"
+        file = open(location, 'wb')
+        pickle.dump(self._model, file)
+        file.close
+
+    def load(self, pathToPklFile:str) -> None:
+        file = open(pathToPklFile, "rb")
+        self._model = pickle.load(file)

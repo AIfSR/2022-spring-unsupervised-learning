@@ -11,3 +11,11 @@ class AlgorithmBase (ABC):
     @abstractmethod
     def predict(self,testData:list[Features]) -> list[list[float]]:
         pass
+
+    @abstractmethod
+    def save(self, directoryToSaveTo:str, name:str) -> None:
+        pass
+
+    @abstractmethod
+    def load(self, pathToPklFile:str) -> None:
+        pass
