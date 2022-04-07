@@ -19,14 +19,30 @@ from PIL import Image
 from cairosvg import svg2png
 from io import BytesIO
 
+class IndiciesFeatureCreator (Features):
+    def __init__(self, features:Features) -> None:
+        super().__init__()
+        self._features = features
+    
+    def get_features(self, points:Points) -> Features:
+        features = Features()
+        for i in range(len(self._features)):
+            features.add_feature_val(i)
+        return features
+        
 class FeaturesOverIndices:
 
     BOTTOM_CROP = 49
     TOP_CROP = 54
     LEFT_CROP = 76
     RIGHT_CROP = 60
+    def display_plot_of_features(self, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None) -> None:
+        """Displays a plot of the yFeatureCreator over time"""
+        indiciesFeatureCreator = IndiciesFeatureCreator(yFeatures)
+        xFeatures = indiciesFeatureCreator.get_features(None)
+        self._display_plot_of_features(xFeatures, yFeatures, imageFile, title, xLabel, yLabel)
 
-    def display_plot_of_features(self, xFeatures:Features, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None) -> None:
+    def _display_plot_of_features(self, xFeatures:Features, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None) -> None:
         """Displays a plot of the yFeatureCreator over time"""
 
         ax_scatter = plt.axes()

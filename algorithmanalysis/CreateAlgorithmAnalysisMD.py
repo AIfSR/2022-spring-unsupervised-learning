@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
 from datasetfeatures.MzykMSDFeatures import MzykMSDFeatures
 from datasets.MacrophageStageDataset import MacrophageStageDataset
@@ -6,47 +6,21 @@ from datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
+from features.FeaturesWithNames import FeaturesWithNames
 from ml_pipelines.MLPipelineBase import MLPipelineBase
 from normalizefeatures.ScaletoMillion import ScaletoMillion
 from plotting.FeaturesOverIndices import FeaturesOverIndices
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
-realDataset = MacrophageStageDataset()
-syntheticDataset = SyntheticDataset()
 
 
-def getFileNames(indices: List[int]):
-    fileNames = []
-    for i in indices:
-        if 0 <= i <= 1499:
-            fileNames.append(syntheticDataset.getCategoriesWithPoints()[0][1][i].title)
-        if 1500 <= i <= 2999:
-            fileNames.append(syntheticDataset.getCategoriesWithPoints()[1][1][i-1500].title)
-        if 3000 <= i <= 4499:
-            fileNames.append(syntheticDataset.getCategoriesWithPoints()[2][1][i-3000].title)
-        if 4500 <= i <= 5999:
-            fileNames.append(syntheticDataset.getCategoriesWithPoints()[3][1][i-4500].title)
-    return fileNames
-
-
-def MyzkPredictions(result: List[List[float]], tag: str) -> List[List[float]]:
+def MyzkPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:
     predict = []
-    start = 0
-    stop = 0
-    if tag == "M0":
-        start = 0
-        stop = 15
-    elif tag == "M1":
-        start = 15
-        stop = 32
-    elif tag == "M2":
-        start = 32
-        stop = 51
-    for i in range(start, stop):
-        predict.append(result[i])
+    for name, prediction in result:
+        if tag in name:
+            predict.append(prediction)
     return predict
-
 
 def RealAnalytics(predict: List[List[float]], tag: str) -> None:
     print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
@@ -55,18 +29,17 @@ def RealAnalytics(predict: List[List[float]], tag: str) -> None:
           "%\tvcd: " + str(format((predict.count([0.0, 0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
 
 
-def MyzkInfo(algorithm):
-    normalizeFeatures = ScaletoMillion()
-    standardizeFeatures = Extract40ValsRegularInterval()
+def MyzkInfo(mlPipeline:MLPipelineBase):
+    normalizeFeatures = mlPipeline.getFeatureNormalizer()
+    standardizeFeatures = mlPipeline.getFeatureStandardizer()
+    algorithm = mlPipeline.getAlgorithm()
     realMSDFeatures = MzykMSDFeatures()
     loaded_real_dataset = realMSDFeatures.getDatasetOfFeatures()
+
     realdataSet = []
     for feature in loaded_real_dataset:
         realdataSet.append(normalizeFeatures.normalizeFeature(feature))
     myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(realdataSet)
-    # real_test_result = []
-    # for realTrajectory in myzkdataSet:
-    #     real_test_result.append(algorithm.predict([realTrajectory]))
     real_test_result = algorithm.predict(myzkdataSet)
 
     m0_predict = MyzkPredictions(real_test_result, "M0")
@@ -85,48 +58,54 @@ def MyzkInfo(algorithm):
     RealAnalytics(myzk_predictions, "Ovr")
 
 
-def displayInaccuracies(Idxs: List[int], Lbls: List[List[float]], result: List[List[float]], tag: str) -> List[int]:
-    check_array = []
+def displayInaccuracies(Lbls: List[List[float]], result: List[Tuple[str, List[float]]], tag:str) -> List[str]:
+    incorrectResults = []
+    names = ""
+    incorrectPredictions = ""
+    actualDiffusionTypes = ""
     for label, prediction in zip(Lbls, result):
-        check_array.append(label == prediction)
-    incorrect = []
-    indices_incorrect = []
-    for index, g in enumerate(check_array):
-        if not g:
-            incorrect.append(index)
-    for i in incorrect:
-        indices_incorrect.append(Idxs[i])
-    if len(incorrect) != 0:
-        print("Indexes of incorrect predictions in " + tag + ": ")
-        for i in indices_incorrect:
-            print(i, end=", ")
-        print()
+        predictionName, predictionVal = prediction
+        if not label == predictionVal:
+            incorrectResults.append(predictionName)
+            names += predictionName + "\n"
+            incorrectPredictions += str(predictionVal) + "\n"
+            actualDiffusionTypes += str(label) + "\n"
+    
+    if len(incorrectResults) != 0:
+        print("Names of incorrect predictions for: " + tag)
+        print(names)
         print("Actual Diffusion Types: ")
-        for i in incorrect:
-            print(Lbls[i], end=", ")
-        print()
+        print(actualDiffusionTypes)
         print("Incorrect predictions: ")
-        for i in incorrect:
-            print(result[i], end=", ")
-        print()
-        print()
-    return indices_incorrect
+        print(incorrectPredictions)  
+    else:
+        print("Algorithm correctly predicted all labels for: " + tag)
+    print()
+    print()
+    
+    return incorrectResults
 
+def getFeaturesByFeaturesName(name:str, dataset:list[FeaturesWithNames]) -> FeaturesWithNames:
+    for featureWithName in dataset:
+        if featureWithName.getName() == name:
+            return featureWithName
+    print("Could not find: " , name)
+    return None
 
-def createIncorGraphs(total_incorrect, dataSet):
-    fileNames = getFileNames(total_incorrect)
+def createIncorGraphs(incorrect_names, dataSet):
     print('\033[1m', "Graphs of Incorrect Trajectories:", '\033[0m')
     print("Here is the graphs of the trajectories that were predicted incorrectly")
-    interval = 1198 // 40
-    counter = 0
     plotting = FeaturesOverIndices()
-    for j in total_incorrect:
-        x = []
-        for k in range(1, 41):
-            x.append(k * interval)
-        plotting.display_plot_of_features(xFeatures=x, yFeatures=dataSet[j], title=fileNames[counter],
-                                          xLabel="Time Step,s", yLabel="3DMSD",)
+    for incorrect_name in incorrect_names:
+        yFeature = getFeaturesByFeaturesName(incorrect_name, dataSet)
+        plotting.display_plot_of_features(yFeatures=yFeature, title=incorrect_name,
+                                          yLabel="3DMSD",)
 
+def getRemovedNamesFromPrediction(predictions:list[Tuple[str,List[float]]]) -> list[list[float]]:
+    predictionsWithoutNames = []
+    for name, prediction in predictions:
+        predictionsWithoutNames.append(prediction)
+    return predictionsWithoutNames
 
 def createAnalysisDocument(mlPipeline:MLPipelineBase):
     normalizeFeatures = mlPipeline.getFeatureNormalizer()
@@ -138,12 +117,11 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase):
     loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(dataSet)
-    indices = np.arange(len(dataSet))
-    (trnData, remData, trnLbls, remLbls, trnIdxs, remIdxs)\
-        = split(dataSet, loaded_labels, indices, train_size=0.6, random_state=1)
+    (trnData, remData, trnLbls, remLbls)\
+        = split(dataSet, loaded_labels, train_size=0.6, random_state=1)
 
-    (testData, valData, testLbls, valLbls, testIdxs, valIdxs) \
-        = split(remData, remLbls, remIdxs, test_size=0.5, random_state=2)
+    (testData, valData, testLbls, valLbls) \
+        = split(remData, remLbls, test_size=0.5, random_state=2)
 
     algorithm.train(trnData, trnLbls)
     test_result = algorithm.predict(testData)
@@ -154,25 +132,23 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase):
     print("Here is the accuracy of our algorithm when the training set, test set,"
           " and cross validation set is passed in")
     print()
-    print("Training Accuracy:", metrics.accuracy_score(trnLbls, train_result))
-    print("Test Accuracy:", metrics.accuracy_score(testLbls, test_result))
-    print("Validation Accuracy:", metrics.accuracy_score(valLbls, valid_result))
+    print("Training Accuracy:", metrics.accuracy_score(trnLbls, getRemovedNamesFromPrediction(train_result)))
+    print("Test Accuracy:", metrics.accuracy_score(testLbls, getRemovedNamesFromPrediction(test_result)))
+    print("Validation Accuracy:", metrics.accuracy_score(valLbls, getRemovedNamesFromPrediction(valid_result)))
     print()
     print()
 
     print('\033[1m', "Inaccurate Trajectories", '\033[0m')
     print("Here is some more information on the trajectories it predicted incorrectly."
-          " It displays the indexes of the incorrect trajectories, "
+          " It displays the name of the incorrect trajectories, "
           "followed by the actual diffusion type and the incorrect predicted diffusion type.")
     print()
     print('\033[1m', "[Ballistic Motion,Confined Diffusion,Random Walk,Very Confinded Diffusion]", '\033[0m')
     print()
-    idxs_trn_incor = displayInaccuracies(trnIdxs, trnLbls, train_result, "training")
-    idxs_test_incor = displayInaccuracies(testIdxs, testLbls, test_result, "testing")
-    idxs_valid_incor = displayInaccuracies(valIdxs, valLbls, valid_result, "validation")
+    names_trn_incor = displayInaccuracies(trnLbls, train_result, "Training Data")
+    names_test_incor = displayInaccuracies(testLbls, test_result, "Testing Data")
+    names_valid_incor = displayInaccuracies(valLbls, valid_result, "CV Data")
+    incorrect_names = names_trn_incor + names_test_incor + names_valid_incor
+    createIncorGraphs(incorrect_names, dataSet)
 
-    total_incorrect = idxs_trn_incor + idxs_test_incor + idxs_valid_incor
-    createIncorGraphs(total_incorrect, dataSet)
-    print(type(dataSet[1]))
-
-    MyzkInfo(algorithm)
+    MyzkInfo(mlPipeline)
