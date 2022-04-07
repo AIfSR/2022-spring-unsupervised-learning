@@ -6,7 +6,9 @@ from tckfilereader.Point import Point
 from tckfilereader.Points import Points
 import math
 
-class ThetaFeatureCreatorTest (unittest.TestCase):
+from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase
+
+class ThetaFeatureCreatorTest (FeatureCreatorTestBase):
 
     def get_feature_creator(self):
         """Gets the XFeatureCreator to test"""

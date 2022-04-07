@@ -14,7 +14,7 @@ class RateOfChangeFeatureCreator (FeatureCreatorBase):
 
     def get_features(self, points: Points) -> Features:
         """Gets the rate of change of all the values in the feature created"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
 
         timeFeature = TFeatureCreator().get_features(points)
         otherFeature = self._featureCreator.get_features(points)

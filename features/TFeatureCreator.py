@@ -7,7 +7,7 @@ class TFeatureCreator (FeatureCreatorBase):
 
     def get_features(self, points: Points) -> Features:
         """Gets all the T values as features"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
         for point in points:
             features.add_feature_val(point.get_t())
 

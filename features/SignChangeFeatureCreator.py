@@ -11,7 +11,7 @@ class SignChangeFeatureCreator (FeatureCreatorBase):
     def get_features(self, points:Points) -> Features:
         """Gets all the sign changes as features"""
         features = self._featureCreator.get_features(points)
-        signChangeFeatures = Features()
+        signChangeFeatures = points.getFeaturesToInitialize()
         prevVal = None
         for featureVal in features:
             if prevVal == None:

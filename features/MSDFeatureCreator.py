@@ -14,7 +14,7 @@ class MSDFeatureCreator(FeatureCreatorBase):
 
     def get_features(self, points: Points) -> Features:
         """Gets the MSD of all the values in the feature created"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
         timeFeature = TFeatureCreator().get_features(points)
         otherFeature = self._featureCreator.get_features(points)
 

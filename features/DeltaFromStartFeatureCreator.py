@@ -16,7 +16,7 @@ class DeltaFromStartFeatureCreator (FeatureCreatorBase):
         """Creates the features from the feature creator and gets eachs feature 
         value's delta from the start value."""
         origFeatures = self._featureCreator.get_features(points)
-        features = Features()
+        features = points.getFeaturesToInitialize()
         start = 0
         assignedStart = False
         for val in origFeatures:

@@ -62,3 +62,10 @@ class Features:
     def __repr__(self) -> str:
         """Gets the string representation of this feature"""
         return str(self._featuresList)
+
+    def clear(self) -> None:
+        """Clears out all of the feature values"""
+        self._featuresList.clear()
+
+    def __setitem__(self, key, value):
+        self._featuresList[key] = value

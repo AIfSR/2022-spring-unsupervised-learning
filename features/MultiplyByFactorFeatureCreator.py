@@ -14,7 +14,7 @@ class MultiplyByFactorFeatureCreator (FeatureCreatorBase):
     def get_features(self, points: Points) -> Features:
         """Gets the features from the original feature creator and multiplies all of the features values
         by the factor passed into the consctructor"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
         originalFeatures = self._featureCreator.get_features(points)
 
         for featureVal in originalFeatures:

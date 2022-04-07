@@ -20,7 +20,7 @@ class SpreadFeatureCreator (FeatureCreatorBase):
         xAvg = xSum / count
         yAvg = ySum / count
         zAvg = zSum / count
-        features = Features()
+        features = points.getFeaturesToInitialize()
         for point in points:
             distance = ((xAvg - point.get_x())**2 + (yAvg - point.get_y())**2 + (zAvg - point.get_z())**2)**0.5
             features.add_feature_val(distance)

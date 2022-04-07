@@ -13,7 +13,7 @@ class XYSpeedFeatureCreator (FeatureCreatorBase):
         """Gets all the XY speed of all of the points"""
         xSpeedFeatures = ABSFeatureCreator(RateOfChangeFeatureCreator(XFeatureCreator())).get_features(points)
         ySpeedFeatures = ABSFeatureCreator(RateOfChangeFeatureCreator(YFeatureCreator())).get_features(points)
-        features = Features()
+        features = points.getFeaturesToInitialize()
         for xSpeed, ySpeed in zip(xSpeedFeatures, ySpeedFeatures):
             totalSpeed = (xSpeed**2 + ySpeed**2)**0.5
             features.add_feature_val(totalSpeed)

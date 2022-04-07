@@ -14,7 +14,7 @@ class EliminatePointsOutsideRangeFeatureCreator (FeatureCreatorBase):
     def get_features(self, points:Points) -> Features:
         """Gets all the values within the range specified"""
         origFeatures = self._featureCreator.get_features(points)
-        features = Features()
+        features = points.getFeaturesToInitialize()
         count = 1
         for featureVal in origFeatures:
             if(count / len(origFeatures) <= self._rangeMax and count / len(origFeatures) >= self._rangeMin):

@@ -9,7 +9,7 @@ from tckfilereader.Points import Points
 from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase
 import unittest
 
-class OutlierFeatureCreatorTest (unittest.TestCase):
+class OutlierFeatureCreatorTest (FeatureCreatorTestBase):
 
     def get_feature_creator(self):
         """Gets the PointsAngleFeatureCreator to test"""

@@ -8,7 +8,7 @@ class PhiFeatureCreator (FeatureCreatorBase):
 
     def get_features(self, points:Points) -> Features:
         """Gets all the Phi values as features"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
         prevPoint = points[0]
         for i in range(1, len(points)):
             point = points[i]
@@ -16,6 +16,8 @@ class PhiFeatureCreator (FeatureCreatorBase):
             yDiff = point.get_y() - prevPoint.get_y()
             zDiff = point.get_z() - prevPoint.get_z()
             radius = (xDiff**2 + yDiff**2 + zDiff**2)**0.5
+            if radius == 0:
+                continue
             phi = math.acos(zDiff / radius)
             features.add_feature_val(phi)
             prevPoint = point

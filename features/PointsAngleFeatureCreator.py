@@ -9,7 +9,7 @@ class PointsAngleFeatureCreator (FeatureCreatorBase):
     def get_features(self, points:Points) -> Features:
         """Creates a feature that gets the euclidean angle between every
         point"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
 
         for i in range(len(points)-2):
             currentPoint = points[i]
@@ -24,7 +24,8 @@ class PointsAngleFeatureCreator (FeatureCreatorBase):
             nextzdifference = nextofnextPoint.get_z() - nextPoint.get_z()
             distance = (xdifference ** 2 + ydifference ** 2 + zdifference ** 2) ** 0.5
             nextdistance = (nextxdifference ** 2 + nextydifference ** 2 + nextzdifference ** 2) ** 0.5
-
+            if distance == 0 or nextdistance == 0:
+                continue
             angle = (xdifference*nextxdifference + ydifference*nextydifference + zdifference*nextzdifference)/(distance*nextdistance)
             # angle in cosine
 

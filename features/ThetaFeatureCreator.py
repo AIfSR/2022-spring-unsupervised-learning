@@ -8,7 +8,7 @@ class ThetaFeatureCreator (FeatureCreatorBase):
 
     def get_features(self, points:Points) -> Features:
         """Gets all the theta values as features"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
         prevPoint = points[0]
         for i in range(1, len(points)):
             point = points[i]

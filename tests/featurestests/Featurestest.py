@@ -86,3 +86,20 @@ class FeaturesTest (unittest.TestCase):
         for val in solution:
             feature.add_feature_val(val)
         self.assertEquals(feature.to_list(), solution)
+
+    def test_clear(self):
+        feature = Features()
+        feature.add_feature_val(1)
+        feature.add_feature_val(2)
+        feature.add_feature_val(8)
+        feature.clear()
+        feature2 = Features()
+        self.assertEquals(feature, feature2)
+
+    def test_setItem(self):
+        features = Features()
+        features.add_feature_val(1)
+        features[0] = 2
+        features2 = Features()
+        features2.add_feature_val(2)
+        self.assertEquals(features, features2)

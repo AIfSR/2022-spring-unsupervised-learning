@@ -7,7 +7,7 @@ class YFeatureCreator (FeatureCreatorBase):
 
     def get_features(self, points:Points) -> Features:
         """Gets all the Y values as features"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
         for point in points:
             features.add_feature_val(point.get_y())
 

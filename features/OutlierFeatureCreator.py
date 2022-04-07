@@ -16,7 +16,7 @@ class OutlierFeatureCreator (FeatureCreatorBase):
         """Gets all the outliers as features"""
 
         stdDeviations = self._get_deviations(points)
-        features = Features()
+        features = points.getFeaturesToInitialize()
         for deviation in stdDeviations:
             if abs(deviation) >= self._maxAcceptableDeviations:
                 features.add_feature_val(1.0)
@@ -32,7 +32,10 @@ class OutlierFeatureCreator (FeatureCreatorBase):
         stdDeviation = (sum([(feature - avg)**2 for feature in features]) / len(features))**0.5
         deviationsOfFeatureVals = []
         for featureval in features:
-            deviations = (featureval - avg) / stdDeviation
+            if stdDeviation != 0:
+                deviations = (featureval - avg) / stdDeviation
+            else:
+                deviations = 0
             deviationsOfFeatureVals.append(deviations)
         return deviationsOfFeatureVals
 

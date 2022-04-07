@@ -19,11 +19,9 @@ class ScaletoMillion(NormalizeFeaturesBase):
                 maxFeatureMagnitude = abs(featuresMin)
             if maxMagnitude < maxFeatureMagnitude:
                 maxMagnitude = maxFeatureMagnitude
-        scaledSet = []
-        for features in setOfFeatures:
-            scaledFeatures = Features()
-            for featureVal in features:
-                scaledFeatures.add_feature_val((featureVal / maxMagnitude) * (10 ** 8))
-            scaledSet.append(scaledFeatures)
 
-        return scaledSet
+        for features in setOfFeatures:
+            for i in range(len(features)):
+                features[i] = (features[i] / maxMagnitude) * (10 ** 8)
+
+        return features

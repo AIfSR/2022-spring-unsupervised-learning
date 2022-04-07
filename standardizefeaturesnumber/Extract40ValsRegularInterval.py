@@ -11,4 +11,7 @@ class Extract40ValsRegularInterval (StandardizeFeaturesNumberBase):
         interval = featureLength // 40
         for i in range(40):
             featureWith40Vals.add_feature_val(features[i*interval])
-        return featureWith40Vals
+        features.clear()
+        for featureVal in featureWith40Vals:
+            features.add_feature_val(featureVal)
+        return features

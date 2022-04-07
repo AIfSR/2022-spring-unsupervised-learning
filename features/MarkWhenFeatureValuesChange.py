@@ -14,7 +14,7 @@ class MarkWhenFeatureValuesChange (FeatureCreatorBase):
     def get_features(self, points:Points) -> Features:
         """Gets all the points where the feature changes values"""
         origFeatures = self._origFeatureCreator.get_features(points)
-        features = Features()
+        features = points.getFeaturesToInitialize()
         prevVal = origFeatures[0]
         features.add_feature_val(1.0)
         for i in range(1, len(origFeatures)):

@@ -10,7 +10,7 @@ class PointsDistanceFeatureCreator (FeatureCreatorBase):
     def get_features(self, points:Points) -> Features:
         """Creates a feature that gets the euclidean distance between every 
         point"""
-        features = Features()
+        features = points.getFeaturesToInitialize()
 
         for i in range(len(points)-1):
             currentPoint = points[i]

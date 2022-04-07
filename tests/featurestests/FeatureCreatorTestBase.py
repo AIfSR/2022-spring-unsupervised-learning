@@ -1,9 +1,10 @@
 import unittest
 from abc import ABC, abstractmethod
 from features.FeatureCreatorBase import FeatureCreatorBase
+from features.FeaturesWithNames import FeaturesWithNames
 from tckfilereader.Point import Point
+from tckfilereader.PointsWithNames import PointsWithNames
 from tckfilereader.Points import Points
-import random
 
 class FeatureCreatorTestBase (unittest.TestCase):
 
@@ -12,12 +13,16 @@ class FeatureCreatorTestBase (unittest.TestCase):
         """Gets the feature creator being tested"""
         pass
 
-    def test_length_of_feature(self):
-        """Tests that the length of the features and length of points are the same"""
-        points = Points()
-        for i in range(random.randint(20,30)):
-            points.addPoint(Point(random.random()*10,random.random()*10,random.random()*10,i))
+    def test_namesArePreserved(self):
+        """Tests that when a feature creator is passed in a Points object with a 
+        name, it creates a features object with a name"""
+        featureCreator = self.get_feature_creator()
+        pointsWithNames = PointsWithNames("name")
+        pointsWithNames.addPoint(Point(1,2,3,0))
+        pointsWithNames.addPoint(Point(1,2,3,1))
+        pointsWithNames.addPoint(Point(1,2,3,2))
+        features = featureCreator.get_features(pointsWithNames)
+        self.assertEquals(type(features), FeaturesWithNames)
+        self.assertEquals(features.getName(), "name")
 
-        feature = self.get_feature_creator().get_features(points)
-        self.assertEquals(len(feature), len(points))
 

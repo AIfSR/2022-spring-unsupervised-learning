@@ -14,7 +14,7 @@ class RaiseToPowerFeatureCreator (FeatureCreatorBase):
         """Gets all the features in the original feature creator raised to a 
         power"""
         origFeatures = self._origFeatureCreator.get_features(points)
-        features = Features()
+        features = points.getFeaturesToInitialize()
         for featureVal in origFeatures:
             features.add_feature_val(featureVal**self._power)
         return features

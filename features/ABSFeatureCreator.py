@@ -12,7 +12,7 @@ class ABSFeatureCreator (FeatureCreatorBase):
     def get_features(self, points:Points) -> Features:
         """Gets all the absolute values of the features passed in"""
         features = self._featureCreatorBase.get_features(points)
-        absFeatures = Features()
+        absFeatures = points.getFeaturesToInitialize()
         for featureVal in features:
             absFeatures.add_feature_val(abs(featureVal))
 

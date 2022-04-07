@@ -9,7 +9,9 @@ from tckfilereader.Point import Point
 from tckfilereader.Points import Points
 import math
 
-class PhiFeatureCreatorTest (unittest.TestCase):
+from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase
+
+class PhiFeatureCreatorTest (FeatureCreatorTestBase):
 
     def get_feature_creator(self):
         """Gets the EliminatePointsOutsideRangeFeatureCreator to test"""
