@@ -79,6 +79,6 @@ if __name__ == "__main__":
 
     predictions = algorithm.predict(inputFeatures)
 
-    for prediction, pointsWithNames in zip(predictions, points):
-        print(pointsWithNames.getName() + ": " + str(prediction))
+    for name, prediction in predictions:
+        print(name + ": " + str(prediction))
     

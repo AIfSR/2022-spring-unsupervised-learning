@@ -1,8 +1,11 @@
+from typing import Tuple
 from algorithms.AlgorithmBase import AlgorithmBase
 from features.Features import Features
 from sklearn.linear_model import LogisticRegression as LR
 import numpy as np
 import pickle
+
+from features.FeaturesWithNames import FeaturesWithNames
 
 
 class LogisticRegression(AlgorithmBase):
@@ -24,18 +27,21 @@ class LogisticRegression(AlgorithmBase):
         labels_arr = np.array(y)
         self._model.fit(trainingData, y)
 
-    def predict(self, testData: list[Features]) -> list[list[float]]:
+    def predict(self, testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:
         y_pred = self._model.predict(testData)
         y = []
-        for i in y_pred:
-            if i == 1:
-                y.append([1.0, 0.0, 0.0, 0.0])
-            elif i == 2:
-                y.append([0.0, 1.0, 0.0, 0.0])
-            elif i == 3:
-                y.append([0.0, 0.0, 1.0, 0.0])
+        for i in range(len(y_pred)):
+            predictionNum = y_pred[i]
+            name = testData[i].getName()
+            if predictionNum == 1:
+                prediction = [1.0, 0.0, 0.0, 0.0]
+            elif predictionNum == 2:
+                prediction = [0.0, 1.0, 0.0, 0.0]
+            elif predictionNum == 3:
+                prediction = [0.0, 0.0, 1.0, 0.0]
             else:
-                y.append([0.0, 0.0, 0.0, 1.0])
+                prediction = [0.0, 0.0, 0.0, 1.0]
+            y.append((name, prediction))
         return y
 
     def predict_proba(self, testData: list[Features]) -> list[list[float]]:

@@ -24,4 +24,4 @@ class ScaletoMillion(NormalizeFeaturesBase):
             for i in range(len(features)):
                 features[i] = (features[i] / maxMagnitude) * (10 ** 8)
 
-        return features
+        return setOfFeatures

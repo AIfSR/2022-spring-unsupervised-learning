@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
+from typing import Tuple
 
 from features.Features import Features
+from features.FeaturesWithNames import FeaturesWithNames
 
 class AlgorithmBase (ABC):
     
@@ -9,7 +11,7 @@ class AlgorithmBase (ABC):
         pass
 
     @abstractmethod
-    def predict(self,testData:list[Features]) -> list[list[float]]:
+    def predict(self,testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:
         pass
 
     @abstractmethod
