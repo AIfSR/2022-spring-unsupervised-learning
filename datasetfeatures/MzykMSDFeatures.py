@@ -15,22 +15,16 @@ class MzykMSDFeatures(DatasetFeaturesBase):
         dataset = MacrophageStageDataset()
         self.categories = dataset.getCategoriesWithPoints()
         self.featureCreator = ThreeDMSDFeatureCreator()
+        mainDir = Utilities.getMainDirectory()
+        self._dataFilePath = mainDir + "/data/Mzykdata.pkl"
 
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been
         converted to MSD values."""
-        mainDir = Utilities.getMainDirectory()
-        dataFilePath = mainDir + "/Mzykdata.pkl"
-        if os.path.exists(dataFilePath):
-            dataFile = open(dataFilePath, "rb")
-            loaded_dataSet = pickle.load(dataFile)
-            dataFile.close()
-            return loaded_dataSet
-
-        # GENERATE MSD VALUES HERE, WRITE RESULTS TO Mzykdata.pkl
-        self.generateDatafiles(dataFilePath)
-
-        dataFile = open(dataFilePath, "rb")
+        if not os.path.exists(self._dataFilePath):
+            self.generateDatafiles()
+        
+        dataFile = open(self._dataFilePath, "rb")
         loaded_dataSet = pickle.load(dataFile)
         dataFile.close()
         return loaded_dataSet
@@ -39,8 +33,8 @@ class MzykMSDFeatures(DatasetFeaturesBase):
         """Gets the labels for each example in the dataset"""
         pass
 
-    def generateDatafiles(self, dataFileName: str) -> None:
-        data_file = open(dataFileName, 'wb')
+    def generateDatafiles(self) -> None:
+        data_file = open(self._dataFilePath, 'wb')
         dataSet = []
         numOfLabels = len(self.categories)
         count = 0

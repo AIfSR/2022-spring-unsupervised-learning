@@ -15,46 +15,38 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         dataset = SyntheticDataset()
         self.categories = dataset.getCategoriesWithPoints()
         self.featureCreator = ThreeDMSDFeatureCreator()
+        mainDir = Utilities.getMainDirectory()
+        self._dataFilePath = mainDir + "/data/data.pkl"
+        self._labelFilePath = mainDir + "/data/label.pkl"
+
+    def _bothFilesExist(self) -> bool:
+        return os.path.exists(self._dataFilePath) and os.path.exists(self._labelFilePath)
 
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been
         converted to MSD values."""
-        mainDir = Utilities.getMainDirectory()
-        dataFilePath = mainDir + "/data.pkl"
-        if os.path.exists(dataFilePath):
-            dataFile = open(dataFilePath, "rb")
-            loaded_dataSet = pickle.load(dataFile)
-            dataFile.close()
-            return loaded_dataSet
+   
+        if not self._bothFilesExist():
+            self.generateDatafiles()
 
-        # GENERATE MSD VALUES HERE, WRITE RESULTS TO data.pkl
-        self.generateDatafiles(dataFilePath, mainDir + "/label.pkl")
-
-        dataFile = open(dataFilePath, "rb")
+        dataFile = open(self._dataFilePath, "rb")
         loaded_dataSet = pickle.load(dataFile)
         dataFile.close()
         return loaded_dataSet
 
     def getLabels(self) -> list[list[float]]:
         """Gets all of the labels of the synthetic dataset."""
-        mainDir = Utilities.getMainDirectory()
-        labelFilePath = mainDir + "/label.pkl"
-        if os.path.exists(labelFilePath):
-            labelFile = open(labelFilePath, "rb")
-            loadedLabels = pickle.load(labelFile)
-            labelFile.close()
-            return loadedLabels
+        if not self._bothFilesExist():
+            self.generateDatafiles()
 
-        # GENERATE LABELS HERE, WRITE RESULTS TO data.pkl
-        self.generateDatafiles(mainDir + "/data.pkl", labelFilePath)
-        labelFile = open(labelFilePath, "rb")
+        labelFile = open(self._labelFilePath, "rb")
         loadedLabels = pickle.load(labelFile)
         labelFile.close()
         return loadedLabels
 
-    def generateDatafiles(self, dataFileName: str, labelFileName: str) -> None:
-        label_file = open(labelFileName, 'wb')
-        data_file = open(dataFileName, 'wb')
+    def generateDatafiles(self) -> None:
+        label_file = open(self._labelFilePath, 'wb')
+        data_file = open(self._dataFilePath, 'wb')
         dataSet = []
         labels = []
         numOfLabels = len(self.categories)
