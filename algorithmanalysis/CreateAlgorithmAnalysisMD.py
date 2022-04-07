@@ -6,6 +6,7 @@ from datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
+from ml_pipelines.MLPipelineBase import MLPipelineBase
 from normalizefeatures.ScaletoMillion import ScaletoMillion
 from plotting.FeaturesOverIndices import FeaturesOverIndices
 from sklearn.model_selection import train_test_split as split
@@ -127,9 +128,11 @@ def createIncorGraphs(total_incorrect, dataSet):
                                           xLabel="Time Step,s", yLabel="3DMSD",)
 
 
-def createAnalysisDocument(algorithm):
-    normalizeFeatures = ScaletoMillion()
-    standardizeFeatures = Extract40ValsRegularInterval()
+def createAnalysisDocument(mlPipeline:MLPipelineBase):
+    normalizeFeatures = mlPipeline.getFeatureNormalizer()
+    standardizeFeatures = mlPipeline.getFeatureStandardizer()
+    algorithm = mlPipeline.getAlgorithm()
+
     syntheticMSDFeatures = SyntheticMSDFeatures()
     loaded_labels = syntheticMSDFeatures.getLabels()
     loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()

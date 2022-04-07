@@ -7,6 +7,7 @@ from normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
 from normalizefeatures.ScaletoMillion import ScaletoMillion
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 from standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
+import Utilities
 
 class LRPipelineFactory (MLPipelineBase):
     def __init__(self) -> None:
@@ -14,7 +15,7 @@ class LRPipelineFactory (MLPipelineBase):
         self._featureNormalizer = ScaletoMillion()
         self._featureStandardizer = Extract40ValsRegularInterval()
         self._algorithm = LogisticRegression()
-        self._algorithm.load("algorithms/LR_V1.0.pkl")
+        self._algorithm.load(Utilities.getMainDirectory() + "/algorithms/LR_V1.0.pkl")
         super().__init__()
     
     def getFeatureCreator(self) -> FeatureCreatorBase:
