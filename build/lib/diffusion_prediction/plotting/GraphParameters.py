@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from features.FeatureCreatorBase import FeatureCreatorBase
-from featuretosingleval.AverageOfFeature import AverageOfFeature
-from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.featuretosingleval.AverageOfFeature import AverageOfFeature
+from diffusion_prediction.featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
 
 
 

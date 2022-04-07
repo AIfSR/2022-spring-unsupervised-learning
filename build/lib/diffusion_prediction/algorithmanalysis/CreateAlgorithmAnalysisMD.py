@@ -1,18 +1,18 @@
 from typing import List, Tuple
-from datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
-from datasetfeatures.MzykMSDFeatures import MzykMSDFeatures
-from datasets.MacrophageStageDataset import MacrophageStageDataset
-from datasets.SyntheticDataset import SyntheticDataset
+from diffusion_prediction.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
+from diffusion_prediction.datasetfeatures.MzykMSDFeatures import MzykMSDFeatures
+from diffusion_prediction.datasets.MacrophageStageDataset import MacrophageStageDataset
+from diffusion_prediction.datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
-from features.FeaturesWithNames import FeaturesWithNames
-from ml_pipelines.MLPipelineBase import MLPipelineBase
-from normalizefeatures.ScaletoMillion import ScaletoMillion
-from plotting.FeaturesOverIndices import FeaturesOverIndices
+from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
+from diffusion_prediction.ml_pipelines.MLPipelineBase import MLPipelineBase
+from diffusion_prediction.normalizefeatures.ScaletoMillion import ScaletoMillion
+from diffusion_prediction.plotting.FeaturesOverIndices import FeaturesOverIndices
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
-from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
+from diffusion_prediction.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 
 
 def MyzkPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:

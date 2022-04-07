@@ -1,6 +1,5 @@
-from normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
-from features.Features import Features
-
+from diffusion_prediction.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
+from diffusion_prediction.features.Features import Features
 
 class ScaletoMillion(NormalizeFeaturesBase):
     """Normalizes the dataset by dividing by the maximum magnitude value in the

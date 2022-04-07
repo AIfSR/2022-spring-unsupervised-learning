@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from features.Features import Features
+from diffusion_prediction.features.Features import Features
 
 class StandardizeFeaturesNumberBase (ABC):
     """This is the base class from which standardizers derive from. The length 

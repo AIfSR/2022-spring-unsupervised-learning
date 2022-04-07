@@ -1,6 +1,6 @@
 from typing import List
-from features.Features import Features
-from tckfilereader.Point import Point
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.tckfilereader.Point import Point
 
 class PointsIterator:
     """Iterator class """

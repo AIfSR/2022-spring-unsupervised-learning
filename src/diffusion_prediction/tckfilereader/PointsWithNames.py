@@ -1,7 +1,7 @@
 from typing import List
-from features.FeaturesWithNames import FeaturesWithNames
-from tckfilereader.Point import Point
-from tckfilereader.Points import Points
+from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
+from diffusion_prediction.tckfilereader.Point import Point
+from diffusion_prediction.tckfilereader.Points import Points
 
 class PointsWithNames(Points):
     def __init__(self, title: str, pointsList: List[Point] = None) -> None:

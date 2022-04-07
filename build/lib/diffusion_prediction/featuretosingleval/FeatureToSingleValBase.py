@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from features.Features import Features
+from diffusion_prediction.features.Features import Features
 
 class FeatureToSingleValBase(ABC):
 

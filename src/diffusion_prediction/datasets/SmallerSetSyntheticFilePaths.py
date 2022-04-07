@@ -1,7 +1,7 @@
 import glob
 import os
 import re
-import Utilities
+import diffusion_prediction.Utilities as Utilities
 
 current_working_dir = Utilities.getMainDirectory()
 

@@ -1,10 +1,10 @@
 from typing import List, Tuple
-from datasets.DatasetBase import DatasetBase
-from tckfilereader.Points import Points
-from tckfilereader.PointsWithNames import PointsWithNames
+from diffusion_prediction.datasets.DatasetBase import DatasetBase
+from diffusion_prediction.tckfilereader.Points import Points
+from diffusion_prediction.tckfilereader.PointsWithNames import PointsWithNames
 
-import datasets.SmallerSetSyntheticFilePaths as FPSubset
-from tckfilereader.TCKFileReader import TCKFileReader
+import diffusion_prediction.datasets.SmallerSetSyntheticFilePaths as FPSubset
+from diffusion_prediction.tckfilereader.TCKFileReader import TCKFileReader
 
 class SyntheticDatasetSubset (DatasetBase):
     def __init__(self) -> None:

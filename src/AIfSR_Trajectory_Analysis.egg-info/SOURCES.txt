@@ -1,4 +1,5 @@
 LICENSE
+MANIFEST.in
 README.md
 pyproject.toml
 setup.cfg
@@ -6,7 +7,7 @@ src/AIfSR_Trajectory_Analysis.egg-info/PKG-INFO
 src/AIfSR_Trajectory_Analysis.egg-info/SOURCES.txt
 src/AIfSR_Trajectory_Analysis.egg-info/dependency_links.txt
 src/AIfSR_Trajectory_Analysis.egg-info/top_level.txt
-src/diffusion_prediction/DirName.py
+src/diffusion_prediction/LR_V1.0.pkl
 src/diffusion_prediction/Main.py
 src/diffusion_prediction/PredictDiffusionTypes.py
 src/diffusion_prediction/Utilities.py

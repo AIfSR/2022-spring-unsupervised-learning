@@ -1,8 +1,8 @@
 
-from features.FeatureCreatorBase import FeatureCreatorBase
-from features.Features import Features
-from features.TFeatureCreator import TFeatureCreator
-from tckfilereader.Points import Points
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.features.TFeatureCreator import TFeatureCreator
+from diffusion_prediction.tckfilereader.Points import Points
 
 
 class RateOfChangeFeatureCreator (FeatureCreatorBase):

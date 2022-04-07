@@ -1,4 +1,4 @@
-from features.Features import Features
+from diffusion_prediction.features.Features import Features
 
 class FeaturesWithNames (Features):
     def __init__(self, name:str) -> None:

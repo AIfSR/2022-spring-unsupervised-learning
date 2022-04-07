@@ -1,7 +1,7 @@
-from datasetfeatures.DatasetFeaturesBase import DatasetFeaturesBase
-from features.Features import Features
-from datasets.MacrophageStageDataset import MacrophageStageDataset
-from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
+from diffusion_prediction.datasetfeatures.DatasetFeaturesBase import DatasetFeaturesBase
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.datasets.MacrophageStageDataset import MacrophageStageDataset
+from diffusion_prediction.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 import os
 import pickle
 import Utilities

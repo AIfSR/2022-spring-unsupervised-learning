@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import List, Tuple
 
-from features.Features import Features
-from plotting.GraphParameters import GraphParameters
-from tckfilereader.Points import Points
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.plotting.GraphParameters import GraphParameters
+from diffusion_prediction.tckfilereader.Points import Points
 
 
 class ComparePlotsBase (ABC):

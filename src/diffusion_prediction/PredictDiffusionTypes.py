@@ -10,7 +10,6 @@ from diffusion_prediction.tckfilereader.PointsWithNames import PointsWithNames
 from diffusion_prediction.tckfilereader.TCKFileReader import TCKFileReader
 
 def checkDirectory(directory:str) -> None:
-    directory = sys.argv[1]
     if(not os.path.isdir(directory)):
         raise IOError("Cannot find directory: " + directory)
 

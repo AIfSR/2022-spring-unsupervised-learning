@@ -1,13 +1,14 @@
-from algorithms.AlgorithmBase import AlgorithmBase
-from algorithms.LogisticRegression import LogisticRegression
-from features.FeatureCreatorBase import FeatureCreatorBase
-from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
-from ml_pipelines.MLPipelineBase import MLPipelineBase
-from normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
-from normalizefeatures.ScaletoMillion import ScaletoMillion
-from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
-from standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
-import Utilities
+from diffusion_prediction.algorithms.AlgorithmBase import AlgorithmBase
+from diffusion_prediction.algorithms.LogisticRegression import LogisticRegression
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
+from diffusion_prediction.ml_pipelines.MLPipelineBase import MLPipelineBase
+from diffusion_prediction.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
+from diffusion_prediction.normalizefeatures.ScaletoMillion import ScaletoMillion
+from diffusion_prediction.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
+from diffusion_prediction.standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
+import diffusion_prediction.Utilities as Utilities
+from importlib import resources
 
 class LRPipelineFactory (MLPipelineBase):
     def __init__(self) -> None:
@@ -15,7 +16,9 @@ class LRPipelineFactory (MLPipelineBase):
         self._featureNormalizer = ScaletoMillion()
         self._featureStandardizer = Extract40ValsRegularInterval()
         self._algorithm = LogisticRegression()
-        self._algorithm.load(Utilities.getMainDirectory() + "/algorithms/LR_V1.0.pkl")
+        # with resources.open_binary("algorithms", "LR_V1.0.pkl") as fp:
+        #     self._algorithm.load(fp)
+        self._algorithm.load("diffusion_prediction", "LR_V1.0.pkl")
         super().__init__()
     
     def getFeatureCreator(self) -> FeatureCreatorBase:

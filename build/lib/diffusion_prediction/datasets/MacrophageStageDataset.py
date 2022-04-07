@@ -1,9 +1,9 @@
 from typing import List, Tuple
-from datasets.DatasetBase import DatasetBase
-from tckfilereader.Points import Points
-from tckfilereader.PointsWithNames import PointsWithNames
-import datasets.MzykFilePaths as FP
-from tckfilereader.TCKFileReader import TCKFileReader
+from diffusion_prediction.datasets.DatasetBase import DatasetBase
+from diffusion_prediction.tckfilereader.Points import Points
+from diffusion_prediction.tckfilereader.PointsWithNames import PointsWithNames
+import diffusion_prediction.datasets.MzykFilePaths as FP
+from diffusion_prediction.tckfilereader.TCKFileReader import TCKFileReader
 
 
 class MacrophageStageDataset (DatasetBase):

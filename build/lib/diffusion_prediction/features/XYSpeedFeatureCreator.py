@@ -1,10 +1,10 @@
-from features.FeatureCreatorBase import FeatureCreatorBase
-from features.Features import Features
-from features.ABSFeatureCreator import ABSFeatureCreator
-from features.RateOfChangeFeatureCreator import RateOfChangeFeatureCreator
-from features.XFeatureCreator import XFeatureCreator
-from features.YFeatureCreator import YFeatureCreator
-from tckfilereader.Points import Points
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.features.ABSFeatureCreator import ABSFeatureCreator
+from diffusion_prediction.features.RateOfChangeFeatureCreator import RateOfChangeFeatureCreator
+from diffusion_prediction.features.XFeatureCreator import XFeatureCreator
+from diffusion_prediction.features.YFeatureCreator import YFeatureCreator
+from diffusion_prediction.tckfilereader.Points import Points
 
 class XYSpeedFeatureCreator (FeatureCreatorBase):
     """Creates a Feature that is the speed of X and Y of the points"""

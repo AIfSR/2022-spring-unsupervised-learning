@@ -2,16 +2,15 @@ from typing import Dict, List, Tuple
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
-from features.FeatureCreatorBase import FeatureCreatorBase
-from features.Features import Features
-from features.XFeatureCreator import XFeatureCreator
-from features.TFeatureCreator import TFeatureCreator
-from features.MultiplyByFactorFeatureCreator import MultiplyByFactorFeatureCreator
-from features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
-from features.MSDFeatureCreator import MSDFeatureCreator
-from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
-from tckfilereader.Points import Points
-from plotting.singlepointcomparetrajectories.LineFeatureCreator import LineFeatureCreator
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.features.XFeatureCreator import XFeatureCreator
+from diffusion_prediction.features.TFeatureCreator import TFeatureCreator
+from diffusion_prediction.features.MultiplyByFactorFeatureCreator import MultiplyByFactorFeatureCreator
+from diffusion_prediction.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
+from diffusion_prediction.features.MSDFeatureCreator import MSDFeatureCreator
+from diffusion_prediction.featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
+from diffusion_prediction.tckfilereader.Points import Points
 from matplotlib.ticker import MaxNLocator
 
 

@@ -1,6 +1,6 @@
-from tckfilereader.Points import Points
+from diffusion_prediction.tckfilereader.Points import Points
 from abc import ABC, abstractmethod
-from features.Features import Features
+from diffusion_prediction.features.Features import Features
 
 class FeatureCreatorBase (ABC):
 

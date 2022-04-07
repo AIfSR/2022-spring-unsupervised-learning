@@ -1,6 +1,6 @@
-from features.FeatureCreatorBase import FeatureCreatorBase
-from features.Features import Features
-from tckfilereader.Points import Points
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.tckfilereader.Points import Points
 
 class EliminatePointsOutsideRangeFeatureCreator (FeatureCreatorBase):
     """Creates a Feature that eliminates the features outside of a certain range"""

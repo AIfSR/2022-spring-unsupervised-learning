@@ -1,6 +1,6 @@
-from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
-from featuretosingleval.AverageOfFeature import AverageOfFeature
-from features.Features import Features
+from diffusion_prediction.featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
+from diffusion_prediction.featuretosingleval.AverageOfFeature import AverageOfFeature
+from diffusion_prediction.features.Features import Features
 
 class StandardDeviationOfFeature (FeatureToSingleValBase):
 

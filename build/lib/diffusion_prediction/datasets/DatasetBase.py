@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Tuple
 
-from tckfilereader.Points import Points
+from diffusion_prediction.tckfilereader.Points import Points
 
 class DatasetBase(ABC):
 

@@ -1,6 +1,6 @@
 
-from normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
-from features.Features import Features
+from diffusion_prediction.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
+from diffusion_prediction.features.Features import Features
 
 class DoNothingNormalization (NormalizeFeaturesBase):
     """Does nothing to the Dataset to normalize it."""

@@ -1,11 +1,12 @@
 from typing import Tuple
-from algorithms.AlgorithmBase import AlgorithmBase
-from features.Features import Features
+from diffusion_prediction.algorithms.AlgorithmBase import AlgorithmBase
+from diffusion_prediction.features.Features import Features
 from sklearn.linear_model import LogisticRegression as LR
 import numpy as np
 import pickle
+from importlib import resources
 
-from features.FeaturesWithNames import FeaturesWithNames
+from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
 
 
 class LogisticRegression(AlgorithmBase):
@@ -55,6 +56,7 @@ class LogisticRegression(AlgorithmBase):
         pickle.dump(self._model, file)
         file.close
 
-    def load(self, pathToPklFile:str) -> None:
-        file = open(pathToPklFile, "rb")
-        self._model = pickle.load(file)
+    def load(self, directory:str, pklFile:str) -> None:
+        file = resources.read_binary(directory, pklFile)
+        # file = open(pathToPklFile, "rb")
+        self._model = pickle.loads(file)

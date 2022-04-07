@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
-from algorithms.AlgorithmBase import AlgorithmBase
-from features.FeatureCreatorBase import FeatureCreatorBase
-from features.Features import Features
-from normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
-from standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
+from diffusion_prediction.algorithms.AlgorithmBase import AlgorithmBase
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
+from diffusion_prediction.standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
 
 class MLPipelineBase (ABC):
     """This is a base class for all factories providing a machine learning 

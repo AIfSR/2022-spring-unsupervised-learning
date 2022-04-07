@@ -1,6 +1,6 @@
-from tckfilereader.PointsWithNames import PointsWithNames
-from tckfilereader.Points import Points
-from tckfilereader.Point import Point
+from diffusion_prediction.tckfilereader.PointsWithNames import PointsWithNames
+from diffusion_prediction.tckfilereader.Points import Points
+from diffusion_prediction.tckfilereader.Point import Point
 import os
 
 

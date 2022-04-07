@@ -1,5 +1,5 @@
-from featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
-from features.Features import Features
+from diffusion_prediction.featuretosingleval.FeatureToSingleValBase import FeatureToSingleValBase
+from diffusion_prediction.features.Features import Features
 
 class MaxOfFeature (FeatureToSingleValBase):
 

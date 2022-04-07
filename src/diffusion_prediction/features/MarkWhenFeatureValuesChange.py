@@ -1,8 +1,8 @@
 
 
-from features.FeatureCreatorBase import FeatureCreatorBase
-from features.Features import Features
-from tckfilereader.Points import Points
+from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
+from diffusion_prediction.features.Features import Features
+from diffusion_prediction.tckfilereader.Points import Points
 
 class MarkWhenFeatureValuesChange (FeatureCreatorBase):
     """Creates a feature where each value of 1 is when the value of a feature is 
