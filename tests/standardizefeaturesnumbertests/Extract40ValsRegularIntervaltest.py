@@ -2,6 +2,8 @@ from features.Features import Features
 from standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 import unittest
 
+from standardizefeaturesnumber.FeatureStandardizationError import FeatureStandardizationError
+
 class Extract40ValsRegularIntervalTest (unittest.TestCase):
     """Test class for the Extract40ValsRegularInterval Standardizer"""
 
@@ -40,3 +42,15 @@ class Extract40ValsRegularIntervalTest (unittest.TestCase):
         extract40ValsRegularInterval = Extract40ValsRegularInterval()
         features = extract40ValsRegularInterval.standardizeFeatures(features)
         self.assertEquals(solution, features)
+
+    def test_exception(self):
+        features = Features()
+        extract40ValsRegularInterval = Extract40ValsRegularInterval()
+        with self.assertRaises(FeatureStandardizationError):
+            extract40ValsRegularInterval.standardizeFeatures(features)
+        for i in range(39):
+            features.add_feature_val(i)
+        with self.assertRaises(FeatureStandardizationError):
+            extract40ValsRegularInterval.standardizeFeatures(features)
+        features.add_feature_val(5)
+        extract40ValsRegularInterval.standardizeFeatures(features)

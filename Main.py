@@ -4,7 +4,9 @@ import os
 from features.Features import Features
 from ml_pipelines.LRPipelineFactory import LRPipelineFactory
 from ml_pipelines.MLPipelineBase import MLPipelineBase
+from standardizefeaturesnumber.FeatureStandardizationError import FeatureStandardizationError
 from tckfilereader.Points import Points
+from tckfilereader.PointsWithNames import PointsWithNames
 from tckfilereader.TCKFileReader import TCKFileReader
 
 def getUserArguments() -> str:
@@ -41,7 +43,7 @@ def getTrajectories(inputTrajectoriesDirectory:str) -> list[Points]:
         sys.exit("Could not read any files in: " + inputTrajectoriesDirectory)
     return points
 
-def getFeaturesForAlgorithm(trajectories:list[Points], mlPipeline:MLPipelineBase) -> list[Features]:
+def getFeaturesForAlgorithm(trajectories:list[PointsWithNames], mlPipeline:MLPipelineBase) -> list[Features]:
     # The featureCreator converts points of a trajectory to features
     featureCreator = mlPipeline.getFeatureCreator()
     # The normalizeFeatures normalizes the feature values to ensure that feature 
@@ -53,10 +55,17 @@ def getFeaturesForAlgorithm(trajectories:list[Points], mlPipeline:MLPipelineBase
 
     allFeatures = []
     for trajectory in trajectories:
-        features = featureCreator.get_features(trajectory)
-        features = normalizeFeatures.normalizeFeature(features)
-        features = standardizeFeatures.standardizeFeatures(features)
-        allFeatures.append(features)
+        try:
+            features = featureCreator.get_features(trajectory)
+            features = normalizeFeatures.normalizeFeature(features)
+            features = standardizeFeatures.standardizeFeatures(features)
+            allFeatures.append(features)
+        except:
+            print("Could not process file: ")
+            print(trajectory.getName())
+            print("Does this trajectory have enough points? (more than 50 x,y,z,t points)")
+            print()
+        
     return allFeatures
 
 # Main is the main module that reads in the trajectories, calculates the MSD 
@@ -74,7 +83,6 @@ if __name__ == "__main__":
     inputTrajectoriesDirectory = getUserArguments()
     
     points = getTrajectories(inputTrajectoriesDirectory)
-    
     inputFeatures = getFeaturesForAlgorithm(points, mlPipeline)
 
     predictions = algorithm.predict(inputFeatures)

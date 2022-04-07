@@ -1,4 +1,5 @@
 from features.Features import Features
+from standardizefeaturesnumber.FeatureStandardizationError import FeatureStandardizationError
 from standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
 
 class Extract40ValsRegularInterval (StandardizeFeaturesNumberBase):
@@ -6,6 +7,8 @@ class Extract40ValsRegularInterval (StandardizeFeaturesNumberBase):
     def standardizeFeatures(self, features:Features) -> Features:
         """Takes a feature and takes 40 values from that feature at a regular 
         interval"""
+        if len(features) < 40:
+            raise FeatureStandardizationError()
         featureWith40Vals = Features()
         featureLength = len(features)
         interval = featureLength // 40
