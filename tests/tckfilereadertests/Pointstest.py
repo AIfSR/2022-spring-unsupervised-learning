@@ -1,4 +1,5 @@
 import unittest
+from features.Features import Features
 from tckfilereader.Points import Points
 from tckfilereader.Point import Point
 
@@ -56,3 +57,6 @@ class TestPointsMethods(unittest.TestCase):
         a_list.addPoint(point2)
         self.assertEquals(len(a_list), 2)
 
+    def test_getFeaturesToInitialize(self):
+        points = Points()
+        self.assertEquals(type(points.getFeaturesToInitialize()), Features)

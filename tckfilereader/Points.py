@@ -1,4 +1,5 @@
 from typing import List
+from features.Features import Features
 from tckfilereader.Point import Point
 
 class PointsIterator:
@@ -48,6 +49,10 @@ class Points:
         """Gets the number of points in this Points object"""
         return len(self.pointsList)
 
+    def getFeaturesToInitialize(self) -> Features:
+        """Gets a features object that should be initialized with feature values 
+        that represent these points"""
+        return Features()
 
 
 
