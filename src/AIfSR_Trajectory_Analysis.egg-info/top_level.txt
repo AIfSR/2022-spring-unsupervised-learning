@@ -1,2 +1,1 @@
 diffusion_prediction
-tests
