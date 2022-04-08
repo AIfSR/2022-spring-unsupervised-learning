@@ -41,7 +41,7 @@ class FeaturesOverIndices:
         xFeatures = indiciesFeatureCreator.get_features(None)
         self._display_plot_of_features(xFeatures, yFeatures, imageFile, title, xLabel, yLabel)
 
-    def _display_plot_of_features(self, xFeatures:Features, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None) -> None:
+    def _display_plot_of_features(self, xFeatures:Features, yFeatures:Features, imageFile:str, title:str, xLabel:str, yLabel:str) -> None:
         """Displays a plot of the yFeatureCreator over time"""
 
         ax_scatter = plt.axes()
@@ -86,7 +86,7 @@ class FeaturesOverIndices:
         yFeatures = yFeatureCreator.get_features(points)
         xFeatures = xFeatures[:len(yFeatures)]
 
-        self.display_plot_of_features(xFeatures, yFeatures, imageFile=imageFile, title=title, xLabel="Time Step,s", yLabel=str(yFeatureCreator))
+        self._display_plot_of_features(xFeatures, yFeatures, imageFile, title, "Time Step,s", str(yFeatureCreator))
 
 
 

@@ -9,11 +9,7 @@ def getUserArguments() -> str:
     directory = sys.argv[1]
     return directory
 
-from diffusion_prediction.ml_pipelines.LRPipelineFactory import LRPipelineFactory
-from diffusion_prediction.algorithmanalysis.CreateAlgorithmAnalysisMD import createAnalysisDocument
-
 if __name__ == "__main__":
-    createAnalysisDocument(LRPipelineFactory())
-    #inputTrajectoriesDirectory = getUserArguments()
-    #predict(inputTrajectoriesDirectory)
+    inputTrajectoriesDirectory = getUserArguments()
+    predict(inputTrajectoriesDirectory)
     

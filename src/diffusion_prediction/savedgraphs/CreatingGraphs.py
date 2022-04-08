@@ -43,9 +43,10 @@ def getPicturePathway(diffusionType:str, pointsWithNames:PointsWithNames):
 
 def createGraphsOfSampleOfSyntheticDataset():
     def plotTrajectory(categoryNumber:int, trajectoryNumber:int):
+        title = syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber].title
         FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
                                         syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber],
-                                        title=syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber].title)
+                                        title=title)
     
     plotTrajectory(0, 0)
     plotTrajectory(1, 44)
