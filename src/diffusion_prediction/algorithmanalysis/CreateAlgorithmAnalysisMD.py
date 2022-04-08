@@ -6,6 +6,7 @@ from diffusion_prediction.datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
+from diffusion_prediction.features.Features import Features
 from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
 from diffusion_prediction.ml_pipelines.MLPipelineBase import MLPipelineBase
 from diffusion_prediction.normalizefeatures.ScaletoMillion import ScaletoMillion

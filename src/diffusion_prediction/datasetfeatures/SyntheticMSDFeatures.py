@@ -1,10 +1,12 @@
 from diffusion_prediction.datasetfeatures.DatasetFeaturesBase import DatasetFeaturesBase
 from diffusion_prediction.features.Features import Features
+from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
 from diffusion_prediction.datasets.SyntheticDataset import SyntheticDataset
 from diffusion_prediction.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 import os
 import pickle
-import Utilities
+import diffusion_prediction.Utilities as Utilities
+from importlib import resources
 
 
 class SyntheticMSDFeatures(DatasetFeaturesBase):
@@ -16,8 +18,11 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         self.categories = dataset.getCategoriesWithPoints()
         self.featureCreator = ThreeDMSDFeatureCreator()
         mainDir = Utilities.getMainDirectory()
-        self._dataFilePath = mainDir + "/data/data.pkl"
-        self._labelFilePath = mainDir + "/data/label.pkl"
+        self._directory = mainDir + "/data"
+        self._dataFileName = "data.pkl"
+        self._labelFileName = "label.pkl"
+        self._dataFilePath = self._directory + "/" + self._dataFileName
+        self._labelFilePath = self._directory + "/" + self._labelFileName
 
     def _bothFilesExist(self) -> bool:
         return os.path.exists(self._dataFilePath) and os.path.exists(self._labelFilePath)
@@ -29,6 +34,7 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         if not self._bothFilesExist():
             self.generateDatafiles()
 
+        print("self._dataFilePath: ", self._dataFilePath)
         dataFile = open(self._dataFilePath, "rb")
         loaded_dataSet = pickle.load(dataFile)
         dataFile.close()

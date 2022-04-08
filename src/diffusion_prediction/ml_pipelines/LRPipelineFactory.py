@@ -16,8 +16,6 @@ class LRPipelineFactory (MLPipelineBase):
         self._featureNormalizer = ScaletoMillion()
         self._featureStandardizer = Extract40ValsRegularInterval()
         self._algorithm = LogisticRegression()
-        # with resources.open_binary("algorithms", "LR_V1.0.pkl") as fp:
-        #     self._algorithm.load(fp)
         self._algorithm.load("diffusion_prediction", "LR_V1.0.pkl")
         super().__init__()
     

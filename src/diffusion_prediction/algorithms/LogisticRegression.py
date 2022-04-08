@@ -58,5 +58,4 @@ class LogisticRegression(AlgorithmBase):
 
     def load(self, directory:str, pklFile:str) -> None:
         file = resources.read_binary(directory, pklFile)
-        # file = open(pathToPklFile, "rb")
         self._model = pickle.loads(file)

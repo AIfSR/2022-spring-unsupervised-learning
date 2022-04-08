@@ -1,7 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 
-from features.Features import Features
+from diffusion_prediction.features.Features import Features
 
 class DatasetFeaturesBase (ABC):
     """This is the base class for getting features from a dataset. This class 
