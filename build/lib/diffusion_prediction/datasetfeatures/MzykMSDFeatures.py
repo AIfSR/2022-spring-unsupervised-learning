@@ -4,7 +4,7 @@ from diffusion_prediction.datasets.MacrophageStageDataset import MacrophageStage
 from diffusion_prediction.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 import os
 import pickle
-import Utilities
+import diffusion_prediction.Utilities as Utilities
 
 
 class MzykMSDFeatures(DatasetFeaturesBase):
