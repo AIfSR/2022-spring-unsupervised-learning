@@ -66,7 +66,6 @@ def getFeaturesForAlgorithm(trajectories:list[PointsWithNames], mlPipeline:MLPip
 # values for them, predicts their diffusion types, and then prints out these 
 # predictions
 def predict(inputTrajectoriesDirectory:str):
-
     # This is the concrete factory class that defines the feature creator, 
     # normalizer, standardizer, and algorithm being used to process the 
     # trajectories for the Logistic Regression algorithm
