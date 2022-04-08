@@ -34,7 +34,6 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         if not self._bothFilesExist():
             self.generateDatafiles()
 
-        print("self._dataFilePath: ", self._dataFilePath)
         dataFile = open(self._dataFilePath, "rb")
         loaded_dataSet = pickle.load(dataFile)
         dataFile.close()
