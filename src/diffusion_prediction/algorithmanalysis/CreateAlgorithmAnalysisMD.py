@@ -14,6 +14,7 @@ from diffusion_prediction.plotting.FeaturesOverIndices import FeaturesOverIndice
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
 from diffusion_prediction.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
+import random
 
 
 def MyzkPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:
@@ -98,6 +99,10 @@ def createIncorGraphs(incorrect_names, dataSet):
     print('\033[1m', "Graphs of Incorrect Trajectories:", '\033[0m')
     print("Here is the graphs of the trajectories that were predicted incorrectly")
     plotting = FeaturesOverIndices()
+    maxNumberOfGraphs = 8
+    if len(incorrect_names) > maxNumberOfGraphs:
+        print("There were " + len(incorrect_names) + " total occurances predicted incorrectly. Randomly sampling a " + str(maxNumberOfGraphs) + " number of graphs:")
+        incorrect_names = random.sample(incorrect_names, maxNumberOfGraphs)
     for incorrect_name in incorrect_names:
         yFeature = getFeaturesByFeaturesName(incorrect_name, dataSet)
         plotting.display_plot_of_features(yFeatures=yFeature, title=incorrect_name,
