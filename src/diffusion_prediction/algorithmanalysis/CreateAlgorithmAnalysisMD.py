@@ -56,6 +56,7 @@ def MyzkInfo(mlPipeline:MLPipelineBase):
     RealAnalytics(m0_predict, "M0")
     RealAnalytics(m1_predict, "M1")
     RealAnalytics(m2_predict, "M2")
+    print()
     RealAnalytics(myzk_predictions, "Ovr")
 
 
