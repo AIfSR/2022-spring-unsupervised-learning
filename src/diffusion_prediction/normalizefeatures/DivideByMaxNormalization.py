@@ -18,5 +18,5 @@ class DivideByMaxNormalization (NormalizeFeaturesBase):
                 maxFeatureMagnitude = abs(featuresMin)
             for i in range(len(singleFeature)):
                 singleFeature[i] = singleFeature[i] / maxFeatureMagnitude
-            
+
         return setOfFeatures

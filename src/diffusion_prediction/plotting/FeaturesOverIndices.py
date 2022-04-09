@@ -58,7 +58,7 @@ class FeaturesOverIndices:
 
         ax_scatter.set_yscale('log')
         ax_scatter.set_xscale('log')
-
+        
         plt.plot(xFeatures, yFeatures, color="red", label="AIfSR")
         plt.legend()
 

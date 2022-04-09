@@ -38,9 +38,7 @@ def MyzkInfo(mlPipeline:MLPipelineBase):
     realMSDFeatures = MzykMSDFeatures()
     loaded_real_dataset = realMSDFeatures.getDatasetOfFeatures()
 
-    realdataSet = []
-    for feature in loaded_real_dataset:
-        realdataSet.append(normalizeFeatures.normalizeFeature(feature))
+    realdataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_real_dataset)
     myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(realdataSet)
     real_test_result = algorithm.predict(myzkdataSet)
 
@@ -95,7 +93,7 @@ def getFeaturesByFeaturesName(name:str, dataset:list[FeaturesWithNames]) -> Feat
     print("Could not find: " , name)
     return None
 
-def createIncorGraphs(incorrect_names, dataSet):
+def createIncorGraphs(incorrect_names:list[str], dataSet:list[FeaturesWithNames]):
     print('\033[1m', "Graphs of Incorrect Trajectories:", '\033[0m')
     print("Here is the graphs of the trajectories that were predicted incorrectly")
     plotting = FeaturesOverIndices()
