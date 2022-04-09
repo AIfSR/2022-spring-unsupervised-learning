@@ -3,7 +3,7 @@
 *.tck
 *.svg
 *.png
-*.pkl
+data/*.pkl
 label.pkl
 data.pkl
 Mzykdata.pkl
