@@ -7,6 +7,7 @@ import pickle
 from importlib import resources
 
 from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
+import diffusion_prediction.Utilities as Utilities
 
 
 class LogisticRegression(AlgorithmBase):
@@ -51,7 +52,8 @@ class LogisticRegression(AlgorithmBase):
 
     def save(self, directoryToSaveTo:str, name:str) -> None:
         """Saves the model to the directoryToSaveTo under the name provided"""
-        location = directoryToSaveTo + name + ".pkl"
+        main_dir = Utilities.getMainDirectory()
+        location = main_dir + "/" + directoryToSaveTo + "/" + name + ".pkl"
         file = open(location, 'wb')
         pickle.dump(self._model, file)
         file.close

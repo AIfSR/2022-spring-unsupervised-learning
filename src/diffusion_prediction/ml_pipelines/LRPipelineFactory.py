@@ -3,6 +3,7 @@ from diffusion_prediction.algorithms.LogisticRegression import LogisticRegressio
 from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
 from diffusion_prediction.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from diffusion_prediction.ml_pipelines.MLPipelineBase import MLPipelineBase
+from diffusion_prediction.normalizefeatures.DivideByMaxNormalization import DivideByMaxNormalization
 from diffusion_prediction.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
 from diffusion_prediction.normalizefeatures.ScaletoMillion import ScaletoMillion
 from diffusion_prediction.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
@@ -13,7 +14,7 @@ from importlib import resources
 class LRPipelineFactory (MLPipelineBase):
     def __init__(self) -> None:
         self._featureCreator = ThreeDMSDFeatureCreator()
-        self._featureNormalizer = ScaletoMillion()
+        self._featureNormalizer = DivideByMaxNormalization()
         self._featureStandardizer = Extract40ValsRegularInterval()
         self._algorithm = LogisticRegression()
         self._algorithm.load("diffusion_prediction", "LR_V1.0.pkl")

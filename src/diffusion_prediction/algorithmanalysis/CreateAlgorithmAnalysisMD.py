@@ -101,7 +101,7 @@ def createIncorGraphs(incorrect_names, dataSet):
     plotting = FeaturesOverIndices()
     maxNumberOfGraphs = 8
     if len(incorrect_names) > maxNumberOfGraphs:
-        print("There were " + len(incorrect_names) + " total occurances predicted incorrectly. Randomly sampling a " + str(maxNumberOfGraphs) + " number of graphs:")
+        print("There were " + str(len(incorrect_names)) + " total occurances predicted incorrectly. Randomly sampling a " + str(maxNumberOfGraphs) + " number of graphs:")
         incorrect_names = random.sample(incorrect_names, maxNumberOfGraphs)
     for incorrect_name in incorrect_names:
         yFeature = getFeaturesByFeaturesName(incorrect_name, dataSet)
@@ -114,7 +114,7 @@ def getRemovedNamesFromPrediction(predictions:list[Tuple[str,List[float]]]) -> l
         predictionsWithoutNames.append(prediction)
     return predictionsWithoutNames
 
-def createAnalysisDocument(mlPipeline:MLPipelineBase):
+def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None):
     normalizeFeatures = mlPipeline.getFeatureNormalizer()
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
     algorithm = mlPipeline.getAlgorithm()
@@ -131,6 +131,9 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase):
         = split(remData, remLbls, test_size=0.5, random_state=2)
 
     algorithm.train(trnData, trnLbls)
+    if(nameToSaveAlgoAs):
+        algorithm.save("", nameToSaveAlgoAs)
+
     test_result = algorithm.predict(testData)
     train_result = algorithm.predict(trnData)
     valid_result = algorithm.predict(valData)

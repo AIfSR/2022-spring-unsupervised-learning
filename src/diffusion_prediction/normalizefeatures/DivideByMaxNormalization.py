@@ -9,7 +9,6 @@ class DivideByMaxNormalization (NormalizeFeaturesBase):
     def normalizeToSetOfFeatures(self, setOfFeatures:list[Features]) -> list[Features]:
         """Normalizes the set of features by dividing each value by the largest 
         magnitude value found within all of the features."""
-        maxMagnitude = 0
         for singleFeature in setOfFeatures:
             featuresMax = max(singleFeature)
             featuresMin = min(singleFeature)
@@ -17,10 +16,7 @@ class DivideByMaxNormalization (NormalizeFeaturesBase):
                 maxFeatureMagnitude = featuresMax
             else:
                 maxFeatureMagnitude = abs(featuresMin)
-            if maxMagnitude < maxFeatureMagnitude:
-                maxMagnitude = maxFeatureMagnitude
-        for features in setOfFeatures:
-            for i in range(len(features)):
-                features[i] = features[i] / maxMagnitude
-        
+            for i in range(len(singleFeature)):
+                singleFeature[i] = singleFeature[i] / maxFeatureMagnitude
+            
         return setOfFeatures

@@ -17,9 +17,9 @@ class DivideByMaxNormalizationTest (unittest.TestCase):
         feature2.add_feature_val(5)
         inputList = [feature1, feature2]
         solutionFeature1 = Features()
-        solutionFeature1.add_feature_val(1 / 5)
-        solutionFeature1.add_feature_val(2 / 5)
-        solutionFeature1.add_feature_val(3 / 5)
+        solutionFeature1.add_feature_val(1 / 3)
+        solutionFeature1.add_feature_val(2 / 3)
+        solutionFeature1.add_feature_val(3 / 3)
         solutionFeature2 = Features()
         solutionFeature2.add_feature_val(4 / 5)
         solutionFeature2.add_feature_val(5 / 5)
