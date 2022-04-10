@@ -65,7 +65,7 @@ def getFeaturesForAlgorithm(trajectories:list[PointsWithNames], mlPipeline:MLPip
 
 def printPredictions(predictions:list[Tuple[str, list[float]]]) -> None:
     for name, prediction in predictions:
-        output = name + ": "
+        output = name + ": \n"
         if prediction == [1.0, 0.0, 0.0, 0.0]:
             output += "Ballistic: Yes, Confined Diffusion: No, Random Walk: No, Very Confined Diffusion: No"
         elif prediction == [0.0, 1.0, 0.0, 0.0]:
@@ -76,4 +76,5 @@ def printPredictions(predictions:list[Tuple[str, list[float]]]) -> None:
             output += "Ballistic: No, Confined Diffusion: No, Random Walk: No, Very Confined Diffusion: Yes"
         else:
             output += str(prediction)
+        output += "\n"
         print(output)
