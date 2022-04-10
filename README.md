@@ -1,6 +1,6 @@
 This package was designed to analyze the trajectories of nanodiamonds in macrophages. Machine learning algorithms were trained on synthetic datasets to predict the type of diffusion occuring within a trajectory based on the path of the trajectory alone.   
 
-To install this package run the command:  
+To install this package run the following command from the command line:  
 ```bash
 pip install <PATH_TO_DIRECTORY_CONTAINING_setup.cfg>  
 ```
