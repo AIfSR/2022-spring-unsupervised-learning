@@ -15,7 +15,7 @@ def predict(inputTrajectoriesDirectory:str):
 
     Example usage (Assume /Users/seandoyle/MyDirectory is a directory containing 
     the trajectories: Trajectory1.tck, Trajectory2.tck, and Trajectory3.tck):
-    >>>predict("/Users/seandoyle/MyDirectory")
+    >>> predict("/Users/seandoyle/MyDirectory")
     /Users/seandoyle/MyDirectory/Trajectory1.tck:
     Ballistic: No, Confined Diffusion: No, Random Walk: Yes, Very Confined Diffusion: No
 
