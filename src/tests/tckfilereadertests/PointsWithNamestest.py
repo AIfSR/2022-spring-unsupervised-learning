@@ -1,7 +1,7 @@
 import unittest
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
-from diffusion_prediction.tckfilereader.PointsWithNames import PointsWithNames
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.features.FeaturesWithNames import FeaturesWithNames
+from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
 
 class TestPointsWithNames(unittest.TestCase):
 

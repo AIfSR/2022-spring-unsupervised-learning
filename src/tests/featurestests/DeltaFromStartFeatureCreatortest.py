@@ -1,8 +1,8 @@
-from diffusion_prediction.features.DeltaFromStartFeatureCreator import DeltaFromStartFeatureCreator
-from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.tckfilereader.Point import Point
-from diffusion_prediction.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.features.DeltaFromStartFeatureCreator import DeltaFromStartFeatureCreator
+from AIfSR_Trajectory_Analysis.features.FeatureCreatorBase import FeatureCreatorBase
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 import unittest
 
 from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase

@@ -1,5 +1,5 @@
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.standardizefeaturesnumber.DoNothingStandardizer import DoNothingStandardizer
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.DoNothingStandardizer import DoNothingStandardizer
 import unittest
 
 class DoNothingStandardizerTest (unittest.TestCase):

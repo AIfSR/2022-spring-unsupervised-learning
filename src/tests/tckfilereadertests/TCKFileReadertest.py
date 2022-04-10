@@ -1,8 +1,8 @@
 import unittest
-from diffusion_prediction.tckfilereader.PointsWithNames import PointsWithNames
-from diffusion_prediction.tckfilereader.TCKFileReader import TCKFileReader
-from diffusion_prediction.tckfilereader.Points import Points
-from diffusion_prediction.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
+from AIfSR_Trajectory_Analysis.tckfilereader.TCKFileReader import TCKFileReader
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
 
 class TCKFileReaderTest (unittest.TestCase):
 

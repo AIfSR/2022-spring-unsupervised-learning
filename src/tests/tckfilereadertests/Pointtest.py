@@ -1,5 +1,5 @@
 import unittest
-from diffusion_prediction.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
 
 
 class TestPointMethods(unittest.TestCase):

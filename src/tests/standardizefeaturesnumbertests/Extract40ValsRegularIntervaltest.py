@@ -1,8 +1,8 @@
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 import unittest
 
-from diffusion_prediction.standardizefeaturesnumber.FeatureStandardizationError import FeatureStandardizationError
+from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.FeatureStandardizationError import FeatureStandardizationError
 
 class Extract40ValsRegularIntervalTest (unittest.TestCase):
     """Test class for the Extract40ValsRegularInterval Standardizer"""

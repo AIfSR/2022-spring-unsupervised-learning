@@ -1,10 +1,10 @@
 import unittest
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.features.MultiplyByFactorFeatureCreator import MultiplyByFactorFeatureCreator
-from diffusion_prediction.features.XFeatureCreator import XFeatureCreator
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.features.MultiplyByFactorFeatureCreator import MultiplyByFactorFeatureCreator
+from AIfSR_Trajectory_Analysis.features.XFeatureCreator import XFeatureCreator
 
-from diffusion_prediction.tckfilereader.Point import Point
-from diffusion_prediction.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase
 
 class RateOfChangeFeatureCreatorTest (FeatureCreatorTestBase):

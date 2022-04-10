@@ -1,4 +1,4 @@
-from diffusion_prediction.PredictDiffusionTypes import predict
+from AIfSR_Trajectory_Analysis.Trajectory_Analysis import predict
 import sys
 
 def getUserArguments() -> str:

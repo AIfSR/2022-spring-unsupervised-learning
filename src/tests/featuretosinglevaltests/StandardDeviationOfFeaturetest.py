@@ -1,7 +1,7 @@
 import unittest
 
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.featuretosingleval.StandardDeviationOfFeature import StandardDeviationOfFeature
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.featuretosingleval.StandardDeviationOfFeature import StandardDeviationOfFeature
 
 class StandardDeviationOfFeatureTest(unittest.TestCase):
  

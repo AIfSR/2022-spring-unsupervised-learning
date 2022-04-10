@@ -1,9 +1,9 @@
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.features.RaiseToPowerFeatureCreator import RaiseToPowerFeatureCreator
-from diffusion_prediction.features.XFeatureCreator import XFeatureCreator
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.features.RaiseToPowerFeatureCreator import RaiseToPowerFeatureCreator
+from AIfSR_Trajectory_Analysis.features.XFeatureCreator import XFeatureCreator
 
-from diffusion_prediction.tckfilereader.Point import Point
-from diffusion_prediction.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase
 
 class RaiseToPowerFeatureCreatorTest (FeatureCreatorTestBase):

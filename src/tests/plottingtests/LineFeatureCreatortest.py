@@ -1,8 +1,8 @@
 import unittest
 
-from diffusion_prediction.plotting.singlepointcomparetrajectories.LineFeatureCreator import LineFeatureCreator
-from diffusion_prediction.tckfilereader.Point import Point
-from diffusion_prediction.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.plotting.singlepointcomparetrajectories.LineFeatureCreator import LineFeatureCreator
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 
 class LineFeatureCreatorTest (unittest.TestCase):
 

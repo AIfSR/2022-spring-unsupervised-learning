@@ -1,9 +1,9 @@
 import unittest
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.features.ZFeatureCreator import ZFeatureCreator
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.features.ZFeatureCreator import ZFeatureCreator
 
-from diffusion_prediction.tckfilereader.Point import Point
-from diffusion_prediction.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase
 
 class ZFeatureCreatorTest (FeatureCreatorTestBase):

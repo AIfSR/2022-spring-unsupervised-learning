@@ -1,5 +1,5 @@
 import unittest
-from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
+from AIfSR_Trajectory_Analysis.features.FeaturesWithNames import FeaturesWithNames
 
 class FeaturesWithNamesTest (unittest.TestCase):
 

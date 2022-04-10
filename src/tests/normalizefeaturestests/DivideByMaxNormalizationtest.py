@@ -1,5 +1,5 @@
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.normalizefeatures.DivideByMaxNormalization import DivideByMaxNormalization
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.normalizefeatures.DivideByMaxNormalization import DivideByMaxNormalization
 import unittest
 
 class DivideByMaxNormalizationTest (unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
-from diffusion_prediction.algorithms.LogisticRegression import LogisticRegression
-from diffusion_prediction.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
+from AIfSR_Trajectory_Analysis.algorithms.LogisticRegression import LogisticRegression
+from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
 
 
 class LogisticRegressionTest(unittest.TestCase):

@@ -1,10 +1,10 @@
 import unittest
 from abc import ABC, abstractmethod
-from diffusion_prediction.features.FeatureCreatorBase import FeatureCreatorBase
-from diffusion_prediction.features.FeaturesWithNames import FeaturesWithNames
-from diffusion_prediction.tckfilereader.Point import Point
-from diffusion_prediction.tckfilereader.PointsWithNames import PointsWithNames
-from diffusion_prediction.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.features.FeatureCreatorBase import FeatureCreatorBase
+from AIfSR_Trajectory_Analysis.features.FeaturesWithNames import FeaturesWithNames
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 
 class FeatureCreatorTestBase (unittest.TestCase):
 

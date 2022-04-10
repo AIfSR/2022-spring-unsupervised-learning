@@ -1,13 +1,13 @@
 import unittest
 import numpy as np
-from diffusion_prediction.features.Features import Features
-from diffusion_prediction.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
-from diffusion_prediction.features.XFeatureCreator import XFeatureCreator
-from diffusion_prediction.features.YFeatureCreator import YFeatureCreator
-from diffusion_prediction.features.ZFeatureCreator import ZFeatureCreator
+from AIfSR_Trajectory_Analysis.features.Features import Features
+from AIfSR_Trajectory_Analysis.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
+from AIfSR_Trajectory_Analysis.features.XFeatureCreator import XFeatureCreator
+from AIfSR_Trajectory_Analysis.features.YFeatureCreator import YFeatureCreator
+from AIfSR_Trajectory_Analysis.features.ZFeatureCreator import ZFeatureCreator
 
-from diffusion_prediction.tckfilereader.Point import Point
-from diffusion_prediction.tckfilereader.Points import Points
+from AIfSR_Trajectory_Analysis.tckfilereader.Point import Point
+from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from tests.featurestests.FeatureCreatorTestBase import FeatureCreatorTestBase
 
 class RateOfChangeFeatureCreatorTest (FeatureCreatorTestBase):
