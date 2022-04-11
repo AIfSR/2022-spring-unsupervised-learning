@@ -7,7 +7,7 @@ import pickle
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 
 
-class MzykMSDFeatures(DatasetFeaturesBase):
+class RealMSDFeatures(DatasetFeaturesBase):
     """This class provides easy access for all of the MSD values from the
     real dataset"""
 
@@ -16,7 +16,7 @@ class MzykMSDFeatures(DatasetFeaturesBase):
         self.categories = dataset.getCategoriesWithPoints()
         self.featureCreator = ThreeDMSDFeatureCreator()
         mainDir = Utilities.getMainDirectory()
-        self._dataFilePath = mainDir + "/data/Mzykdata.pkl"
+        self._dataFilePath = mainDir + "/data/Realdata.pkl"
 
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been

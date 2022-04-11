@@ -1,6 +1,6 @@
 from typing import List, Tuple
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
-from AIfSR_Trajectory_Analysis.datasetfeatures.MzykMSDFeatures import MzykMSDFeatures
+from AIfSR_Trajectory_Analysis.datasetfeatures.RealMSDFeatures import RealMSDFeatures
 from AIfSR_Trajectory_Analysis.datasets.MacrophageStageDataset import MacrophageStageDataset
 from AIfSR_Trajectory_Analysis.datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
@@ -35,7 +35,7 @@ def MyzkInfo(mlPipeline:MLPipelineBase):
     normalizeFeatures = mlPipeline.getFeatureNormalizer()
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
     algorithm = mlPipeline.getAlgorithm()
-    realMSDFeatures = MzykMSDFeatures()
+    realMSDFeatures = RealMSDFeatures()
     loaded_real_dataset = realMSDFeatures.getDatasetOfFeatures()
 
     realdataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_real_dataset)
