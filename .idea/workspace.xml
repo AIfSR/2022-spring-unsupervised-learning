@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d188f595-363c-4814-af61-12f1a1c9bbe2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/build/lib/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/AIfSR_Trajectory_Analysis/datasetfeatures/RealMSDFeatures.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/AIfSR_Trajectory_Analysis/datasetfeatures/RealMSDFeatures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/AIfSR_Trajectory_Analysis/datasets/MacrophageStageDataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/AIfSR_Trajectory_Analysis/datasets/MacrophageStageDataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/savedgraphs/SyntheticGraphs.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/savedgraphs/SyntheticGraphs.ipynb" afterDir="false" />
-    </list>
+    <list default="true" id="d188f595-363c-4814-af61-12f1a1c9bbe2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,6 +72,7 @@
       <workItem from="1649664024623" duration="13000" />
       <workItem from="1649664067705" duration="34000" />
       <workItem from="1649666870979" duration="15000" />
+      <workItem from="1649711328726" duration="93000" />
     </task>
     <servers />
   </component>
@@ -94,16 +89,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>8</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
