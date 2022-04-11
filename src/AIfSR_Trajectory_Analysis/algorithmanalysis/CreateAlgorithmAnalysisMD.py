@@ -1,6 +1,6 @@
 from typing import List, Tuple
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
-from AIfSR_Trajectory_Analysis.datasetfeatures.MzykMSDFeatures import MzykMSDFeatures
+from AIfSR_Trajectory_Analysis.datasetfeatures.RealMSDFeatures import RealMSDFeatures
 from AIfSR_Trajectory_Analysis.datasets.MacrophageStageDataset import MacrophageStageDataset
 from AIfSR_Trajectory_Analysis.datasets.SyntheticDataset import SyntheticDataset
 import numpy as np
@@ -17,7 +17,7 @@ from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.Extract40ValsRegularInt
 import random
 
 
-def MyzkPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:
+def RealPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:
     predict = []
     for name, prediction in result:
         if tag in name:
@@ -31,21 +31,21 @@ def RealAnalytics(predict: List[List[float]], tag: str) -> None:
           "%\tvcd: " + str(format((predict.count([0.0, 0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
 
 
-def MyzkInfo(mlPipeline:MLPipelineBase):
+def RealInfo(mlPipeline:MLPipelineBase):
     normalizeFeatures = mlPipeline.getFeatureNormalizer()
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
     algorithm = mlPipeline.getAlgorithm()
-    realMSDFeatures = MzykMSDFeatures()
+    realMSDFeatures = RealMSDFeatures()
     loaded_real_dataset = realMSDFeatures.getDatasetOfFeatures()
 
     realdataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_real_dataset)
-    myzkdataSet = standardizeFeatures.standardizeSetOfFeatures(realdataSet)
-    real_test_result = algorithm.predict(myzkdataSet)
+    realdataSet = standardizeFeatures.standardizeSetOfFeatures(realdataSet)
+    real_test_result = algorithm.predict(realdataSet)
 
-    m0_predict = MyzkPredictions(real_test_result, "M0")
-    m1_predict = MyzkPredictions(real_test_result, "M1")
-    m2_predict = MyzkPredictions(real_test_result, "M2")
-    myzk_predictions = m0_predict + m1_predict + m2_predict
+    m0_predict = RealPredictions(real_test_result, "M0")
+    m1_predict = RealPredictions(real_test_result, "M1")
+    m2_predict = RealPredictions(real_test_result, "M2")
+    real_predictions = m0_predict + m1_predict + m2_predict
 
     print()
     print('\033[1m', "Analytics of Predictions: ", '\033[0m')
@@ -56,7 +56,7 @@ def MyzkInfo(mlPipeline:MLPipelineBase):
     RealAnalytics(m1_predict, "M1")
     RealAnalytics(m2_predict, "M2")
     print()
-    RealAnalytics(myzk_predictions, "Ovr")
+    RealAnalytics(real_predictions, "Ovr")
 
 
 def displayInaccuracies(Lbls: List[List[float]], result: List[Tuple[str, List[float]]], tag:str) -> List[str]:
@@ -159,4 +159,4 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     incorrect_names = names_trn_incor + names_test_incor + names_valid_incor
     createIncorGraphs(incorrect_names, dataSet)
 
-    MyzkInfo(mlPipeline)
+    RealInfo(mlPipeline)

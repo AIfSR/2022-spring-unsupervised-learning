@@ -2,7 +2,7 @@ from typing import List, Tuple
 from AIfSR_Trajectory_Analysis.datasets.DatasetBase import DatasetBase
 from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
-import AIfSR_Trajectory_Analysis.datasets.MzykFilePaths as FP
+import AIfSR_Trajectory_Analysis.datasets.RealFilePaths as FP
 from AIfSR_Trajectory_Analysis.tckfilereader.TCKFileReader import TCKFileReader
 
 
@@ -13,7 +13,7 @@ class MacrophageStageDataset (DatasetBase):
         super().__init__()
 
     def getCategoriesWithPoints(self) -> List[Tuple[str, List[PointsWithNames]]]:
-        """Returns a list of all of Mzyk's data split up by m0, m1, and m2"""
+        """Returns a list of all the real data split up by m0, m1, and m2"""
         m0Points = self._getValidPointsFromFilePaths(FP.m0FilePaths)
         m1Points = self._getValidPointsFromFilePaths(FP.m1FilePaths)
         m2Points = self._getValidPointsFromFilePaths(FP.m2FilePaths)

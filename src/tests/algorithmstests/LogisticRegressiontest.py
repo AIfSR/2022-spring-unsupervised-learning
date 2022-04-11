@@ -6,7 +6,6 @@ from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import Synth
 class LogisticRegressionTest(unittest.TestCase):
 
     def test_predict(self):
-        assert False
         syntheticMSDFeatures = SyntheticMSDFeatures()
         loaded_labels = syntheticMSDFeatures.getLabels()
         loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
@@ -15,8 +14,8 @@ class LogisticRegressionTest(unittest.TestCase):
 
         algorithm = LogisticRegression()
         algorithm.train(dataset, labels)
-        result = list(algorithm.predict(loaded_dataSet[:10]))
-        self.assertEqual(result, [1,1,1,1,1,1,1,1,1,1])
+        result = list(algorithm.predict(loaded_dataSet[:1]))
+        self.assertEqual(result, [('data/02_01_Simulated_trajectories/Simple_cases/Ballistic_movement/trajectories/pure_ballistic_0.tck', [1.0, 0.0, 0.0, 0.0])])
 
 
 

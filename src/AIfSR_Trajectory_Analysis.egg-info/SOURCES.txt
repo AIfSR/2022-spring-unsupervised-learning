@@ -19,12 +19,12 @@ src/AIfSR_Trajectory_Analysis/algorithms/AlgorithmBase.py
 src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py
 src/AIfSR_Trajectory_Analysis/algorithms/__init__.py
 src/AIfSR_Trajectory_Analysis/datasetfeatures/DatasetFeaturesBase.py
-src/AIfSR_Trajectory_Analysis/datasetfeatures/MzykMSDFeatures.py
+src/AIfSR_Trajectory_Analysis/datasetfeatures/RealMSDFeatures.py
 src/AIfSR_Trajectory_Analysis/datasetfeatures/SyntheticMSDFeatures.py
 src/AIfSR_Trajectory_Analysis/datasetfeatures/__init__.py
 src/AIfSR_Trajectory_Analysis/datasets/DatasetBase.py
 src/AIfSR_Trajectory_Analysis/datasets/MacrophageStageDataset.py
-src/AIfSR_Trajectory_Analysis/datasets/MzykFilePaths.py
+src/AIfSR_Trajectory_Analysis/datasets/RealFilePaths.py
 src/AIfSR_Trajectory_Analysis/datasets/SmallerSetSyntheticFilePaths.py
 src/AIfSR_Trajectory_Analysis/datasets/SyntheticDataset.py
 src/AIfSR_Trajectory_Analysis/datasets/SyntheticDatasetSubset.py
