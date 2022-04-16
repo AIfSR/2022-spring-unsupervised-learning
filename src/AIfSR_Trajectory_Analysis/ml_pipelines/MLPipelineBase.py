@@ -35,3 +35,7 @@ class MLPipelineBase (ABC):
     def getAlgorithm(self) -> AlgorithmBase:
         """Gets the algorithm to process the data"""
         pass
+
+    @abstractmethod
+    def __str__(self) -> str:
+        pass

@@ -17,4 +17,7 @@ class DatasetFeaturesBase (ABC):
     def getLabels(self) -> list[list[float]]:
         """Gets the labels for each example in the dataset"""
         pass
-
+    
+    @abstractmethod
+    def __str__(self) -> str:
+        pass

@@ -46,7 +46,7 @@ class LogisticRegression(AlgorithmBase):
             y.append((name, prediction))
         return y
 
-    def predict_proba(self, testData: list[Features]) -> list[list[float]]:
+    def predictProbabilities(self,testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:
         y_pred = self._model.predict_proba(testData)
         return y_pred
 

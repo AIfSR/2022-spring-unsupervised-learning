@@ -38,3 +38,6 @@ class LRPipelineFactory (MLPipelineBase):
     def getAlgorithm(self) -> AlgorithmBase:
         """Gets the logistic regression algorithm"""
         return self._algorithm
+
+    def __str__(self) -> str:
+        return "Logistic Regression Algorithm"

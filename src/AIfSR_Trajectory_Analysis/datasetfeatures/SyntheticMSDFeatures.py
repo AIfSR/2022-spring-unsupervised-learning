@@ -78,3 +78,6 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         label_file.close()
         pickle.dump(dataSet, data_file)
         data_file.close()
+
+    def __str__(self) -> str:
+        return "Simple_cases"

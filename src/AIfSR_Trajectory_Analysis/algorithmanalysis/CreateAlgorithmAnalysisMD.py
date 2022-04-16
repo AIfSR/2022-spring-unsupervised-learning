@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from AIfSR_Trajectory_Analysis.algorithms.AlgorithmBase import AlgorithmBase
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.datasetfeatures.RealMSDFeatures import RealMSDFeatures
 from AIfSR_Trajectory_Analysis.datasets.MacrophageStageDataset import MacrophageStageDataset
@@ -59,28 +60,30 @@ def RealInfo(mlPipeline:MLPipelineBase):
     RealAnalytics(real_predictions, "Ovr")
 
 
-def displayInaccuracies(Lbls: List[List[float]], result: List[Tuple[str, List[float]]], tag:str) -> List[str]:
+def displayInaccuracies(Lbls: List[List[float]], result: List[Tuple[str, List[float]]], tag:str, algorithm:AlgorithmBase, dataset:list[FeaturesWithNames]) -> List[str]:
     incorrectResults = []
-    names = ""
-    incorrectPredictions = ""
-    actualDiffusionTypes = ""
+    print("Incorrectly Labeled trajectories for: " , tag)
+    print("Labeling Format:")
+    print('\033[1m', "[Ballistic Motion, Confined Diffusion, Random Walk, Very Confinded Diffusion]", '\033[0m')
+    print("Line Format:")
+    print("Name")
+    print("prediction, label")
+    print("----------------------------------")
     for label, prediction in zip(Lbls, result):
         predictionName, predictionVal = prediction
         if not label == predictionVal:
+            features = getFeaturesByFeaturesName(predictionName, dataset)
+            print(predictionName)
+            probabilities = algorithm.predictProbabilities([features])[0]
+            roundedProb = []
+            for prob in probabilities:
+                roundedProb.append(round(prob, 2))
+            print(roundedProb, ", ", label)
             incorrectResults.append(predictionName)
-            names += predictionName + "\n"
-            incorrectPredictions += str(predictionVal) + "\n"
-            actualDiffusionTypes += str(label) + "\n"
+        
     
-    if len(incorrectResults) != 0:
-        print("Names of incorrect predictions for: " + tag)
-        print(names)
-        print("Actual Diffusion Types: ")
-        print(actualDiffusionTypes)
-        print("Incorrect predictions: ")
-        print(incorrectPredictions)  
-    else:
-        print("Algorithm correctly predicted all labels for: " + tag)
+    if len(incorrectResults) == 0:
+        print("N/A")
     print()
     print()
     
@@ -135,10 +138,13 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     test_result = algorithm.predict(testData)
     train_result = algorithm.predict(trnData)
     valid_result = algorithm.predict(valData)
-
+    print(str(mlPipeline), "on dataset:", str(syntheticMSDFeatures))
+    
     print('\033[1m', "Accuracy Measurements:", '\033[0m')
     print("Here is the accuracy of our algorithm when the training set, test set,"
-          " and cross validation set is passed in")
+        " and cross validation set is passed in")
+    print("Accuracy of an algorithm is typically measured based on test set" 
+        " accuracy because the algorithm has never seen the \ntest set before")
     print()
     print("Training Accuracy:", metrics.accuracy_score(trnLbls, getRemovedNamesFromPrediction(train_result)))
     print("Test Accuracy:", metrics.accuracy_score(testLbls, getRemovedNamesFromPrediction(test_result)))
@@ -148,15 +154,14 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
 
     print('\033[1m', "Inaccurate Trajectories", '\033[0m')
     print("Here is some more information on the trajectories it predicted incorrectly."
-          " It displays the name of the incorrect trajectories, "
-          "followed by the actual diffusion type and the incorrect predicted diffusion type.")
+        " It displays the name of the incorrect \ntrajectories, "
+        "followed by the incorrect predicted diffusion type and the actual diffusion type.")
     print()
-    print('\033[1m', "[Ballistic Motion,Confined Diffusion,Random Walk,Very Confinded Diffusion]", '\033[0m')
     print()
-    names_trn_incor = displayInaccuracies(trnLbls, train_result, "Training Data")
-    names_test_incor = displayInaccuracies(testLbls, test_result, "Testing Data")
-    names_valid_incor = displayInaccuracies(valLbls, valid_result, "CV Data")
+    names_trn_incor = displayInaccuracies(trnLbls, train_result, "Training Data", algorithm, dataSet)
+    names_test_incor = displayInaccuracies(testLbls, test_result, "Testing Data", algorithm, dataSet)
+    names_valid_incor = displayInaccuracies(valLbls, valid_result, "CV Data", algorithm, dataSet)
     incorrect_names = names_trn_incor + names_test_incor + names_valid_incor
-    createIncorGraphs(incorrect_names, dataSet)
+    # createIncorGraphs(incorrect_names, dataSet)
 
-    RealInfo(mlPipeline)
+    # RealInfo(mlPipeline)
