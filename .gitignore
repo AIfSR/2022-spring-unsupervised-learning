@@ -3,6 +3,7 @@
 *.tck
 *.svg
 *.png
+*.txt
 data/*.pkl
 label.pkl
 data.pkl
