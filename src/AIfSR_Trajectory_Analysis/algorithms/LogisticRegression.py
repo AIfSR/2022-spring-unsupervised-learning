@@ -46,9 +46,15 @@ class LogisticRegression(AlgorithmBase):
             y.append((name, prediction))
         return y
 
-    def predict_proba(self, testData: list[Features]) -> list[list[float]]:
+    def predict_prob(self, testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:
         y_pred = self._model.predict_proba(testData)
-        return y_pred
+        y= []
+        for feature, prediction in zip(testData, y_pred):
+            roundedPrediction = []
+            for predictionVal in prediction:
+                roundedPrediction.append(round(predictionVal, 3))
+            y.append([feature.getName(), roundedPrediction])
+        return y
 
     def save(self, directoryToSaveTo:str, name:str) -> None:
         """Saves the model to the directoryToSaveTo under the name provided"""

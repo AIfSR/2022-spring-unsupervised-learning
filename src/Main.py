@@ -11,5 +11,5 @@ def getUserArguments() -> str:
 
 if __name__ == "__main__":
     inputTrajectoriesDirectory = getUserArguments()
-    predict(inputTrajectoriesDirectory)
-    
+    # predict(inputTrajectoriesDirectory)
+    predict(inputTrajectoriesDirectory, "/Users/seandoyle/Downloads/TestSheet.xlsx")
