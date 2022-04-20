@@ -2,7 +2,7 @@ from typing import List, Tuple
 from AIfSR_Trajectory_Analysis.datasets.DatasetBase import DatasetBase
 from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
-
+from AIfSR_Trajectory_Analysis.datasets.LabeledCategory import LabeledCategory
 import AIfSR_Trajectory_Analysis.datasets.SyntheticFilePaths as FP
 from AIfSR_Trajectory_Analysis.tckfilereader.TCKFileReader import TCKFileReader
 
@@ -21,12 +21,12 @@ class SyntheticDataset (DatasetBase):
         Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(FP.Very_confined_diffusionFilePaths)
 
         # Specifies the three different categories of trajectories that are to be
-        # compared and the points list of points associated with each of these treajectory categories
+        # compared and the points list of points associated with each of these trajectory categories
         SimpleCasesCategories = [
-            ("Bal", Ballistic_movementPoints),
-            ("CD", Confined_diffusionPoints),
-            ("RW", Random_walkPoints),
-            ("VCD", Very_confined_diffusionPoints),
+            LabeledCategory("Bal", [1.0, 0.0, 0.0], Ballistic_movementPoints),
+            LabeledCategory("CD", [0.0, 1.0, 0.0], Confined_diffusionPoints),
+            LabeledCategory("RW", [0.0, 0.0, 1.0], Random_walkPoints),
+            LabeledCategory("VCD", [0.0, 1.0, 0.0], Very_confined_diffusionPoints)
         ]
         return SimpleCasesCategories
 

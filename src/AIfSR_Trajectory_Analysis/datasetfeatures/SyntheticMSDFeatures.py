@@ -59,16 +59,15 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         
         totalTrajectories = 0
         for i in range(numOfLabels):
-            for example in self.categories[i][1]:
+            for example in self.categories[i].trajectories:
                 totalTrajectories += 1
         
         print("Generating MSD Files")
 
         for i in range(numOfLabels):
-            for example in self.categories[i][1]:
+            for example in self.categories[i].trajectories:
                 dataSet.append(self.featureCreator.get_features(example))
-                label = [0] * numOfLabels
-                label[i] = 1
+                label = self.categories[i].label
                 labels.append(label)
                 if (count / (totalTrajectories // 10)) % 1 == 0:
                     print(str(count) + "/" + str(totalTrajectories) + " MSD vals calculated")
@@ -78,3 +77,4 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         label_file.close()
         pickle.dump(dataSet, data_file)
         data_file.close()
+

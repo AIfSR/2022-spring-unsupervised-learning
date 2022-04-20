@@ -24,11 +24,11 @@ def RealPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List
             predict.append(prediction)
     return predict
 
+
 def RealAnalytics(predict: List[List[float]], tag: str) -> None:
-    print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\tcd: " + str(format((predict.count([0.0, 1.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\trw: " + str(format((predict.count([0.0, 0.0, 1.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\tvcd: " + str(format((predict.count([0.0, 0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
+    print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
+          "%\tcd: " + str(format((predict.count([0.0, 1.0, 0.0]) / len(predict) * 100), '.3f')) +
+          "%\trw: " + str(format((predict.count([0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
 
 
 def RealInfo(mlPipeline:MLPipelineBase):

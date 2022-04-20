@@ -18,14 +18,12 @@ class LogisticRegression(AlgorithmBase):
     def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
         y = []
         for i in labels:
-            if i == [1.0, 0.0, 0.0, 0.0]:
+            if i == [1.0, 0.0, 0.0]:
                 y.append(1)
-            elif i == [0.0, 1.0, 0.0, 0.0]:
+            elif i == [0.0, 1.0, 0.0]:
                 y.append(2)
-            elif i == [0.0, 0.0, 1.0, 0.0]:
+            elif i == [0.0, 0.0, 1.0]:
                 y.append(3)
-            elif i == [0.0, 0.0, 0.0, 1.0]:
-                y.append(4)
         labels_arr = np.array(y)
         self._model.fit(trainingData, y)
 
@@ -36,13 +34,11 @@ class LogisticRegression(AlgorithmBase):
             predictionNum = y_pred[i]
             name = testData[i].getName()
             if predictionNum == 1:
-                prediction = [1.0, 0.0, 0.0, 0.0]
+                prediction = [1.0, 0.0, 0.0]
             elif predictionNum == 2:
-                prediction = [0.0, 1.0, 0.0, 0.0]
+                prediction = [0.0, 1.0, 0.0]
             elif predictionNum == 3:
-                prediction = [0.0, 0.0, 1.0, 0.0]
-            else:
-                prediction = [0.0, 0.0, 0.0, 1.0]
+                prediction = [0.0, 0.0, 1.0]
             y.append((name, prediction))
         return y
 
@@ -50,7 +46,7 @@ class LogisticRegression(AlgorithmBase):
         y_pred = self._model.predict_proba(testData)
         return y_pred
 
-    def save(self, directoryToSaveTo:str, name:str) -> None:
+    def save(self, directoryToSaveTo: str, name: str) -> None:
         """Saves the model to the directoryToSaveTo under the name provided"""
         main_dir = Utilities.getMainDirectory()
         location = main_dir + "/" + directoryToSaveTo + "/" + name + ".pkl"
@@ -58,6 +54,6 @@ class LogisticRegression(AlgorithmBase):
         pickle.dump(self._model, file)
         file.close
 
-    def load(self, directory:str, pklFile:str) -> None:
+    def load(self, directory: str, pklFile: str) -> None:
         file = resources.read_binary(directory, pklFile)
         self._model = pickle.loads(file)

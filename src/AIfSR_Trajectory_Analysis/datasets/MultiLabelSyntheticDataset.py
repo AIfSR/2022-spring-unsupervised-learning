@@ -3,32 +3,34 @@ from AIfSR_Trajectory_Analysis.datasets.DatasetBase import DatasetBase
 from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
 
-import AIfSR_Trajectory_Analysis.datasets.SmallerSetSyntheticFilePaths as FPSubset
+import AIfSR_Trajectory_Analysis.datasets.SyntheticFilePaths as FP
 from AIfSR_Trajectory_Analysis.tckfilereader.TCKFileReader import TCKFileReader
 from AIfSR_Trajectory_Analysis.datasets.LabeledCategory import LabeledCategory
 
-class SyntheticDatasetSubset (DatasetBase):
+class MultiLabelSyntheticDataset (DatasetBase):
     def __init__(self) -> None:
         self.tckFileReader = TCKFileReader()
         super().__init__()
 
     def getCategoriesWithPoints(self) -> List[Tuple[str, List[PointsWithNames]]]:
-        """Returns a list of some of the synthetic data split up by the type of 
+        """Returns a list of all of the synthetic data split up by the type of
         diffusion occuring in each trajectory"""
-        Ballistic_movementPoints = self._getValidPointsFromFilePaths(FPSubset.Ballistic_movementFilePaths)
-        Confined_diffusionPoints = self._getValidPointsFromFilePaths(FPSubset.Confined_diffusionFilePaths)
-        Random_walkPoints = self._getValidPointsFromFilePaths(FPSubset.Random_walkFilePaths)
-        Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(FPSubset.Very_confined_diffusionFilePaths)
+        BallisticConfinedPoints = self._getValidPointsFromFilePaths(FP.Limits_0_1au_Speed_0_001Paths) +\
+                                     self._getValidPointsFromFilePaths(FP.Limits_0_1au_Speed_001_01Paths) + \
+                                     self._getValidPointsFromFilePaths(FP.Limits_0_1au_Speed_0001_001Paths)
+        BallisticSimplePoints = self._getValidPointsFromFilePaths(FP.Fast_ballisticFilePaths) + \
+                            self._getValidPointsFromFilePaths(FP.Random_ballisticFilePaths) + \
+                            self._getValidPointsFromFilePaths(FP.Slow_ballisticFilePaths)
+        ConfinementEscapePoints = self._getValidPointsFromFilePaths(FP.Confinement_escapeFilePaths)
 
         # Specifies the three different categories of trajectories that are to be
         # compared and the points list of points associated with each of these treajectory categories
-        SimpleCasesCategories = [
-            LabeledCategory("Bal", [1.0, 0.0, 0.0], Ballistic_movementPoints),
-            LabeledCategory("CD", [0.0, 1.0, 0.0], Confined_diffusionPoints),
-            LabeledCategory("RW", [0.0, 0.0, 1.0], Random_walkPoints),
-            LabeledCategory("VCD", [0.0, 1.0, 0.0], Very_confined_diffusionPoints)
+        MultilabeledCasesCategories = [
+            LabeledCategory("BALCD", [1.0, 1.0, 0.0], BallisticConfinedPoints),
+            LabeledCategory("BALSD", [1.0, 0.0, 1.0], BallisticSimplePoints),
+            LabeledCategory("CE", [0.0, 1.0, 1.0], ConfinementEscapePoints),
         ]
-        return SimpleCasesCategories
+        return MultilabeledCasesCategories
 
     def _getValidPointsFromFilePaths(self, filePaths:List[str]) -> List[PointsWithNames]:
         """Gets trajectories that have at least 50 points in them because some
@@ -39,3 +41,4 @@ class SyntheticDatasetSubset (DatasetBase):
             if len(points) > 49:
                 pointsList.append(points)
         return pointsList
+

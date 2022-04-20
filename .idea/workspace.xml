@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d188f595-363c-4814-af61-12f1a1c9bbe2" name="Changes" comment="" />
+    <list default="true" id="d188f595-363c-4814-af61-12f1a1c9bbe2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/LR_V1.0.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/LR_V1.0.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/LRNotebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/LRNotebook.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasetfeatures/SyntheticMSDFeatures.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasetfeatures/SyntheticMSDFeatures.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticDataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticDataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticDatasetSubset.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticDatasetSubset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticFilePaths.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticFilePaths.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,6 +82,7 @@
       <workItem from="1649664067705" duration="34000" />
       <workItem from="1649666870979" duration="15000" />
       <workItem from="1649711328726" duration="93000" />
+      <workItem from="1650483842169" duration="113000" />
     </task>
     <servers />
   </component>
