@@ -67,7 +67,7 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
         for i in range(numOfLabels):
             for example in self.categories[i].trajectories:
                 dataSet.append(self.featureCreator.get_features(example))
-                label = self.categories[i].label
+                label = self.categories[i].labels
                 labels.append(label)
                 if (count / (totalTrajectories // 10)) % 1 == 0:
                     print(str(count) + "/" + str(totalTrajectories) + " MSD vals calculated")
