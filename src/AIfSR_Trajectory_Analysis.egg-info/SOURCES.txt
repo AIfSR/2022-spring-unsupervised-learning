@@ -16,7 +16,7 @@ src/AIfSR_Trajectory_Analysis.egg-info/top_level.txt
 src/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py
 src/AIfSR_Trajectory_Analysis/algorithmanalysis/__init__.py
 src/AIfSR_Trajectory_Analysis/algorithms/AlgorithmBase.py
-src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py
+src/AIfSR_Trajectory_Analysis/algorithms/MultiLogisticRegression.py
 src/AIfSR_Trajectory_Analysis/algorithms/__init__.py
 src/AIfSR_Trajectory_Analysis/datasetfeatures/DatasetFeaturesBase.py
 src/AIfSR_Trajectory_Analysis/datasetfeatures/RealMSDFeatures.py
@@ -64,7 +64,7 @@ src/AIfSR_Trajectory_Analysis/featuretosingleval/MaxOfFeature.py
 src/AIfSR_Trajectory_Analysis/featuretosingleval/MedianOfFeature.py
 src/AIfSR_Trajectory_Analysis/featuretosingleval/StandardDeviationOfFeature.py
 src/AIfSR_Trajectory_Analysis/featuretosingleval/__init__.py
-src/AIfSR_Trajectory_Analysis/ml_pipelines/LRPipelineFactory.py
+src/AIfSR_Trajectory_Analysis/ml_pipelines/MultiLRPipelineFactory.py
 src/AIfSR_Trajectory_Analysis/ml_pipelines/MLPipelineBase.py
 src/AIfSR_Trajectory_Analysis/ml_pipelines/__init__.py
 src/AIfSR_Trajectory_Analysis/normalizefeatures/DivideByMaxNormalization.py
@@ -89,7 +89,7 @@ src/AIfSR_Trajectory_Analysis/tckfilereader/PointsWithNames.py
 src/AIfSR_Trajectory_Analysis/tckfilereader/TCKFileReader.py
 src/AIfSR_Trajectory_Analysis/tckfilereader/__init__.py
 src/tests/__init__.py
-src/tests/algorithmstests/LogisticRegressiontest.py
+src/tests/algorithmstests/MultiLogisticRegressiontest.py
 src/tests/algorithmstests/__init__.py
 src/tests/featurestests/ABSFeatureCreatortest.py
 src/tests/featurestests/DeltaFromStartFeatureCreatortest.py

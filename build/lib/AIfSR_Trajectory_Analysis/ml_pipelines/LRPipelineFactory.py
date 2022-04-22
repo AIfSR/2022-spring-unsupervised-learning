@@ -1,5 +1,5 @@
 from AIfSR_Trajectory_Analysis.algorithms.AlgorithmBase import AlgorithmBase
-from AIfSR_Trajectory_Analysis.algorithms.LogisticRegression import LogisticRegression
+from AIfSR_Trajectory_Analysis.algorithms.MultiLogisticRegression import MultiLogisticRegression
 from AIfSR_Trajectory_Analysis.features.FeatureCreatorBase import FeatureCreatorBase
 from AIfSR_Trajectory_Analysis.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from AIfSR_Trajectory_Analysis.ml_pipelines.MLPipelineBase import MLPipelineBase
@@ -16,7 +16,7 @@ class LRPipelineFactory (MLPipelineBase):
         self._featureCreator = ThreeDMSDFeatureCreator()
         self._featureNormalizer = DivideByMaxNormalization()
         self._featureStandardizer = Extract40ValsRegularInterval()
-        self._algorithm = LogisticRegression()
+        self._algorithm = MultiLogisticRegression()
         self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.0.pkl")
         super().__init__()
     

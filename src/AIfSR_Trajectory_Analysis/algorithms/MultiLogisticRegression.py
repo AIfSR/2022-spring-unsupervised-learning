@@ -10,7 +10,7 @@ from AIfSR_Trajectory_Analysis.features.FeaturesWithNames import FeaturesWithNam
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 
 
-class LogisticRegression(AlgorithmBase):
+class MultiLogisticRegression(AlgorithmBase):
     def __init__(self) -> None:
         super().__init__()
         self._model = LR(multi_class='multinomial', solver='lbfgs', max_iter=13000)

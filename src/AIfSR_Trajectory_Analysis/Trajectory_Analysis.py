@@ -27,7 +27,7 @@ def predict(inputTrajectoriesDirectory:str):
     """
     PredictDiffusionTypes.checkDirectory(inputTrajectoriesDirectory)
 
-    mlPipeline = PredictDiffusionTypes.LRPipelineFactory()
+    mlPipeline = PredictDiffusionTypes.MultiLRPipelineFactory()
 
     algorithm = mlPipeline.getAlgorithm()
     
