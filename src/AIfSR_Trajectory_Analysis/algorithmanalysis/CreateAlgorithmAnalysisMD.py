@@ -19,6 +19,7 @@ import random
 
 def RealPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:
     predict = []
+    print(result)
     for name, prediction in result:
         if tag in name:
             predict.append(prediction)

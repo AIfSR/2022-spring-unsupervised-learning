@@ -9,37 +9,30 @@ from AIfSR_Trajectory_Analysis.features.FeaturesWithNames import FeaturesWithNam
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 
 
-class MultiLogisticRegression(AlgorithmBase):
-    def __init__(self) -> None:
+class LogisticRegression(AlgorithmBase):
+    def __init__(self, diffusion_type: str) -> None:
         super().__init__()
-        self._model = LR(multi_class='multinomial', solver='lbfgs', max_iter=13000)
+        self._model = LR(solver='lbfgs', max_iter=13000)
+        self._diffusionType = diffusion_type
+        if self._diffusionType == "BAL":
+            self._index = 0
+        elif self._diffusionType == "CD":
+            self._index = 1
+        elif self._diffusionType == "RW":
+            self._index = 2
 
     def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
         y = []
         for i in labels:
-            if i == [1.0, 0.0, 0.0]:
+            if i[self._index] == 1.0:
                 y.append(1)
-            elif i == [0.0, 1.0, 0.0]:
-                y.append(2)
-            elif i == [0.0, 0.0, 1.0]:
-                y.append(3)
+            else:
+                y.append(0)
         self._model.fit(trainingData, y)
 
     def predict(self, testData: list[FeaturesWithNames]) -> list[Tuple[str, list[float]]]:
         y_pred = self._model.predict(testData)
-        y = []
-        for i in range(len(y_pred)):
-            predictionNum = y_pred[i]
-            name = testData[i].getName()
-            prediction = [0.0, 0.0, 0.0]
-            if predictionNum == 1:
-                prediction = [1.0, 0.0, 0.0]
-            elif predictionNum == 2:
-                prediction = [0.0, 1.0, 0.0]
-            elif predictionNum == 3:
-                prediction = [0.0, 0.0, 1.0]
-            y.append((name, prediction))
-        return y
+        return y_pred
 
     def predict_proba(self, testData: list[Features]) -> list[list[float]]:
         y_pred = self._model.predict_proba(testData)
