@@ -1,14 +1,18 @@
 from typing import Tuple
 
 import AIfSR_Trajectory_Analysis.PredictDiffusionTypes as PredictDiffusionTypes
+from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
+from AIfSR_Trajectory_Analysis.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from AIfSR_Trajectory_Analysis.features.FeatureCreatorBase import FeatureCreatorBase
 from AIfSR_Trajectory_Analysis.datasets.SyntheticDataset import SyntheticDataset
+from AIfSR_Trajectory_Analysis.features.FeaturesWithNames import FeaturesWithNames
 from AIfSR_Trajectory_Analysis.normalizefeatures.DivideByMaxNormalization import DivideByMaxNormalization
 from AIfSR_Trajectory_Analysis.plotting.FeaturesOverIndices import FeaturesOverIndices
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.ExtractValsRegularInterval import ExtractValsRegularInterval
 from AIfSR_Trajectory_Analysis.algorithms.LogisticRegression import LogisticRegression
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
+import time
 
 def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName:str = None):
     """This is the function used to predict the diffusion types of trajectories 
@@ -61,14 +65,26 @@ def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName
     else:
         PredictDiffusionTypes.printPredictions(predictions, labels)
 
-def quick_train(featureCreators:list[Tuple[FeatureCreatorBase,int]]):
+def quick_train(featureCreators:list[Tuple[FeatureCreatorBase,int]], trajectoriesPerCategory=200, graphsPerCategory=3):
     def getRemovedNamesFromPrediction(predictions:list[Tuple[str,list[float]]]) -> list[list[float]]:
         predictionsWithoutNames = []
         for name, prediction in predictions:
             predictionsWithoutNames.append(prediction)
         return predictionsWithoutNames
-    print("Getting points")
-    categories = SyntheticDataset().getCategoriesWithPoints(4)
+
+    def getMSDFeaturesByFeaturesName(name:str) -> FeaturesWithNames:
+        for featureWithName in msdDataset:
+            if featureWithName.getName() == name:
+                return featureWithName
+        print("Could not find: " , name)
+        return None
+    
+    print("Loading trajectories")
+
+    msdDataset = SyntheticMSDFeatures().getDatasetOfFeatures()
+    categories = SyntheticDataset().getCategoriesWithPoints(trajectoriesPerCategory)
+    print()
+
     featureNormalizer = DivideByMaxNormalization()
     featureStandardizer = ExtractValsRegularInterval()
     algorithm = LogisticRegression()
@@ -76,6 +92,7 @@ def quick_train(featureCreators:list[Tuple[FeatureCreatorBase,int]]):
     labels = []
     featuresToGraph = []
     print("Extracting Features:")
+
     totalTrajectories = 0
     for _, trajectories in categories:
         totalTrajectories += len(trajectories)
@@ -83,19 +100,21 @@ def quick_train(featureCreators:list[Tuple[FeatureCreatorBase,int]]):
     for tag, trajectories in categories:
         numberOfFeaturesInTagToGraph = 0
         for trajectory in trajectories:
-            if(count % (totalTrajectories // 10) == 0):
+            if(count % (totalTrajectories // 5) == 0):
                 print(str(count), "/" , str(totalTrajectories), " trajectory's features extracted")
+            
             feature = trajectory.getFeaturesToInitialize()
             for featureCreator, number in featureCreators:
-                newFeatures = featureCreator.get_features(trajectory)
+                if(number <= 0):
+                    continue
+                if type(featureCreator) == ThreeDMSDFeatureCreator:
+                    newFeatures = getMSDFeaturesByFeaturesName(feature.getName())
+                else:
+                    newFeatures = featureCreator.get_features(trajectory)
                 newFeatures = featureNormalizer.normalizeFeature(newFeatures)
-                # newFeatures = featureStandardizer.standardizeFeatures(newFeatures, number)
+                newFeatures = featureStandardizer.standardizeFeatures(newFeatures, number)
                 feature += newFeatures
             features.append(feature)
-            if(max(feature) != 1):
-                print("max(feature): ", max(feature))
-            if(min(feature) != 0):
-                print("min(feature): ", min(feature))
             if tag == "Bal":
                 labels.append([1.0, 0.0, 0.0, 0.0])
             elif tag == "CD":
@@ -108,22 +127,25 @@ def quick_train(featureCreators:list[Tuple[FeatureCreatorBase,int]]):
                 print("Unidentified tag: " , tag)
                 assert(False)
 
-            if(numberOfFeaturesInTagToGraph < 1):
+            if(numberOfFeaturesInTagToGraph < graphsPerCategory):
                 featuresToGraph.append(feature)
                 numberOfFeaturesInTagToGraph += 1
             count += 1
+    print()
 
     (trnData, testData, trnLbls, testLbls)\
         = split(features, labels, train_size=0.8, random_state=1)
-    print("Training Algorithm")
+    print("Training Algorithm on ", str(len(trnData)), " trajectories")
     algorithm.train(trnData, trnLbls)
-    test_result = algorithm.predict(testData)
     train_result = algorithm.predict(trnData)
 
     print("Training Accuracy:", metrics.accuracy_score(trnLbls, getRemovedNamesFromPrediction(train_result)))
-    print("Test Accuracy:", metrics.accuracy_score(testLbls, getRemovedNamesFromPrediction(test_result)))
+    test_result = algorithm.predict(testData)
+    print("Testing Algorithm on ", str(len(testData)), " trajectories")
+    print("Test Accuracy: ", metrics.accuracy_score(testLbls, getRemovedNamesFromPrediction(test_result)))
 
-    print("Here are a few graphs of the features used:")
+    print()
+    print("Here are a few graphs of the features generated:")
 
     plotting = FeaturesOverIndices()
     for feature in featuresToGraph:
