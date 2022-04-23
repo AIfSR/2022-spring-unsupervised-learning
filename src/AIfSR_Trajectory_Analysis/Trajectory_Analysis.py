@@ -65,7 +65,26 @@ def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName
     else:
         PredictDiffusionTypes.printPredictions(predictions, labels)
 
-def quick_train(featureCreators:list[Tuple[FeatureCreatorBase,int]], trajectoriesPerCategory=200, graphsPerCategory=3):
+def quick_train(featureCreators:list[Tuple[FeatureCreatorBase,int]], trajectoriesPerCategory:int=200, graphsPerCategory:int=3):
+    """ This code trains a machine learning algorithm are the features passed in, 
+    outputs the results of the algorithm, and also displays a few graphs of the 
+    features that the algorithm was trained and evaluated on.
+
+    :param list[Tuple[FeatureCreatorBase,int]] featureCreators: This is a list
+    of the types of features, and the number of features to extract from each
+    trajectory. Each FeatureCreatorBase will extract a large number of features
+    from each trajectory. The integer included in the tuple is used to scale
+    down this number so as not to overwhelm the algorithm
+
+    :param int trajectoriesPerCategory: specifies the number of trajectories 
+    that will be analyzed per category(the categories being the four different 
+    types of diffusion types: Ballistic, Confined Diffusion, Random Walk, and 
+    Very Confined Diffusion)
+
+    :param int graphsPerCategory: specifies the number of graphs for each label
+    category that will be displayed
+    
+    """
     def getRemovedNamesFromPrediction(predictions:list[Tuple[str,list[float]]]) -> list[list[float]]:
         predictionsWithoutNames = []
         for name, prediction in predictions:
