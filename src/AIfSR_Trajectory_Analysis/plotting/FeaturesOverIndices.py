@@ -35,13 +35,13 @@ class FeaturesOverIndices:
     TOP_CROP = 54
     LEFT_CROP = 76
     RIGHT_CROP = 60
-    def display_plot_of_features(self, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None) -> None:
+    def display_plot_of_features(self, yFeatures:Features, imageFile:str=None, title:str=None, xLabel:str=None, yLabel:str=None, yRange:Tuple[float, float]=None) -> None:
         """Displays a plot of the yFeatureCreator over time"""
         indiciesFeatureCreator = IndiciesFeatureCreator(yFeatures)
         xFeatures = indiciesFeatureCreator.get_features(None)
-        self._display_plot_of_features(xFeatures, yFeatures, imageFile, title, xLabel, yLabel)
+        self._display_plot_of_features(xFeatures, yFeatures, imageFile, title, xLabel, yLabel, yRange)
 
-    def _display_plot_of_features(self, xFeatures:Features, yFeatures:Features, imageFile:str, title:str, xLabel:str, yLabel:str) -> None:
+    def _display_plot_of_features(self, xFeatures:Features, yFeatures:Features, imageFile:str, title:str, xLabel:str, yLabel:str, yRange:Tuple[float, float]=None) -> None:
         """Displays a plot of the yFeatureCreator over time"""
 
         ax_scatter = plt.axes()
@@ -56,10 +56,15 @@ class FeaturesOverIndices:
         else:
             plt.suptitle(title)
 
-        ax_scatter.set_yscale('log')
-        ax_scatter.set_xscale('log')
+        if(yRange):
+            minY, maxY = yRange
+            plt.ylim(minY, maxY)
+        else:
+            ax_scatter.set_yscale('log')
+            ax_scatter.set_xscale('log')
         
         plt.plot(xFeatures, yFeatures, color="red", label="AIfSR")
+        
         plt.legend()
 
         if imageFile != None:

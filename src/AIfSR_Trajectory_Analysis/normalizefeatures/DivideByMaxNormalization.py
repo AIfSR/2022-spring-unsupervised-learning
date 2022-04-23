@@ -12,6 +12,7 @@ class DivideByMaxNormalization (NormalizeFeaturesBase):
         for singleFeature in setOfFeatures:
             featuresMax = max(singleFeature)
             featuresMin = min(singleFeature)
+            featuresRange = featuresMax - featuresMin
             if featuresMax > abs(featuresMin):
                 maxFeatureMagnitude = featuresMax
             else:

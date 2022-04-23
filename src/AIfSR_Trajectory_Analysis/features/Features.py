@@ -69,3 +69,7 @@ class Features:
 
     def __setitem__(self, key, value):
         self._featuresList[key] = value
+
+    def __iadd__(self, otherFeature:Features):
+        self._featuresList.extend(otherFeature._featuresList)
+        return self
