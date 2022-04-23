@@ -3,7 +3,7 @@ import AIfSR_Trajectory_Analysis.PredictDiffusionTypes as PredictDiffusionTypes
 def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName:str = None):
     """This is the function used to predict the diffusion types of trajectories 
     using the most accurate machine learning model within this build. Pass in 
-    the path to a directory as a string and every trajectory within that 
+    the path to a directory as a raw string and every trajectory within that 
     directory will be analyzed. Trajectories are files that end in .tck and 
     contain x,y,z,t points in the following format:
     line 1: x points, seperated by spaces
@@ -13,10 +13,10 @@ def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName
     
     If you would like to export the results to an excel spreadsheet, pass in the 
     location of the excel spreadsheet you would like to export to into the 
-    parameter locationOfXlsx. You can further specify the name of the sheet that 
-    will be made within the spreadsheet by passing a string into the sheet 
-    parameter. If no sheet name is provided, today's date will be used as the 
-    sheet name 
+    parameter locationOfXlsx as a raw string. You can further specify the name 
+    of the sheet that will be made within the spreadsheet by passing a string 
+    into the sheet parameter. If no sheet name is provided, today's date will be 
+    used as the sheet name 
 
     If no name of a spreadsheet is passed in then this function will print out 
     the file names of the trajectories it predicts and then the type(s) of 
