@@ -1,0 +1,5 @@
+CairoSVG==2.5.2
+matplotlib==3.5.1
+numpy==1.19.5
+Pillow==9.1.0
+scikit_learn==1.0.2

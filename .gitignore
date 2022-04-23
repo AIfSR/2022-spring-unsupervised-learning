@@ -3,4 +3,11 @@
 *.tck
 *.svg
 *.png
-*.DS_store
+data/*.pkl
+label.pkl
+data.pkl
+Realdata.pkl
+DirName.py
+Sandbox.py
+build/
+src/AIfSR_Trajectory_Analysis/data/*
