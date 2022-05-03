@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from AIfSR_Trajectory_Analysis.datasetfeatures.MultiLabelSyntheticMSDFeatures import MultiLabelSyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.datasetfeatures.RealMSDFeatures import RealMSDFeatures
 from AIfSR_Trajectory_Analysis.datasets.MacrophageStageDataset import MacrophageStageDataset
@@ -118,7 +119,8 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
     algorithm = mlPipeline.getAlgorithm()
 
-    syntheticMSDFeatures = SyntheticMSDFeatures()
+    # syntheticMSDFeatures = SyntheticMSDFeatures()
+    syntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
     loaded_labels = syntheticMSDFeatures.getLabels()
     loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
