@@ -7,6 +7,7 @@ import os
 import pickle
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 from importlib import resources
+import time
 
 
 class SyntheticMSDFeatures(DatasetFeaturesBase):
@@ -14,8 +15,6 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
     Synthetic dataset"""
 
     def __init__(self):
-        dataset = SyntheticDataset()
-        self.categories = dataset.getCategoriesWithPoints()
         self.featureCreator = ThreeDMSDFeatureCreator()
         mainDir = Utilities.getMainDirectory()
         self._directory = mainDir + "/data"
@@ -30,10 +29,8 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
     def getDatasetOfFeatures(self) -> list[Features]:
         """Gets the Synthetic dataset after all of the trajectories have been
         converted to MSD values."""
-   
         if not self._bothFilesExist():
             self.generateDatafiles()
-
         dataFile = open(self._dataFilePath, "rb")
         loaded_dataSet = pickle.load(dataFile)
         dataFile.close()
@@ -52,7 +49,10 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
     def generateDatafiles(self) -> None:
         label_file = open(self._labelFilePath, 'wb')
         data_file = open(self._dataFilePath, 'wb')
-        dataSet = []
+        syntheticDataset = SyntheticDataset()
+        self.categories = syntheticDataset.getCategoriesWithPoints()
+
+        featuresDataSet = []
         labels = []
         numOfLabels = len(self.categories)
         count = 0
@@ -66,7 +66,7 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
 
         for i in range(numOfLabels):
             for example in self.categories[i][1]:
-                dataSet.append(self.featureCreator.get_features(example))
+                featuresDataSet.append(self.featureCreator.get_features(example))
                 label = [0] * numOfLabels
                 label[i] = 1
                 labels.append(label)
@@ -76,5 +76,5 @@ class SyntheticMSDFeatures(DatasetFeaturesBase):
 
         pickle.dump(labels, label_file)
         label_file.close()
-        pickle.dump(dataSet, data_file)
+        pickle.dump(featuresDataSet, data_file)
         data_file.close()

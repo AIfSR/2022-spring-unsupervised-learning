@@ -12,11 +12,11 @@ class DivideByMaxNormalization (NormalizeFeaturesBase):
         for singleFeature in setOfFeatures:
             featuresMax = max(singleFeature)
             featuresMin = min(singleFeature)
-            if featuresMax > abs(featuresMin):
-                maxFeatureMagnitude = featuresMax
-            else:
-                maxFeatureMagnitude = abs(featuresMin)
-            for i in range(len(singleFeature)):
-                singleFeature[i] = singleFeature[i] / maxFeatureMagnitude
+            featuresRange = featuresMax - featuresMin
 
+            for i in range(len(singleFeature)):
+                if featuresRange == 0:
+                    singleFeature[i] = 1.0
+                else:
+                    singleFeature[i] = (singleFeature[i] - featuresMin) / featuresRange
         return setOfFeatures
