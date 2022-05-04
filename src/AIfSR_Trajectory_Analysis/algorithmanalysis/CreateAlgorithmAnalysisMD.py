@@ -119,10 +119,20 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
     algorithm = mlPipeline.getAlgorithm()
 
-    # syntheticMSDFeatures = SyntheticMSDFeatures()
-    syntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
-    loaded_labels = syntheticMSDFeatures.getLabels()
-    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
+    syntheticMSDFeatures = SyntheticMSDFeatures()
+    MultisyntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
+
+    # loaded_labels = syntheticMSDFeatures.getLabels()
+    # loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
+
+    # loaded_labels = MultisyntheticMSDFeatures.getLabels()
+    # loaded_dataSet = MultisyntheticMSDFeatures.getDatasetOfFeatures()
+
+    loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
+    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
+
+    loaded_labels = loaded_labels[:-1500]
+    loaded_dataSet = loaded_dataSet[:-1500]
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(dataSet)
     (trnData, remData, trnLbls, remLbls)\
