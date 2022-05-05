@@ -9,3 +9,5 @@ data.pkl
 Realdata.pkl
 DirName.py
 Sandbox.py
+build/
+src/AIfSR_Trajectory_Analysis/data/*
