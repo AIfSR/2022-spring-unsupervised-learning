@@ -51,7 +51,7 @@ def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName
     PredictDiffusionTypes.checkDirectory(inputTrajectoriesDirectory)
     if locationOfXlsx:
         PredictDiffusionTypes.checkOutputToXlsxFile(locationOfXlsx)
-    mlPipeline = PredictDiffusionTypes.LRPipelineFactory()
+    mlPipeline = PredictDiffusionTypes.MultiLRPipelineFactory()
 
     algorithm = mlPipeline.getAlgorithm()
     
@@ -69,3 +69,5 @@ def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName
     
 
         
+
+    PredictDiffusionTypes.printPredictions(predictions)

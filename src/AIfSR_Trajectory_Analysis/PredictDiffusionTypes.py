@@ -3,7 +3,7 @@ import numpy as np
 import sys
 import os
 from AIfSR_Trajectory_Analysis.features.Features import Features
-from AIfSR_Trajectory_Analysis.ml_pipelines.LRPipelineFactory import LRPipelineFactory
+from AIfSR_Trajectory_Analysis.ml_pipelines.MultiLRPipelineFactory import MultiLRPipelineFactory
 from AIfSR_Trajectory_Analysis.ml_pipelines.MLPipelineBase import MLPipelineBase
 from AIfSR_Trajectory_Analysis.output_results.OutputXlsx import OutputXlsx
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.FeatureStandardizationError import FeatureStandardizationError

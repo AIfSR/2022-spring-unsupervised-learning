@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from AIfSR_Trajectory_Analysis.datasetfeatures.MultiLabelSyntheticMSDFeatures import MultiLabelSyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.datasetfeatures.RealMSDFeatures import RealMSDFeatures
 from AIfSR_Trajectory_Analysis.datasets.MacrophageStageDataset import MacrophageStageDataset
@@ -19,16 +20,17 @@ import random
 
 def RealPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:
     predict = []
+    print(result)
     for name, prediction in result:
         if tag in name:
             predict.append(prediction)
     return predict
 
+
 def RealAnalytics(predict: List[List[float]], tag: str) -> None:
-    print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\tcd: " + str(format((predict.count([0.0, 1.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\trw: " + str(format((predict.count([0.0, 0.0, 1.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\tvcd: " + str(format((predict.count([0.0, 0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
+    print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
+          "%\tcd: " + str(format((predict.count([0.0, 1.0, 0.0]) / len(predict) * 100), '.3f')) +
+          "%\trw: " + str(format((predict.count([0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
 
 
 def RealInfo(mlPipeline:MLPipelineBase):
@@ -118,8 +120,19 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     algorithm = mlPipeline.getAlgorithm()
 
     syntheticMSDFeatures = SyntheticMSDFeatures()
-    loaded_labels = syntheticMSDFeatures.getLabels()
-    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
+    MultisyntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
+
+    # loaded_labels = syntheticMSDFeatures.getLabels()
+    # loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
+
+    # loaded_labels = MultisyntheticMSDFeatures.getLabels()
+    # loaded_dataSet = MultisyntheticMSDFeatures.getDatasetOfFeatures()
+
+    loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
+    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
+
+    loaded_labels = loaded_labels[:-1500]
+    loaded_dataSet = loaded_dataSet[:-1500]
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(dataSet)
     (trnData, remData, trnLbls, remLbls)\

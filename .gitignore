@@ -3,9 +3,12 @@
 *.tck
 *.svg
 *.png
+*.txt
 data/*.pkl
 label.pkl
 data.pkl
+multilabel.pkl
+multidata.pkl
 Realdata.pkl
 DirName.py
 Sandbox.py
