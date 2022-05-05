@@ -17,8 +17,8 @@ class extractValsRegularIntervalTest (unittest.TestCase):
         for i in range(80):
             solution.add_feature_val(i*10)
         
-        extractValsRegularInterval = ExtractValsRegularInterval()
-        features = extractValsRegularInterval.standardizeFeatures(features, 80)
+        extractValsRegularInterval = ExtractValsRegularInterval(80)
+        features = extractValsRegularInterval.standardizeFeatures(features)
         self.assertEquals(solution, features)
 
         features = Features()
@@ -28,8 +28,8 @@ class extractValsRegularIntervalTest (unittest.TestCase):
         for i in range(80):
             solution.add_feature_val(i*10)
         
-        extractValsRegularInterval = ExtractValsRegularInterval()
-        features = extractValsRegularInterval.standardizeFeatures(features, 80)
+        extractValsRegularInterval = ExtractValsRegularInterval(80)
+        features = extractValsRegularInterval.standardizeFeatures(features)
         self.assertEquals(solution, features)
 
         features = Features()
@@ -39,29 +39,31 @@ class extractValsRegularIntervalTest (unittest.TestCase):
         for i in range(80):
             solution.add_feature_val(i*10)
         
-        extractValsRegularInterval = ExtractValsRegularInterval()
-        features = extractValsRegularInterval.standardizeFeatures(features,80)
+        extractValsRegularInterval = ExtractValsRegularInterval(80)
+        features = extractValsRegularInterval.standardizeFeatures(features)
         self.assertEquals(solution, features)
 
     def test_exception(self):
         features = Features()
-        extractValsRegularInterval = ExtractValsRegularInterval()
+        extractValsRegularInterval = ExtractValsRegularInterval(20)
         with self.assertRaises(FeatureStandardizationError):
-            extractValsRegularInterval.standardizeFeatures(features, 20)
+            extractValsRegularInterval.standardizeFeatures(features)
         for i in range(39):
             features.add_feature_val(i)
+        extractValsRegularInterval = ExtractValsRegularInterval(43)
         with self.assertRaises(FeatureStandardizationError):
-            extractValsRegularInterval.standardizeFeatures(features, 43)
+            extractValsRegularInterval.standardizeFeatures(features)
         features.add_feature_val(5)
-        extractValsRegularInterval.standardizeFeatures(features, 40)
+        extractValsRegularInterval = ExtractValsRegularInterval(40)
+        extractValsRegularInterval.standardizeFeatures(features)
 
     def test_0Features(self):
         features = Features()
         features.add_feature_val(1)
         features.add_feature_val(2)
         features.add_feature_val(3)
-        extractValsRegularInterval = ExtractValsRegularInterval()
-        features = extractValsRegularInterval.standardizeFeatures(features, 0)
+        extractValsRegularInterval = ExtractValsRegularInterval(0)
+        features = extractValsRegularInterval.standardizeFeatures(features)
         solution = Features()
         self.assertEquals(solution, features)
 

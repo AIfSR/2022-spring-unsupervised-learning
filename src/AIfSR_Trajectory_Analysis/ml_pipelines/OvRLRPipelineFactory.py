@@ -6,7 +6,7 @@ from AIfSR_Trajectory_Analysis.ml_pipelines.MLPipelineBase import MLPipelineBase
 from AIfSR_Trajectory_Analysis.normalizefeatures.DivideByMaxNormalization import DivideByMaxNormalization
 from AIfSR_Trajectory_Analysis.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
 from AIfSR_Trajectory_Analysis.normalizefeatures.ScaletoMillion import ScaletoMillion
-from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
+from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.ExtractValsRegularInterval import ExtractValsRegularInterval
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 from importlib import resources
@@ -16,8 +16,8 @@ class OvRLRPipelineFactory(MLPipelineBase):
     def __init__(self) -> None:
         self._featureCreator = ThreeDMSDFeatureCreator()
         self._featureNormalizer = DivideByMaxNormalization()
-        self._featureStandardizer = Extract40ValsRegularInterval()
-        self._algorithm = OvRLogisticRegression()
+        self._featureStandardizer = ExtractValsRegularInterval(20)
+        self._algorithm = OvRLogisticRegression(0.5)
         # self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.2.pkl")
         super().__init__()
 

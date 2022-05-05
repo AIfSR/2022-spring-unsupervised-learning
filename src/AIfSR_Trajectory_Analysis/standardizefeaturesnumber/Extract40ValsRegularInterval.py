@@ -4,8 +4,10 @@ from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.ExtractValsRegularInter
 
 class Extract40ValsRegularInterval (StandardizeFeaturesNumberBase):
 
+    
+
     def standardizeFeatures(self, features:Features) -> Features:
         """Takes a feature and takes 40 values from that feature at a regular 
         interval"""
-        return ExtractValsRegularInterval().standardizeFeatures(features, 40)
+        return ExtractValsRegularInterval(40).standardizeFeatures(features)
         

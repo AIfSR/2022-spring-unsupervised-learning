@@ -114,6 +114,16 @@ def getRemovedNamesFromPrediction(predictions:list[Tuple[str,List[float]]]) -> l
         predictionsWithoutNames.append(prediction)
     return predictionsWithoutNames
 
+def removeConfinementEscape(dataset, labels):
+    newDataset = []
+    newLabels = []
+    for feature, label in zip(dataset, labels):
+        if "Confinement_escape" not in feature.getName():
+            newDataset.append(feature)
+            newLabels.append(label)
+    print("# of Confinement_escape removed: " + str(len(dataset) - len(newDataset)))
+    return newDataset, newLabels
+
 def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None):
     normalizeFeatures = mlPipeline.getFeatureNormalizer()
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
@@ -122,23 +132,17 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     syntheticMSDFeatures = SyntheticMSDFeatures()
     MultisyntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
 
-    # loaded_labels = syntheticMSDFeatures.getLabels()
-    # loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
-
-    # loaded_labels = MultisyntheticMSDFeatures.getLabels()
-    # loaded_dataSet = MultisyntheticMSDFeatures.getDatasetOfFeatures()
-
     loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
     loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
+    loaded_dataSet, loaded_labels = removeConfinementEscape(loaded_dataSet, loaded_labels)
 
-    loaded_labels = loaded_labels[:-1500]
-    loaded_dataSet = loaded_dataSet[:-1500]
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(dataSet)
+    print("Number of features per trajectory:" , len(dataSet[0]))
     (trnData, remData, trnLbls, remLbls)\
         = split(dataSet, loaded_labels, train_size=0.6, random_state=1)
 
-    (testData, valData, testLbls, valLbls) \
+    (valData, testData, valLbls, testLbls) \
         = split(remData, remLbls, test_size=0.5, random_state=2)
 
     algorithm.train(trnData, trnLbls)
