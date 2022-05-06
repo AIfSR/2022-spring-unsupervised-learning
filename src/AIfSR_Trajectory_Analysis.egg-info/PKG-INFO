@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: AIfSR-Trajectory-Analysis
-Version: 0.0.1
+Version: 0.0.2
 Summary: Code base for analyzing and predicting information on trajectories.
 Home-page: https://github.com/AIfSR/2022-spring-unsupervised-learning
 Author: NYU AI for Scientific Research Team
@@ -9,7 +9,7 @@ License: UNKNOWN
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.6
+Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE
 

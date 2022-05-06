@@ -12,5 +12,5 @@ multidata.pkl
 Realdata.pkl
 DirName.py
 Sandbox.py
-build/
+build/*
 src/AIfSR_Trajectory_Analysis/data/*
