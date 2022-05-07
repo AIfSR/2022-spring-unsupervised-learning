@@ -41,9 +41,14 @@ class MultiLogisticRegression(AlgorithmBase):
             y.append((name, prediction))
         return y
 
-    def predict_proba(self, testData: list[Features]) -> list[list[float]]:
+    def predict_prob(self, testData: list[Features]) -> list[Tuple[str,list[float]]]:
         y_pred = self._model.predict_proba(testData)
-        return y_pred
+        y = []
+        for i in range(len(y_pred)):
+            predictionNum = y_pred[i]
+            name = testData[i].getName()
+            y.append((name, predictionNum))
+        return y
 
     def save(self, directoryToSaveTo: str, name: str) -> None:
         """Saves the model to the directoryToSaveTo under the name provided"""

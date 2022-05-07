@@ -1,6 +1,8 @@
 from typing import Tuple
 
 import AIfSR_Trajectory_Analysis.PredictDiffusionTypes as PredictDiffusionTypes
+from AIfSR_Trajectory_Analysis.ml_pipelines.OvRLRPipelineFactory import OvRLRPipelineFactory
+from AIfSR_Trajectory_Analysis.ml_pipelines.MultiLRPipelineFactory import MultiLRPipelineFactory
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from AIfSR_Trajectory_Analysis.features.FeatureCreatorBase import FeatureCreatorBase
@@ -51,7 +53,7 @@ def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName
     PredictDiffusionTypes.checkDirectory(inputTrajectoriesDirectory)
     if locationOfXlsx:
         PredictDiffusionTypes.checkOutputToXlsxFile(locationOfXlsx)
-    mlPipeline = PredictDiffusionTypes.MultiLRPipelineFactory()
+    mlPipeline = MultiLRPipelineFactory()
 
     algorithm = mlPipeline.getAlgorithm()
     
@@ -59,15 +61,9 @@ def predict(inputTrajectoriesDirectory:str, locationOfXlsx:str = None, sheetName
     inputFeatures = PredictDiffusionTypes.getFeaturesForAlgorithm(points, mlPipeline)
 
     predictions = algorithm.predict_prob(inputFeatures)
-    labels = ["Ballistic Motion","Confined Diffusion","Random Walk","Very Confinded Diffusion"]
+    labels = ["Ballistic Motion","Confined Diffusion","Random Walk"]
     if locationOfXlsx:
         PredictDiffusionTypes.outputToXlsxFile(predictions, labels, locationOfXlsx, sheetName)
     else:
         PredictDiffusionTypes.printPredictions(predictions, labels)
 
-
-    
-
-        
-
-    PredictDiffusionTypes.printPredictions(predictions)

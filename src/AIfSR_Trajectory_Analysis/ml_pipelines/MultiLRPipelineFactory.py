@@ -17,7 +17,7 @@ class MultiLRPipelineFactory (MLPipelineBase):
         self._featureNormalizer = DivideByMaxNormalization()
         self._featureStandardizer = Extract40ValsRegularInterval()
         self._algorithm = MultiLogisticRegression()
-        # self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.0.pkl")
+        self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.0.pkl")
         super().__init__()
     
     def getFeatureCreator(self) -> FeatureCreatorBase:

@@ -21,7 +21,7 @@ class OvRLogisticRegression(AlgorithmBase):
         self._CDmodel.train(trainingData, labels)
         self._RWmodel.train(trainingData, labels)
 
-    def predict_proba(self, testData: list[Features]) -> list[list[float]]:
+    def getProbabilities(self, testData: list[Features]) -> list[list[float]]:
         result = []
         ba = self._BALmodel.predict_prob(testData)
         cd = self._CDmodel.predict_prob(testData)
@@ -32,7 +32,7 @@ class OvRLogisticRegression(AlgorithmBase):
 
     def predict(self, testData: list[FeaturesWithNames]) -> list[Tuple[str, list[float]]]:
         result = []
-        prediction_probabilities = self.predict_proba(testData)
+        prediction_probabilities = self.getProbabilities(testData)
         for i in range(len(prediction_probabilities)):
             name = testData[i].getName()
             prob_list = []
@@ -46,7 +46,7 @@ class OvRLogisticRegression(AlgorithmBase):
 
     def predict_prob(self, testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:
         result = []
-        prediction_probabilities = self.predict_proba(testData)
+        prediction_probabilities = self.getProbabilities(testData)
         for i in range(len(prediction_probabilities)):
             name = testData[i].getName()
             prob_list = prediction_probabilities[i]

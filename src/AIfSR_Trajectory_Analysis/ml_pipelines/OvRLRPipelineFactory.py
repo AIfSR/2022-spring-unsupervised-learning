@@ -16,9 +16,9 @@ class OvRLRPipelineFactory(MLPipelineBase):
     def __init__(self) -> None:
         self._featureCreator = ThreeDMSDFeatureCreator()
         self._featureNormalizer = DivideByMaxNormalization()
-        self._featureStandardizer = ExtractValsRegularInterval(20)
+        self._featureStandardizer = ExtractValsRegularInterval(40)
         self._algorithm = OvRLogisticRegression(0.5)
-        # self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.2.pkl")
+        self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.2.pkl")
         super().__init__()
 
     def getFeatureCreator(self) -> FeatureCreatorBase:

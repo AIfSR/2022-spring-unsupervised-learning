@@ -32,7 +32,7 @@ class LogisticRegression(AlgorithmBase):
         y_pred = self._model.predict(testData)
         return y_pred
 
-    def predict_prob(self, testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:
+    def predict_prob(self, testData:list[Features]) -> list[list[float]]:
         y_pred = self._model.predict_proba(testData)
         y= []
         for feature, prediction in zip(testData, y_pred):
