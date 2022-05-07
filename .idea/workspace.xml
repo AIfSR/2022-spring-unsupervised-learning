@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d188f595-363c-4814-af61-12f1a1c9bbe2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/tests/algorithmstests/LogisticRegressiontest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tests/algorithmstests/OvRLogisticRegressiontest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/OvRLogisticRegression.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/OvRLogisticRegression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/algorithmstests/LogisticRegressiontest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/algorithmstests/LogisticRegressiontest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tests/algorithmstests/MultiLogisticRegressiontest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/algorithmstests/MultiLogisticRegressiontest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/algorithmstests/OvRLogisticRegressiontest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/algorithmstests/OvRLogisticRegressiontest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +188,7 @@
       <workItem from="1650755338406" duration="12215000" />
       <workItem from="1651607054648" duration="22000" />
       <workItem from="1651607116793" duration="19360000" />
-      <workItem from="1651872241970" duration="3208000" />
+      <workItem from="1651872241970" duration="4704000" />
     </task>
     <servers />
   </component>

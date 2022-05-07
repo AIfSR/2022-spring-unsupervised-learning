@@ -16,6 +16,3 @@ class LogisticRegressionTest(unittest.TestCase):
         algorithm.train(dataset, labels)
         result = list(algorithm.predict(loaded_dataSet[:1]))
         self.assertEqual(result, [1.0])
-
-
-

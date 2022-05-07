@@ -15,7 +15,5 @@ class MultiLogisticRegressionTest(unittest.TestCase):
         algorithm = MultiLogisticRegression()
         algorithm.train(dataset, labels)
         result = list(algorithm.predict(loaded_dataSet[:1]))
-        self.assertEqual(result, [('data/02_01_Simulated_trajectories/Simple_cases/Ballistic_movement/Trajectories/pure_ballistic_0.tck', [1.0, 0.0, 0.0])])
-
-
-
+        self.assertEqual(result, [('data/02_01_Simulated_trajectories/Simple_cases/Ballistic_movement/Trajectories/'
+                                   'pure_ballistic_0.tck', [1.0, 0.0, 0.0])])
