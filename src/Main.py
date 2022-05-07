@@ -16,5 +16,3 @@ def getUserArguments() -> Tuple[str,str,str]:
 if __name__ == "__main__":
     inputTrajectoriesDirectory, excelFile, sheetName = getUserArguments()
     predict(inputTrajectoriesDirectory, excelFile, sheetName)
-
-    # predict(inputTrajectoriesDirectory, "/Users/seandoyle/Downloads/TestSheet.xlsx")
