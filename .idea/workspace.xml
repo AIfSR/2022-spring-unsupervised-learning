@@ -2,16 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d188f595-363c-4814-af61-12f1a1c9bbe2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/tests/algorithmstests/LogisticRegressiontest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/algorithmstests/OvRLogisticRegressiontest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/OvRLRNotebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/OvRLRNotebook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/LabeledCategory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/LabeledCategory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/algorithmstests/MultiLogisticRegressiontest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/algorithmstests/MultiLogisticRegressiontest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
     <envs>
@@ -179,7 +186,8 @@
       <workItem from="1650755191524" duration="20000" />
       <workItem from="1650755338406" duration="12215000" />
       <workItem from="1651607054648" duration="22000" />
-      <workItem from="1651607116793" duration="14680000" />
+      <workItem from="1651607116793" duration="19360000" />
+      <workItem from="1651872241970" duration="3208000" />
     </task>
     <servers />
   </component>
@@ -198,7 +206,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/2022_spring_unsupervised_learning$Sandbox.coverage" NAME="Sandbox Coverage Results" MODIFIED="1651638484404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/2022_spring_unsupervised_learning$Sandbox.coverage" NAME="Sandbox Coverage Results" MODIFIED="1651904648615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/2022_spring_unsupervised_learning$LabeledCategory.coverage" NAME="LabeledCategory Coverage Results" MODIFIED="1651607023309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets" />
     <SUITE FILE_PATH="coverage/2022_spring_unsupervised_learning$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1651460765143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Interviews/BlueStamp" />
     <SUITE FILE_PATH="coverage/2022_spring_unsupervised_learning$MultiLabelSyntheticMSDFeatures.coverage" NAME="MultiLabelSyntheticMSDFeatures Coverage Results" MODIFIED="1651606950307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasetfeatures" />

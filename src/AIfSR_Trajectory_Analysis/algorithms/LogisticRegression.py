@@ -30,7 +30,7 @@ class LogisticRegression(AlgorithmBase):
                 y.append(0)
         self._model.fit(trainingData, y)
 
-    def predict(self, testData: list[FeaturesWithNames]) -> list[Tuple[str, list[float]]]:
+    def predict(self, testData: list[FeaturesWithNames]) -> list[float]:
         y_pred = self._model.predict(testData)
         return y_pred
 
