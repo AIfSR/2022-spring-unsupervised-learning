@@ -41,7 +41,7 @@ class OvRLogisticRegression(AlgorithmBase):
                     prob_list.append(1.0)
                 else:
                     prob_list.append(0.0)
-            result.append((name,prob_list))
+            result.append((name, prob_list))
         return result
 
     def predict_prob(self, testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:

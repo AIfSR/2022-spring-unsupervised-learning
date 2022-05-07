@@ -1,11 +1,9 @@
-from typing import Tuple
 from AIfSR_Trajectory_Analysis.algorithms.AlgorithmBase import AlgorithmBase
 from AIfSR_Trajectory_Analysis.features.Features import Features
 from sklearn.linear_model import LogisticRegression as LR
 import pickle
 from importlib import resources
 
-from AIfSR_Trajectory_Analysis.features.FeaturesWithNames import FeaturesWithNames
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 
 
@@ -30,7 +28,7 @@ class LogisticRegression(AlgorithmBase):
                 y.append(0)
         self._model.fit(trainingData, y)
 
-    def predict(self, testData: list[FeaturesWithNames]) -> list[Tuple[str, list[float]]]:
+    def predict(self, testData: list[Features]) -> list[float]:
         y_pred = self._model.predict(testData)
         return y_pred
 
