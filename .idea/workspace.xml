@@ -2,26 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d188f595-363c-4814-af61-12f1a1c9bbe2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/MultiLR.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/OvRLR.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/LR_V1.0.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/LR_V1.1.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/LR_V1.2.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/LR_V1.3.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/LR_V1.4.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/.ipynb_checkpoints/OvRLRNotebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/.ipynb_checkpoints/OvRLRNotebook-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/MultiLR.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/MultiLR.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/CreateAlgorithmAnalysisMD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/OvRLRNotebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithmanalysis/OvRLRNotebook.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/LogisticRegression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/OvRLogisticRegression.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/OvRLogisticRegression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticFilePaths.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/datasets/SyntheticFilePaths.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/MultiLogisticRegression.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/algorithms/MultiLogisticRegression.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/ml_pipelines/MLPipelineBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/ml_pipelines/MLPipelineBase.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/ml_pipelines/MultiLRPipelineFactory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/ml_pipelines/MultiLRPipelineFactory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/ml_pipelines/OvRLRPipelineFactory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/ml_pipelines/OvRLRPipelineFactory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AIfSR_Trajectory_Analysis/test1.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/algorithmstests/LogisticRegressiontest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/algorithmstests/LogisticRegressiontest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

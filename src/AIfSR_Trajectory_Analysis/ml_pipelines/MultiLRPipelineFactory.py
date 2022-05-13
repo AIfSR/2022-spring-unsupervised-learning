@@ -13,13 +13,13 @@ import AIfSR_Trajectory_Analysis.Utilities as Utilities
 from importlib import resources
 
 class MultiLRPipelineFactory (MLPipelineBase):
-    def __init__(self) -> None:
+    def __init__(self, modelToLoad: str = "MultiLR.pkl") -> None:
+        super().__init__(modelToLoad)
         self._featureCreator = ThreeDMSDFeatureCreator()
         self._featureNormalizer = DivideByMaxNormalization()
         self._featureStandardizer = ExtractValsRegularInterval(20)
         self._algorithm = MultiLogisticRegression()
-        self._algorithm.load("AIfSR_Trajectory_Analysis", "MultiLR.pkl")
-        super().__init__()
+        self._algorithm.load("AIfSR_Trajectory_Analysis", self._modelToLoad)
 
     def getFeatureCreator(self) -> FeatureCreatorBase:
         """Gets the 3D MSD Feature creator to extract MSD Values"""

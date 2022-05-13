@@ -15,15 +15,27 @@ class MultiLogisticRegression(AlgorithmBase):
         self._model = LR(multi_class='multinomial', solver='lbfgs', max_iter=13000)
 
     def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
+        trainingDataWithoutBadLabels = []
         y = []
-        for i in labels:
+        count = 0
+        badLabels = []
+        for i, features in zip(labels, trainingData):
             if i == [1.0, 0.0, 0.0]:
                 y.append(1)
             elif i == [0.0, 1.0, 0.0]:
                 y.append(2)
             elif i == [0.0, 0.0, 1.0]:
                 y.append(3)
-        self._model.fit(trainingData, y)
+            else:
+                count += 1
+                if i not in badLabels:
+                    badLabels.append(i)
+                continue
+            trainingDataWithoutBadLabels.append(features)
+
+        print("MultiLR algorithm can not handle label ", badLabels)
+        print("Number of trajectories multiLR can't handle: ", count)
+        self._model.fit(trainingDataWithoutBadLabels, y)
 
     def predict(self, testData: list[FeaturesWithNames]) -> list[Tuple[str, list[float]]]:
         y_pred = self._model.predict(testData)

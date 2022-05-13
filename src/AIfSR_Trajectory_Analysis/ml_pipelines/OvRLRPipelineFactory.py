@@ -13,13 +13,14 @@ from importlib import resources
 
 
 class OvRLRPipelineFactory(MLPipelineBase):
-    def __init__(self) -> None:
+    def __init__(self, modelToLoad: str = "OvRLR.pkl") -> None:
+        super().__init__(modelToLoad)
         self._featureCreator = ThreeDMSDFeatureCreator()
         self._featureNormalizer = DivideByMaxNormalization()
         self._featureStandardizer = ExtractValsRegularInterval(20)
         self._algorithm = OvRLogisticRegression(0.5)
-        self._algorithm.load("AIfSR_Trajectory_Analysis", "OvRLR")
-        super().__init__()
+        self._algorithm.load("AIfSR_Trajectory_Analysis", self._modelToLoad)
+
 
     def getFeatureCreator(self) -> FeatureCreatorBase:
         """Gets the 3D MSD Feature creator to extract MSD Values"""

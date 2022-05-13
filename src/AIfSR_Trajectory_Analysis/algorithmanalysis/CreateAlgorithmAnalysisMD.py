@@ -96,12 +96,8 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs: str = No
     syntheticMSDFeatures = SyntheticMSDFeatures()
     MultisyntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
 
-    if isinstance(mlPipeline, MultiLRPipelineFactory):
-        loaded_labels = syntheticMSDFeatures.getLabels()
-        loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
-    elif isinstance(mlPipeline, OvRLRPipelineFactory):
-        loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
-        loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
+    loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
+    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
 
     loaded_dataSet, loaded_labels = removeConfinementEscape(loaded_dataSet, loaded_labels)
 

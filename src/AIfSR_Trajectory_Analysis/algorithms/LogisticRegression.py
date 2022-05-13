@@ -13,7 +13,6 @@ class LogisticRegression(AlgorithmBase):
         self._model = LR(solver='lbfgs', max_iter=13000)
         self._diffusionType = diffusion_type
 
-
     def train(self, trainingData: list[Features], labels: list[int]) -> None:
         self._model.fit(trainingData, labels)
 
