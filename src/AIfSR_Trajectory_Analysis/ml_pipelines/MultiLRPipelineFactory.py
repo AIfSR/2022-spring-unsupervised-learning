@@ -7,6 +7,7 @@ from AIfSR_Trajectory_Analysis.normalizefeatures.DivideByMaxNormalization import
 from AIfSR_Trajectory_Analysis.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
 from AIfSR_Trajectory_Analysis.normalizefeatures.ScaletoMillion import ScaletoMillion
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
+from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.ExtractValsRegularInterval import ExtractValsRegularInterval
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 from importlib import resources
@@ -15,11 +16,11 @@ class MultiLRPipelineFactory (MLPipelineBase):
     def __init__(self) -> None:
         self._featureCreator = ThreeDMSDFeatureCreator()
         self._featureNormalizer = DivideByMaxNormalization()
-        self._featureStandardizer = Extract40ValsRegularInterval()
+        self._featureStandardizer = ExtractValsRegularInterval(20)
         self._algorithm = MultiLogisticRegression()
-        self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.0.pkl")
+        self._algorithm.load("AIfSR_Trajectory_Analysis", "MultiLR.pkl")
         super().__init__()
-    
+
     def getFeatureCreator(self) -> FeatureCreatorBase:
         """Gets the 3D MSD Feature creator to extract MSD Values"""
         return self._featureCreator

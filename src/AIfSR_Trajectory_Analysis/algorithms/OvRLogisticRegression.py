@@ -17,9 +17,18 @@ class OvRLogisticRegression(AlgorithmBase):
         self._threshold = threshold
 
     def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
-        self._BALmodel.train(trainingData, labels)
-        self._CDmodel.train(trainingData, labels)
-        self._RWmodel.train(trainingData, labels)
+        BALdata = []
+        CDdata = []
+        RWdata = []
+
+        for i in labels:
+            BALdata.append(int(i[0]))
+            CDdata.append(int(i[1]))
+            RWdata.append(int(i[2]))
+
+        self._BALmodel.train(trainingData, BALdata)
+        self._CDmodel.train(trainingData, CDdata )
+        self._RWmodel.train(trainingData, RWdata)
 
     def getProbabilities(self, testData: list[Features]) -> list[list[float]]:
         result = []

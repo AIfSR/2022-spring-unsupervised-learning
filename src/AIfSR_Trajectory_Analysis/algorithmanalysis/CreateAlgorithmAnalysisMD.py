@@ -1,6 +1,8 @@
 from typing import List, Tuple
 from AIfSR_Trajectory_Analysis.datasetfeatures.MultiLabelSyntheticMSDFeatures import MultiLabelSyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
+from AIfSR_Trajectory_Analysis.ml_pipelines.MultiLRPipelineFactory import MultiLRPipelineFactory
+from AIfSR_Trajectory_Analysis.ml_pipelines.OvRLRPipelineFactory import OvRLRPipelineFactory
 from AIfSR_Trajectory_Analysis.datasetfeatures.RealMSDFeatures import RealMSDFeatures
 from AIfSR_Trajectory_Analysis.datasets.MacrophageStageDataset import MacrophageStageDataset
 from AIfSR_Trajectory_Analysis.datasets.SyntheticDataset import SyntheticDataset
@@ -14,7 +16,6 @@ from AIfSR_Trajectory_Analysis.normalizefeatures.ScaletoMillion import ScaletoMi
 from AIfSR_Trajectory_Analysis.plotting.FeaturesOverIndices import FeaturesOverIndices
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
-from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 import random
 
 def displayInaccuracies(Lbls: List[List[float]], result: List[Tuple[str, List[float]]], tag:str) -> List[str]:
@@ -59,7 +60,9 @@ def createIncorGraphs(incorrect_names:list[str], dataSet:list[FeaturesWithNames]
     plotting = FeaturesOverIndices()
     maxNumberOfGraphs = 8
     if len(incorrect_names) > maxNumberOfGraphs:
-        print("There were " + str(len(incorrect_names)) + " total occurances predicted incorrectly. Randomly sampling a " + str(maxNumberOfGraphs) + " number of graphs:")
+        print("There were " + str(len(incorrect_names)) + " total occurances predicted incorrectly. "
+                                                          "Randomly sampling a " + str(maxNumberOfGraphs)
+                                                          + " number of graphs:")
         incorrect_names = random.sample(incorrect_names, maxNumberOfGraphs)
     for incorrect_name in incorrect_names:
         yFeature = getFeaturesByFeaturesName(incorrect_name, dataSet)
@@ -85,7 +88,7 @@ def removeConfinementEscape(dataset, labels):
     return newDataset, newLabels
 
 
-def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None):
+def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs: str = None):
     normalizeFeatures = mlPipeline.getFeatureNormalizer()
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
     algorithm = mlPipeline.getAlgorithm()
@@ -93,8 +96,12 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     syntheticMSDFeatures = SyntheticMSDFeatures()
     MultisyntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
 
-    loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
-    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
+    if isinstance(mlPipeline, MultiLRPipelineFactory):
+        loaded_labels = syntheticMSDFeatures.getLabels()
+        loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
+    elif isinstance(mlPipeline, OvRLRPipelineFactory):
+        loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
+        loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
 
     loaded_dataSet, loaded_labels = removeConfinementEscape(loaded_dataSet, loaded_labels)
 

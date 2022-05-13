@@ -12,21 +12,10 @@ class LogisticRegression(AlgorithmBase):
         super().__init__()
         self._model = LR(solver='lbfgs', max_iter=13000)
         self._diffusionType = diffusion_type
-        if self._diffusionType == "BAL":
-            self._index = 0
-        elif self._diffusionType == "CD":
-            self._index = 1
-        elif self._diffusionType == "RW":
-            self._index = 2
 
-    def train(self, trainingData: list[Features], labels: list[list[float]]) -> None:
-        y = []
-        for i in labels:
-            if i[self._index] == 1.0:
-                y.append(1)
-            else:
-                y.append(0)
-        self._model.fit(trainingData, y)
+
+    def train(self, trainingData: list[Features], labels: list[int]) -> None:
+        self._model.fit(trainingData, labels)
 
     def predict(self, testData: list[Features]) -> list[float]:
         y_pred = self._model.predict(testData)
