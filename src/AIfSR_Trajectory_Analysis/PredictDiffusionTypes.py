@@ -3,12 +3,14 @@ import numpy as np
 import sys
 import os
 from AIfSR_Trajectory_Analysis.features.Features import Features
-from AIfSR_Trajectory_Analysis.ml_pipelines.LRPipelineFactory import LRPipelineFactory
+from AIfSR_Trajectory_Analysis.ml_pipelines.MultiLRPipelineFactory import MultiLRPipelineFactory
 from AIfSR_Trajectory_Analysis.ml_pipelines.MLPipelineBase import MLPipelineBase
+from AIfSR_Trajectory_Analysis.output_results.OutputXlsx import OutputXlsx
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.FeatureStandardizationError import FeatureStandardizationError
 from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
 from AIfSR_Trajectory_Analysis.tckfilereader.TCKFileReader import TCKFileReader
+from datetime import date
 
 def checkDirectory(directory:str) -> None:
     if(not os.path.isdir(directory)):
@@ -63,18 +65,22 @@ def getFeaturesForAlgorithm(trajectories:list[PointsWithNames], mlPipeline:MLPip
         
     return allFeatures
 
-def printPredictions(predictions:list[Tuple[str, list[float]]]) -> None:
+def printPredictions(predictions:list[Tuple[str, list[float]]], labels:list[str]) -> None:
     for name, prediction in predictions:
         output = name + ": \n"
-        if prediction == [1.0, 0.0, 0.0, 0.0]:
-            output += "Ballistic: Yes, Confined Diffusion: No, Random Walk: No, Very Confined Diffusion: No"
-        elif prediction == [0.0, 1.0, 0.0, 0.0]:
-            output += "Ballistic: No, Confined Diffusion: Yes, Random Walk: No, Very Confined Diffusion: No"
-        elif prediction == [0.0, 0.0, 1.0, 0.0]:
-            output += "Ballistic: No, Confined Diffusion: No, Random Walk: Yes, Very Confined Diffusion: No"
-        elif prediction == [0.0, 0.0, 0.0, 1.0]:
-            output += "Ballistic: No, Confined Diffusion: No, Random Walk: No, Very Confined Diffusion: Yes"
-        else:
-            output += str(prediction)
+        assert(len(labels) == len(prediction))
+        for i in range(len(labels)):
+            output += labels[i] + ": " + str(prediction[i]) + ", "
         output += "\n"
         print(output)
+
+def checkOutputToXlsxFile(locationOfXlsx:str):
+    if(not OutputXlsx.checklocationOfXlsx(locationOfXlsx)):
+        raise IOError("Cannot find Xlsx: " + locationOfXlsx)
+
+def outputToXlsxFile(predictions:list[Tuple[str, list[float]]], labels:list[str], locationOfXlsx:str, sheetName:str = None) -> None:
+    sheetName = sheetName or str(date.today()) + " "
+    outputXlsx = OutputXlsx(locationOfXlsx, sheetName, labels)
+    outputXlsx.output(predictions)
+    print("Output to: ", locationOfXlsx)
+    

@@ -1,5 +1,5 @@
 from AIfSR_Trajectory_Analysis.algorithms.AlgorithmBase import AlgorithmBase
-from AIfSR_Trajectory_Analysis.algorithms.LogisticRegression import LogisticRegression
+from AIfSR_Trajectory_Analysis.algorithms.MultiLogisticRegression import MultiLogisticRegression
 from AIfSR_Trajectory_Analysis.features.FeatureCreatorBase import FeatureCreatorBase
 from AIfSR_Trajectory_Analysis.features.ThreeDMSDFeatureCreator import ThreeDMSDFeatureCreator
 from AIfSR_Trajectory_Analysis.ml_pipelines.MLPipelineBase import MLPipelineBase
@@ -7,19 +7,20 @@ from AIfSR_Trajectory_Analysis.normalizefeatures.DivideByMaxNormalization import
 from AIfSR_Trajectory_Analysis.normalizefeatures.NormalizeFeaturesBase import NormalizeFeaturesBase
 from AIfSR_Trajectory_Analysis.normalizefeatures.ScaletoMillion import ScaletoMillion
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
+from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.ExtractValsRegularInterval import ExtractValsRegularInterval
 from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.StandardizeFeaturesNumberBase import StandardizeFeaturesNumberBase
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 from importlib import resources
 
-class LRPipelineFactory (MLPipelineBase):
-    def __init__(self) -> None:
+class MultiLRPipelineFactory (MLPipelineBase):
+    def __init__(self, modelToLoad: str = "MultiLR.pkl") -> None:
+        super().__init__(modelToLoad)
         self._featureCreator = ThreeDMSDFeatureCreator()
         self._featureNormalizer = DivideByMaxNormalization()
-        self._featureStandardizer = Extract40ValsRegularInterval()
-        self._algorithm = LogisticRegression()
-        self._algorithm.load("AIfSR_Trajectory_Analysis", "LR_V1.0.pkl")
-        super().__init__()
-    
+        self._featureStandardizer = ExtractValsRegularInterval(20)
+        self._algorithm = MultiLogisticRegression()
+        self._algorithm.load("AIfSR_Trajectory_Analysis", self._modelToLoad)
+
     def getFeatureCreator(self) -> FeatureCreatorBase:
         """Gets the 3D MSD Feature creator to extract MSD Values"""
         return self._featureCreator

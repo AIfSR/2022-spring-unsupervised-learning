@@ -3,11 +3,14 @@
 *.tck
 *.svg
 *.png
+*.txt
 data/*.pkl
 label.pkl
 data.pkl
+multilabel.pkl
+multidata.pkl
 Realdata.pkl
 DirName.py
 Sandbox.py
-build/
+build/*
 src/AIfSR_Trajectory_Analysis/data/*

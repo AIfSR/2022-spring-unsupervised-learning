@@ -2,9 +2,10 @@ from typing import List, Tuple
 from AIfSR_Trajectory_Analysis.datasets.DatasetBase import DatasetBase
 from AIfSR_Trajectory_Analysis.tckfilereader.Points import Points
 from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
-
+from AIfSR_Trajectory_Analysis.datasets.LabeledCategory import LabeledCategory
 import AIfSR_Trajectory_Analysis.datasets.SyntheticFilePaths as FP
 from AIfSR_Trajectory_Analysis.tckfilereader.TCKFileReader import TCKFileReader
+from random import sample
 
 
 class SyntheticDataset (DatasetBase):
@@ -12,21 +13,32 @@ class SyntheticDataset (DatasetBase):
         self.tckFileReader = TCKFileReader()
         super().__init__()
 
-    def getCategoriesWithPoints(self) -> List[Tuple[str, List[PointsWithNames]]]:
+    def getCategoriesWithPoints(self, numberFromEachCategory:int=None) -> List[Tuple[str, List[PointsWithNames]]]:
         """Returns a list of all of the synthetic data split up by the type of 
         diffusion occuring in each trajectory"""
-        Ballistic_movementPoints = self._getValidPointsFromFilePaths(FP.Ballistic_movementFilePaths)
-        Confined_diffusionPoints = self._getValidPointsFromFilePaths(FP.Confined_diffusionFilePaths)
-        Random_walkPoints = self._getValidPointsFromFilePaths(FP.Random_walkFilePaths)
-        Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(FP.Very_confined_diffusionFilePaths)
-
+        if(numberFromEachCategory is None):
+            Ballistic_movementPoints = self._getValidPointsFromFilePaths(FP.Ballistic_movementFilePaths)
+            Confined_diffusionPoints = self._getValidPointsFromFilePaths(FP.Confined_diffusionFilePaths)
+            Random_walkPoints = self._getValidPointsFromFilePaths(FP.Random_walkFilePaths)
+            Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(FP.Very_confined_diffusionFilePaths)
+        else:
+            minimumNumberOfTrajecories = min(len(FP.Ballistic_movementFilePaths), 
+                len(FP.Confined_diffusionFilePaths), len(FP.Random_walkFilePaths), 
+                len(FP.Very_confined_diffusionFilePaths))
+            if(numberFromEachCategory > minimumNumberOfTrajecories):
+                print("numberFromEachCategory is bigger than the the smallest category of trajectories. Setting it to: ", str(minimumNumberOfTrajecories))
+                numberFromEachCategory = minimumNumberOfTrajecories
+            Ballistic_movementPoints = self._getValidPointsFromFilePaths(sample(FP.Ballistic_movementFilePaths, numberFromEachCategory))
+            Confined_diffusionPoints = self._getValidPointsFromFilePaths(sample(FP.Confined_diffusionFilePaths,numberFromEachCategory))
+            Random_walkPoints = self._getValidPointsFromFilePaths(sample(FP.Random_walkFilePaths,numberFromEachCategory))
+            Very_confined_diffusionPoints = self._getValidPointsFromFilePaths(sample(FP.Very_confined_diffusionFilePaths,numberFromEachCategory))
         # Specifies the three different categories of trajectories that are to be
-        # compared and the points list of points associated with each of these treajectory categories
+        # compared and the points list of points associated with each of these trajectory categories
         SimpleCasesCategories = [
-            ("Bal", Ballistic_movementPoints),
-            ("CD", Confined_diffusionPoints),
-            ("RW", Random_walkPoints),
-            ("VCD", Very_confined_diffusionPoints),
+            LabeledCategory("Bal", [1.0, 0.0, 0.0], Ballistic_movementPoints),
+            LabeledCategory("CD", [0.0, 1.0, 0.0], Confined_diffusionPoints),
+            LabeledCategory("RW", [0.0, 0.0, 1.0], Random_walkPoints),
+            LabeledCategory("VCD", [0.0, 1.0, 0.0], Very_confined_diffusionPoints)
         ]
         return SimpleCasesCategories
 

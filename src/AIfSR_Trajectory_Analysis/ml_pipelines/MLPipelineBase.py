@@ -13,6 +13,10 @@ class MLPipelineBase (ABC):
     number of features per occurance are passed into an algorithm, and an 
     algorithm to train or predict with."""
 
+    def __init__(self, modelToLoad: str) -> None:
+        self._modelToLoad =  modelToLoad
+        super().__init__()
+
     @abstractmethod
     def getFeatureCreator(self) -> FeatureCreatorBase:
         """Gets the feature creator to convert points in a trajectory to 

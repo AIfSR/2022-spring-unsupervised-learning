@@ -15,6 +15,10 @@ class AlgorithmBase (ABC):
         pass
 
     @abstractmethod
+    def predict_prob(self,testData:list[FeaturesWithNames]) -> list[Tuple[str,list[float]]]:
+        pass
+
+    @abstractmethod
     def save(self, directoryToSaveTo:str, name:str) -> None:
         pass
 

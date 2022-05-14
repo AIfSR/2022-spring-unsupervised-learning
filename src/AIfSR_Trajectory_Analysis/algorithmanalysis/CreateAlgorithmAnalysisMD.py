@@ -1,5 +1,8 @@
 from typing import List, Tuple
+from AIfSR_Trajectory_Analysis.datasetfeatures.MultiLabelSyntheticMSDFeatures import MultiLabelSyntheticMSDFeatures
 from AIfSR_Trajectory_Analysis.datasetfeatures.SyntheticMSDFeatures import SyntheticMSDFeatures
+from AIfSR_Trajectory_Analysis.ml_pipelines.MultiLRPipelineFactory import MultiLRPipelineFactory
+from AIfSR_Trajectory_Analysis.ml_pipelines.OvRLRPipelineFactory import OvRLRPipelineFactory
 from AIfSR_Trajectory_Analysis.datasetfeatures.RealMSDFeatures import RealMSDFeatures
 from AIfSR_Trajectory_Analysis.datasets.MacrophageStageDataset import MacrophageStageDataset
 from AIfSR_Trajectory_Analysis.datasets.SyntheticDataset import SyntheticDataset
@@ -13,51 +16,7 @@ from AIfSR_Trajectory_Analysis.normalizefeatures.ScaletoMillion import ScaletoMi
 from AIfSR_Trajectory_Analysis.plotting.FeaturesOverIndices import FeaturesOverIndices
 from sklearn.model_selection import train_test_split as split
 from sklearn import metrics
-from AIfSR_Trajectory_Analysis.standardizefeaturesnumber.Extract40ValsRegularInterval import Extract40ValsRegularInterval
 import random
-
-
-def RealPredictions(result: List[Tuple[str, List[float]]], tag:str) -> List[List[float]]:
-    predict = []
-    for name, prediction in result:
-        if tag in name:
-            predict.append(prediction)
-    return predict
-
-def RealAnalytics(predict: List[List[float]], tag: str) -> None:
-    print(tag + ":\tbal: " + str(format((predict.count([1.0, 0.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\tcd: " + str(format((predict.count([0.0, 1.0, 0.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\trw: " + str(format((predict.count([0.0, 0.0, 1.0, 0.0]) / len(predict) * 100), '.3f')) +
-          "%\tvcd: " + str(format((predict.count([0.0, 0.0, 0.0, 1.0]) / len(predict) * 100), '.3f')) + "%")
-
-
-def RealInfo(mlPipeline:MLPipelineBase):
-    normalizeFeatures = mlPipeline.getFeatureNormalizer()
-    standardizeFeatures = mlPipeline.getFeatureStandardizer()
-    algorithm = mlPipeline.getAlgorithm()
-    realMSDFeatures = RealMSDFeatures()
-    loaded_real_dataset = realMSDFeatures.getDatasetOfFeatures()
-
-    realdataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_real_dataset)
-    realdataSet = standardizeFeatures.standardizeSetOfFeatures(realdataSet)
-    real_test_result = algorithm.predict(realdataSet)
-
-    m0_predict = RealPredictions(real_test_result, "M0")
-    m1_predict = RealPredictions(real_test_result, "M1")
-    m2_predict = RealPredictions(real_test_result, "M2")
-    real_predictions = m0_predict + m1_predict + m2_predict
-
-    print()
-    print('\033[1m', "Analytics of Predictions: ", '\033[0m')
-    print("Here is some percentages and information derived from the predictions of the algorithm")
-    print()
-
-    RealAnalytics(m0_predict, "M0")
-    RealAnalytics(m1_predict, "M1")
-    RealAnalytics(m2_predict, "M2")
-    print()
-    RealAnalytics(real_predictions, "Ovr")
-
 
 def displayInaccuracies(Lbls: List[List[float]], result: List[Tuple[str, List[float]]], tag:str) -> List[str]:
     incorrectResults = []
@@ -86,6 +45,7 @@ def displayInaccuracies(Lbls: List[List[float]], result: List[Tuple[str, List[fl
     
     return incorrectResults
 
+
 def getFeaturesByFeaturesName(name:str, dataset:list[FeaturesWithNames]) -> FeaturesWithNames:
     for featureWithName in dataset:
         if featureWithName.getName() == name:
@@ -93,18 +53,22 @@ def getFeaturesByFeaturesName(name:str, dataset:list[FeaturesWithNames]) -> Feat
     print("Could not find: " , name)
     return None
 
+
 def createIncorGraphs(incorrect_names:list[str], dataSet:list[FeaturesWithNames]):
     print('\033[1m', "Graphs of Incorrect Trajectories:", '\033[0m')
     print("Here is the graphs of the trajectories that were predicted incorrectly")
     plotting = FeaturesOverIndices()
     maxNumberOfGraphs = 8
     if len(incorrect_names) > maxNumberOfGraphs:
-        print("There were " + str(len(incorrect_names)) + " total occurances predicted incorrectly. Randomly sampling a " + str(maxNumberOfGraphs) + " number of graphs:")
+        print("There were " + str(len(incorrect_names)) + " total occurances predicted incorrectly. "
+                                                          "Randomly sampling a " + str(maxNumberOfGraphs)
+                                                          + " number of graphs:")
         incorrect_names = random.sample(incorrect_names, maxNumberOfGraphs)
     for incorrect_name in incorrect_names:
         yFeature = getFeaturesByFeaturesName(incorrect_name, dataSet)
         plotting.display_plot_of_features(yFeatures=yFeature, title=incorrect_name,
                                           yLabel="3DMSD",)
+
 
 def getRemovedNamesFromPrediction(predictions:list[Tuple[str,List[float]]]) -> list[list[float]]:
     predictionsWithoutNames = []
@@ -112,20 +76,38 @@ def getRemovedNamesFromPrediction(predictions:list[Tuple[str,List[float]]]) -> l
         predictionsWithoutNames.append(prediction)
     return predictionsWithoutNames
 
-def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None):
+
+def removeConfinementEscape(dataset, labels):
+    newDataset = []
+    newLabels = []
+    for feature, label in zip(dataset, labels):
+        if "Confinement_escape" not in feature.getName():
+            newDataset.append(feature)
+            newLabels.append(label)
+    print("# of Confinement_escape removed: " + str(len(dataset) - len(newDataset)))
+    return newDataset, newLabels
+
+
+def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs: str = None):
     normalizeFeatures = mlPipeline.getFeatureNormalizer()
     standardizeFeatures = mlPipeline.getFeatureStandardizer()
     algorithm = mlPipeline.getAlgorithm()
 
     syntheticMSDFeatures = SyntheticMSDFeatures()
-    loaded_labels = syntheticMSDFeatures.getLabels()
-    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures()
+    MultisyntheticMSDFeatures = MultiLabelSyntheticMSDFeatures()
+
+    loaded_labels = syntheticMSDFeatures.getLabels() + MultisyntheticMSDFeatures.getLabels()
+    loaded_dataSet = syntheticMSDFeatures.getDatasetOfFeatures() + MultisyntheticMSDFeatures.getDatasetOfFeatures()
+
+    loaded_dataSet, loaded_labels = removeConfinementEscape(loaded_dataSet, loaded_labels)
+
     dataSet = normalizeFeatures.normalizeToSetOfFeatures(loaded_dataSet)
     dataSet = standardizeFeatures.standardizeSetOfFeatures(dataSet)
+    print("Number of features per trajectory:" , len(dataSet[0]))
     (trnData, remData, trnLbls, remLbls)\
         = split(dataSet, loaded_labels, train_size=0.6, random_state=1)
 
-    (testData, valData, testLbls, valLbls) \
+    (valData, testData, valLbls, testLbls) \
         = split(remData, remLbls, test_size=0.5, random_state=2)
 
     algorithm.train(trnData, trnLbls)
@@ -159,4 +141,3 @@ def createAnalysisDocument(mlPipeline:MLPipelineBase, nameToSaveAlgoAs:str=None)
     incorrect_names = names_trn_incor + names_test_incor + names_valid_incor
     createIncorGraphs(incorrect_names, dataSet)
 
-    RealInfo(mlPipeline)

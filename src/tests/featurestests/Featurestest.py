@@ -103,3 +103,14 @@ class FeaturesTest (unittest.TestCase):
         features2 = Features()
         features2.add_feature_val(2)
         self.assertEquals(features, features2)
+
+    def test_plusEquals(self):
+        features = Features()
+        features.add_feature_val(1)
+        features2 = Features()
+        features2.add_feature_val(3)
+        solution = Features()
+        solution.add_feature_val(1)
+        solution.add_feature_val(3)
+        features += features2
+        self.assertEquals(features, solution)

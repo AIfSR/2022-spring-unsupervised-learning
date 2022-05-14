@@ -7,7 +7,7 @@ from AIfSR_Trajectory_Analysis.plotting.FeaturesOverIndices import FeaturesOverI
 
 from AIfSR_Trajectory_Analysis.features.XFeatureCreator import XFeatureCreator
 from AIfSR_Trajectory_Analysis.tckfilereader.PointsWithNames import PointsWithNames
-from AIfSR_Trajectory_Analysis.datasets.SyntheticDatasetSubset import SyntheticDatasetSubset
+from AIfSR_Trajectory_Analysis.datasets.SyntheticDataset import SyntheticDataset
 import AIfSR_Trajectory_Analysis.Utilities as Utilities
 
 plotFeatures = [
@@ -16,7 +16,7 @@ plotFeatures = [
             xLabel = "MSD: X Speed"),
 ]
 realDataset = MacrophageStageDataset()
-syntheticDataset = SyntheticDatasetSubset()
+syntheticDataset = SyntheticDataset()
 
 FeaturesOverIndices = FeaturesOverIndices()
 
@@ -42,16 +42,17 @@ def getPicturePathway(diffusionType:str, pointsWithNames:PointsWithNames):
     return imagePath
 
 def createGraphsOfSampleOfSyntheticDataset():
-    def plotTrajectory(categoryNumber:int, trajectoryNumber:int):
-        title = syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber].title
+    def plotTrajectory(categoryNumber:int, categories):
+        title = categories[categoryNumber][1][0].title
         FeaturesOverIndices.display_plots(ThreeDMSDFeatureCreator(),
-                                        syntheticDataset.getCategoriesWithPoints()[categoryNumber][1][trajectoryNumber],
+                                        categories[categoryNumber][1][0],
                                         title=title)
     
-    plotTrajectory(0, 0)
-    plotTrajectory(1, 44)
-    plotTrajectory(2, 39)
-    plotTrajectory(3, 43)
+    categories = syntheticDataset.getCategoriesWithPoints(5)
+    plotTrajectory(0, categories)
+    plotTrajectory(1, categories)
+    plotTrajectory(2, categories)
+    plotTrajectory(3, categories)
 
 def createGraphsOfSyntheticDataset():
     i = 0;

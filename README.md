@@ -16,3 +16,7 @@ Within this file, the "predict" function takes in a directory and will print out
 ```python3
 ta.predict("/Path/To/Directory/With/Trajectories")
 ```
+
+Predict can also be called with a path to an excel spreadsheet to output results to. To learn more, call help(ta.predict).
+
+To learn more about the architecture of the package consult, ARCHITECTURE.md, however this is not necessary in order to use the package.
